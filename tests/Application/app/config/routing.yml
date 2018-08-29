@@ -1,0 +1,12 @@
+sylius:
+    resource: "../../../../vendor/sylius/sylius/app/config/routing.yml"
+
+sylius_rbac_plugin_shop:
+    resource: "@SyliusRbacPlugin/Resources/config/shop_routing.yml"
+    prefix: /{_locale}
+    requirements:
+        _locale: ^[a-z]{2}(?:_[A-Z]{2})?$
+
+sylius_rbac_plugin_admin:
+    resource: "@SyliusRbacPlugin/Resources/config/admin_routing.yml"
+    prefix: /admin
