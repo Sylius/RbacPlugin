@@ -31,8 +31,3 @@
         resource: "@SyliusRbacPlugin/Resources/config/routing.yml"
     ````
 
-4. Clear cache:
-
-    ```bash
-    bin/console cache:clear
-    ```
