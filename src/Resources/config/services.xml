@@ -9,5 +9,9 @@
             </argument>
             <tag name="form.type" />
         </service>
+
+        <service id="Sylius\RbacPlugin\Menu\AdminMenuListener">
+            <tag name="kernel.event_listener" event="sylius.menu.admin.main" method="addRbacMenu" />
+        </service>
     </services>
 </container>
