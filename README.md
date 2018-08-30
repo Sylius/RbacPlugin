@@ -31,7 +31,13 @@
         resource: "@SyliusRbacPlugin/Resources/config/routing.yml"
     ```
 
-4. Generate and apply migrations
+4. Import configuration:
+
+    ```yaml
+    - { resource: "@SyliusRbacPlugin/Resources/config/config.yml" }
+    ```
+
+5. Generate and apply migrations
 
     ```bash
     bin/console doctrine:migrations:diff
