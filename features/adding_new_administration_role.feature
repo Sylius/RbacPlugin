@@ -1,4 +1,4 @@
-@managing_roles
+@managing_administration_roles
 Feature: Adding a new Administration role
     In order to describe Administrators permission sets with the system
     As an Administrator

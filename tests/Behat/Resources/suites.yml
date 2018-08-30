@@ -1,3 +1,10 @@
-# Put your Behat suites definitions here
+default:
+    ui_managing_administration_roles:
+        contexts_services:
+            - sylius.behat.context.hook.doctrine_orm
 
-default: ~
+            - Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdministrationRolesContext
+
+            - Tests\Sylius\RbacPlugin\Behat\Context\UI\ManagingAdministrationRolesContext
+        filters:
+            tags: "@managing_administration_roles && @ui"
