@@ -5,15 +5,39 @@ declare(strict_types=1);
 namespace Tests\Sylius\RbacPlugin\Behat\Context\UI;
 
 use Behat\Behat\Context\Context;
+use Sylius\Behat\NotificationType;
+use Sylius\Behat\Page\Admin\Crud\IndexPageInterface;
+use Sylius\Behat\Service\NotificationCheckerInterface;
+use Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdministrationRoleCreatePageInterface;
+use Webmozart\Assert\Assert;
 
 final class ManagingAdministrationRolesContext implements Context
 {
+    /** @var AdministrationRoleCreatePageInterface */
+    private $administrationRoleCreatePage;
+
+    /** @var IndexPageInterface */
+    private $administrationRoleIndexPage;
+
+    /** @var NotificationCheckerInterface */
+    private $notificationChecker;
+
+    public function __construct(
+        AdministrationRoleCreatePageInterface $administrationRoleCreatePage,
+        IndexPageInterface $administrationRoleIndexPage,
+        NotificationCheckerInterface $notificationChecker
+    ) {
+        $this->administrationRoleCreatePage = $administrationRoleCreatePage;
+        $this->administrationRoleIndexPage = $administrationRoleIndexPage;
+        $this->notificationChecker = $notificationChecker;
+    }
+
     /**
      * @When I want to add a new Administration role
      */
     public function wantToAddNewAdministrationRole(): void
     {
-        throw new PendingException();
+        $this->administrationRoleCreatePage->open();
     }
 
     /**
@@ -21,7 +45,7 @@ final class ManagingAdministrationRolesContext implements Context
      */
     public function nameIt(string $name): void
     {
-        throw new PendingException();
+        $this->administrationRoleCreatePage->nameIt($name);
     }
 
     /**
@@ -29,7 +53,7 @@ final class ManagingAdministrationRolesContext implements Context
      */
     public function addIt(): void
     {
-        throw new PendingException();
+        $this->administrationRoleCreatePage->create();
     }
 
     /**
@@ -37,7 +61,8 @@ final class ManagingAdministrationRolesContext implements Context
      */
     public function thereShouldBeAdministrationRoleWithNameWithinTheSystem(int $count, string $name): void
     {
-        throw new PendingException();
+        Assert::eq($this->administrationRoleIndexPage->countItems(), $count);
+        Assert::true($this->administrationRoleIndexPage->isSingleResourceOnPage(['name' => $name]));
     }
 
     /**
@@ -45,7 +70,10 @@ final class ManagingAdministrationRolesContext implements Context
      */
     public function shouldBeNotifiedThatAdministrationRoleHasBeenSuccessfullyCreated(): void
     {
-        throw new PendingException();
+        $this->notificationChecker->checkNotification(
+            'Administration role has been successfully created',
+            NotificationType::success()
+        );
     }
 
     /**
@@ -53,6 +81,9 @@ final class ManagingAdministrationRolesContext implements Context
      */
     public function shouldBeNotifiedThatThisNameIsAlreadyTaken(): void
     {
-        throw new PendingException();
+        Assert::same(
+            $this->administrationRoleCreatePage->getNameValidationMessage(),
+            'This name is already taken'
+        );
     }
 }
