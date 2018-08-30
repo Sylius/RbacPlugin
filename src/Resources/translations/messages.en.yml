@@ -1,0 +1,4 @@
+sylius_rbac:
+    ui:
+        administration_roles: Administation roles
+        new_administration_role: New Administarion role

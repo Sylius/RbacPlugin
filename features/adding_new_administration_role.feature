@@ -4,6 +4,9 @@ Feature: Adding a new Administration role
     As an Administrator
     I want to be able to add new Administration role
 
+    Background:
+        Given I am logged in as an administrator
+
     @ui
     Scenario: Add a new Administration role to the system
         When I want to add a new Administration role

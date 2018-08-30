@@ -3,8 +3,8 @@
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <service id="Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdministrationRolesContext">
-            <argument type="service" id="__symfony__.sylius_rbac.repository.administration_role" />
             <argument type="service" id="__symfony__.sylius_rbac.factory.administration_role" />
+            <argument type="service" id="__symfony__.sylius_rbac.repository.administration_role" />
             <tag name="fob.context_service" />
         </service>
 
@@ -16,11 +16,12 @@
         </service>
 
         <service id="Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdministrationRoleCreatePage" parent="sylius.behat.page.admin.crud.create" public="false">
-            <argument>sylius_rbac_administration_role_create</argument>
+            <argument>sylius_rbac_admin_administration_role_create</argument>
         </service>
 
         <service id="sylius_rbac.behat.page.administration_role.index" class="Sylius\Behat\Page\Admin\Crud\IndexPage" parent="sylius.behat.symfony_page" public="false">
-            <argument>sylius_rbac_administration_role_index</argument>
+            <argument type="service" id="sylius.behat.table_accessor" />
+            <argument>sylius_rbac_admin_administration_role_index</argument>
         </service>
     </services>
 </container>
