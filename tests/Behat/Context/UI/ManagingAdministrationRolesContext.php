@@ -61,6 +61,7 @@ final class ManagingAdministrationRolesContext implements Context
      */
     public function thereShouldBeAdministrationRoleWithNameWithinTheSystem(int $count, string $name): void
     {
+        $this->administrationRoleIndexPage->open();
         Assert::eq($this->administrationRoleIndexPage->countItems(), $count);
         Assert::true($this->administrationRoleIndexPage->isSingleResourceOnPage(['name' => $name]));
     }

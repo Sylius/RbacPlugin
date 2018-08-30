@@ -10,5 +10,5 @@ interface AdministrationRoleCreatePageInterface extends CreatePageInterface
 {
     public function nameIt(string $name): void;
 
-    public function getNameValidationMessage(): ?string;
+    public function getNameValidationMessage(): string;
 }

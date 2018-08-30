@@ -3,6 +3,7 @@ sylius_resource:
         sylius_rbac.administration_role:
             classes:
                 model: Sylius\RbacPlugin\Entity\AdministrationRole
+                form: Sylius\RbacPlugin\Form\Type\AdministrationRoleType
 
 sylius_grid:
     grids:

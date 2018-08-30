@@ -13,13 +13,12 @@ final class AdministrationRoleCreatePage extends CreatePage implements Administr
         $this->getDocument()->fillField('Name', $name);
     }
 
-    public function getNameValidationMessage(): ?string
+    public function getNameValidationMessage(): string
     {
-        $validationMessage = $this
+        return $this
             ->getDocument()
-            ->find('css', '[name="sylius_rbac_administration_role_name"] ~ .sylius-validation-message')
+            ->find('css', '#sylius_rbac_administration_role_name ~ .sylius-validation-error')
+            ->getText()
         ;
-
-        return $validationMessage ? null : $validationMessage->getText();
     }
 }
