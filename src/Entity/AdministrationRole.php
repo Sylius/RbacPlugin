@@ -9,7 +9,7 @@ final class AdministrationRole implements AdministrationRoleInterface
     /** @var int */
     private $id;
 
-    /** @var string */
+    /** @var string|null */
     private $name;
 
     public function getId(): int
