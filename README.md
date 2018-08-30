@@ -26,8 +26,14 @@
 
 3. Import routing:
 
-    ````yaml
+    ```yaml
     sylius_rbac:
         resource: "@SyliusRbacPlugin/Resources/config/routing.yml"
-    ````
+    ```
 
+4. Generate and apply migrations
+
+    ```bash
+    bin/console doctrine:migrations:diff
+    bin/console doctrine:migrations:migrate
+    ```
