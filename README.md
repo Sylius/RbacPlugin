@@ -4,80 +4,30 @@
     </a>
 </p>
 
-<h1 align="center">Plugin Skeleton</h1>
+<h1 align="center">Rbac Plugin</h1>
 
-<p align="center">Skeleton for starting Sylius plugins.</p>
+<p align="center">This plugin provides basic roles and permissions management functionality for Sylius application.</p>
 
 ## Installation
 
-1. Run `composer create-project sylius/plugin-skeleton ProjectName`.
-
-2. From the plugin skeleton root directory, run the following commands:
+1. Require plugin with composer:
 
     ```bash
-    $ (cd tests/Application && yarn install)
-    $ (cd tests/Application && yarn run gulp)
-    $ (cd tests/Application && bin/console assets:install web -e test)
-    
-    $ (cd tests/Application && bin/console doctrine:database:create -e test)
-    $ (cd tests/Application && bin/console doctrine:schema:create -e test)
+    composer require sylius/rbac-plugin
     ```
 
-## Usage
+2. Add plugin class and other required bundles to your `AppKernel`:
 
-### Running plugin tests
-
-  - PHPUnit
-
-    ```bash
-    $ bin/phpunit
+    ```php
+    $bundles = [
+       new \Sylius\RbacPlugin\SyliusRbacPlugin(),
+    ];
     ```
 
-  - PHPSpec
+3. Import routing:
 
-    ```bash
-    $ bin/phpspec run
-    ```
+    ````yaml
+    sylius_rbac:
+        resource: "@SyliusRbacPlugin/Resources/config/routing.yml"
+    ````
 
-  - Behat (non-JS scenarios)
-
-    ```bash
-    $ bin/behat --tags="~@javascript"
-    ```
-
-  - Behat (JS scenarios)
- 
-    1. Download [Chromedriver](https://sites.google.com/a/chromium.org/chromedriver/)
-    
-    2. Run Selenium server with previously downloaded Chromedriver:
-    
-        ```bash
-        $ bin/selenium-server-standalone -Dwebdriver.chrome.driver=chromedriver
-        ```
-    3. Run test application's webserver on `localhost:8080`:
-    
-        ```bash
-        $ (cd tests/Application && bin/console server:run 127.0.0.1:8080 -d web -e test)
-        ```
-    
-    4. Run Behat:
-    
-        ```bash
-        $ bin/behat --tags="@javascript"
-        ```
-
-### Opening Sylius with your plugin
-
-- Using `test` environment:
-
-    ```bash
-    $ (cd tests/Application && bin/console sylius:fixtures:load -e test)
-    $ (cd tests/Application && bin/console server:run -d web -e test)
-    ```
-    
-- Using `dev` environment:
-
-    ```bash
-    $ (cd tests/Application && bin/console sylius:fixtures:load -e dev)
-    $ (cd tests/Application && bin/console server:run -d web -e dev)
-    ```
