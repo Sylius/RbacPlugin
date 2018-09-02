@@ -1,0 +1,22 @@
+sylius_resource:
+    resources:
+        sylius_rbac.administration_role:
+            classes:
+                model: Sylius\RbacPlugin\Entity\AdministrationRole
+                form: Sylius\RbacPlugin\Form\Type\AdministrationRoleType
+
+sylius_grid:
+    grids:
+        sylius_rbac_administration_role:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: Sylius\RbacPlugin\Entity\AdministrationRole
+            fields:
+                name:
+                    type: string
+                    label: sylius.ui.name
+            actions:
+                main:
+                    create:
+                        type: create

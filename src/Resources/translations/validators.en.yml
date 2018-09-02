@@ -1,0 +1,4 @@
+sylius_rbac:
+    administration_role:
+        name:
+            unique: 'This name is already taken'
