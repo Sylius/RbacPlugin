@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Sylius\RbacPlugin\Entity;
 
-final class AdministrationRole implements AdministrationRoleInterface
+/** @final */
+class AdministrationRole implements AdministrationRoleInterface
 {
     /** @var int */
     private $id;
