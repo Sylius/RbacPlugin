@@ -19,7 +19,7 @@ final class AdminMenuListener
         ;
 
         $rbacSubmenu
-            ->addChild('administration_roles')
+            ->addChild('administration_roles', ['route' => 'sylius_rbac_admin_administration_role_index'])
             ->setLabel('sylius_rbac.ui.administration_roles')
             ->setLabelAttribute('icon', 'address card')
         ;
