@@ -5,11 +5,18 @@
         <service id="Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdministrationRolesContext">
             <argument type="service" id="__symfony__.sylius_rbac.factory.administration_role" />
             <argument type="service" id="__symfony__.sylius_rbac.repository.administration_role" />
+            <argument type="service" id="__symfony__.sylius_rbac.manager.administration_role" />
+            <argument type="service" id="sylius.behat.shared_storage" />
             <tag name="fob.context_service" />
+        </service>
+
+        <service id="Tests\Sylius\RbacPlugin\Behat\Context\Transform\AdministrationRoleContext">
+            <argument type="service" id="__symfony__.sylius_rbac.repository.administration_role" />
         </service>
 
         <service id="Tests\Sylius\RbacPlugin\Behat\Context\UI\ManagingAdministrationRolesContext">
             <argument type="service" id="Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdministrationRoleCreatePage" />
+            <argument type="service" id="Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdministrationRoleUpdatePage" />
             <argument type="service" id="sylius_rbac.behat.page.administration_role.index" />
             <argument type="service" id="sylius.behat.notification_checker" />
             <tag name="fob.context_service" />
@@ -17,6 +24,9 @@
 
         <service id="Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdministrationRoleCreatePage" parent="sylius.behat.page.admin.crud.create" public="false">
             <argument>sylius_rbac_admin_administration_role_create</argument>
+        </service>
+        <service id="Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdministrationRoleUpdatePage" parent="sylius.behat.page.admin.crud.update" public="false">
+            <argument>sylius_rbac_admin_administration_role_update</argument>
         </service>
 
         <service id="sylius_rbac.behat.page.administration_role.index" class="Sylius\Behat\Page\Admin\Crud\IndexPage" parent="sylius.behat.symfony_page" public="false">

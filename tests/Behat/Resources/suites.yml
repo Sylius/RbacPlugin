@@ -4,6 +4,8 @@ default:
             contexts_services:
                 - sylius.behat.context.hook.doctrine_orm
 
+                - Tests\Sylius\RbacPlugin\Behat\Context\Transform\AdministrationRoleContext
+
                 - sylius.behat.context.setup.admin_security
                 - Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdministrationRolesContext
 
