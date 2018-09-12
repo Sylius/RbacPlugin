@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                                      http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <mapped-superclass name="Sylius\RbacPlugin\Entity\AdminUser" table="sylius_rbac_admin_user">
+        <many-to-many field="administrationRoles" target-entity="Sylius\RbacPlugin\Entity\AdministrationRole" fetch="EAGER">
+            <join-table name="sylius_rbac_admin_user_administration_roles">
+                <join-columns>
+                    <join-column name="administration_role_id" referenced-column-name="id" nullable="true"/>
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="administration_role_id" referenced-column-name="id" nullable="true"/>
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+        <one-to-many field="" target-entity="" mapped-by="">
+
+        </one-to-many>
+    </mapped-superclass>
+</doctrine-mapping>
