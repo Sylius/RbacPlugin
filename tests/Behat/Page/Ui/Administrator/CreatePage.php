@@ -16,7 +16,7 @@ final class CreatePage extends BaseCreatePage implements CreatePageInterface
     protected function getDefinedElements()
     {
         return array_merge(parent::getDefinedElements(), [
-            'roles' => '#sylius_admin_user_administrationRoles'
+            'roles' => '#sylius_admin_user_administrationRole'
         ]);
     }
 }

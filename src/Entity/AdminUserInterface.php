@@ -8,5 +8,7 @@ use \Sylius\Component\Core\Model\AdminUserInterface as BaseAdminUserInterface;
 
 interface AdminUserInterface extends BaseAdminUserInterface
 {
-    public function addAdministrationRole(AdministrationRole $administrationRole): void;
+    public function setAdministrationRole(AdministrationRole $administrationRole): void;
+
+    public function getAdministrationRole(): ?AdministrationRoleInterface;
 }

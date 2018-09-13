@@ -6,6 +6,7 @@ namespace Sylius\RbacPlugin\Form\Type;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class AdministrationRoleChoiceType extends AbstractType
@@ -18,9 +19,6 @@ final class AdministrationRoleChoiceType extends AbstractType
         $this->administrationRoleRepository = $administrationRoleRepository;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -29,9 +27,13 @@ final class AdministrationRoleChoiceType extends AbstractType
             'choices' => $this->administrationRoleRepository->findAll(),
             'choice_value' => 'id',
             'choice_label' => 'name',
-//            'label' => 'sylius.form.locale.locale',
-//            'placeholder' => 'sylius.form.locale.select',
+            'label' => 'sylius_rbac.ui.administration_role',
         ]);
+    }
+
+    public function getParent(): string
+    {
+        return ChoiceType::class;
     }
 
     public function getBlockPrefix()

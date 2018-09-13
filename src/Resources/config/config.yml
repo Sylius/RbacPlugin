@@ -23,14 +23,14 @@ sylius_grid:
                 item:
                     update:
                         type: update
-          sylius_admin_admin_user:
-              fields:
-                  administrationRole:
-                      type: twig
-                      label: sylius_rbac.ui.administration_role
-                      sortable: ~
-                      options:
-                          template: '@SyliusRbacPlugin/AdministrationRole/Grid/Field/administrationRole.html.twig'
+        sylius_admin_admin_user:
+            fields:
+                administrationRole:
+                    type: twig
+                    label: sylius_rbac.ui.administration_role
+                    sortable: true
+                    options:
+                        template: '@SyliusRbacPlugin/AdministrationRole/Grid/Field/administrationRole.html.twig'
 
 sylius_user:
     resources:

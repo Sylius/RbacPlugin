@@ -80,7 +80,7 @@ final class ManagingAdministrationRolesContext implements Context
     }
 
     /**
-     * @When I add it
+     * @When I add this role
      */
     public function addIt(): void
     {

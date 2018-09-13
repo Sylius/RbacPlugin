@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Sylius\RbacPlugin\Behat\Context\UI;
 
+use Behat\Behat\Context\Context;
 use Sylius\Behat\Page\Admin\Crud\IndexPageInterface;
 use Tests\Sylius\RbacPlugin\Behat\Page\Ui\Administrator\CreatePageInterface;
 use Webmozart\Assert\Assert;
 
-final class ManagingAdministratorsContext
+final class ManagingAdministratorsContext implements Context
 {
     /** @var CreatePageInterface */
     private $createPage;
