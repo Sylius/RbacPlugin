@@ -14,6 +14,8 @@ Feature: Managing permissions of Administration roles
         Then I should be able to select "Catalog management" permission
         And I should be able to select "Sales management" permission
         And I should be able to select "Customers management" permission
+        And I should be able to select "Marketing management" permission
+        And I should be able to select "Configuration" permission
 
     @ui
     Scenario: Adding permissions to existing Administration role

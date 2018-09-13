@@ -1,8 +1,8 @@
 sylius_rbac_administration_role:
     resource: |
         alias: sylius_rbac.administration_role
-        only: ['create', 'index']
+        only: ['create', 'index', 'update']
         section: admin
-        templates: SyliusAdminBundle:Crud
+        templates: SyliusRbacPlugin:AdministrationRole
         grid: sylius_rbac_administration_role
     type: sylius.resource
