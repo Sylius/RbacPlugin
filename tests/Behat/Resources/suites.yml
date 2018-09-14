@@ -4,6 +4,16 @@ default:
             contexts_services:
                 - sylius.behat.context.hook.doctrine_orm
 
+                - sylius.behat.context.setup.admin_security
+                - Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdministrationRolesContext
+
+                - Tests\Sylius\RbacPlugin\Behat\Context\UI\ManagingAdministrationRolesContext
+            filters:
+                tags: "@managing_administration_roles && @ui"
+        ui_managing_administrators:
+            context_services:
+                - sylius.behat.context.hook.doctrine_orm
+
                 - Tests\Sylius\RbacPlugin\Behat\Context\Transform\AdministrationRoleContext
 
                 - sylius.behat.context.transform.admin
@@ -18,7 +28,7 @@ default:
                 - Tests\Sylius\RbacPlugin\Behat\Context\UI\ManagingAdministrationRolesContext
                 - Tests\Sylius\RbacPlugin\Behat\Context\UI\ManagingAdministratorsContext
             filters:
-                tags: "@managing_administration_roles && @ui"
+                tags: "@managing_administrators && @ui"
         ui_managing_permissions:
             contexts_services:
                 - sylius.behat.context.hook.doctrine_orm

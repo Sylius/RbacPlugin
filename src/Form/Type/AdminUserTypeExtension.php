@@ -11,14 +11,14 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 final class AdminUserTypeExtension extends AbstractTypeExtension
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('administrationRole', AdministrationRoleChoiceType::class, [
             'required' => false,
         ]);
     }
 
-    public function getExtendedType()
+    public function getExtendedType(): string
     {
         return AdminUserType::class;
     }

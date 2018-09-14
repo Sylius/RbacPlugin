@@ -32,7 +32,7 @@ final class ManagingAdministratorsContext implements Context
     }
 
     /**
-     * @Then there should be administrator :email with role :roleName
+     * @Then administrator :email should have role :roleName
      */
     public function itsRoleShouldBe(string $email, string $roleName): void
     {

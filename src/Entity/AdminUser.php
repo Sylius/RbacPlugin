@@ -6,17 +6,11 @@ namespace Sylius\RbacPlugin\Entity;
 
 use Sylius\Component\Core\Model\AdminUser as BaseAdminUser;
 
-final class AdminUser extends BaseAdminUser implements AdminUserInterface
+/** @final */
+class AdminUser extends BaseAdminUser implements AdminUserInterface
 {
     /** @var AdministrationRoleInterface|null */
     private $administrationRole;
-
-    public function __construct(AdministrationRoleInterface $administrationRole = null)
-    {
-        parent::__construct();
-
-        $this->administrationRole = $administrationRole;
-    }
 
     public function setAdministrationRole(AdministrationRole $administrationRole): void
     {

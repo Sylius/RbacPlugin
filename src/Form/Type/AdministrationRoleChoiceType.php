@@ -27,7 +27,7 @@ final class AdministrationRoleChoiceType extends AbstractType
             'choices' => $this->administrationRoleRepository->findAll(),
             'choice_value' => 'id',
             'choice_label' => 'name',
-            'label' => 'sylius_rbac.ui.administration_role',
+            'label' => false,
         ]);
     }
 
@@ -36,7 +36,7 @@ final class AdministrationRoleChoiceType extends AbstractType
         return ChoiceType::class;
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'sylius_rbac_administration_role_choice';
     }

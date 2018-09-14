@@ -1,7 +1,7 @@
 sylius_rbac:
     ui:
         administration_roles: 'Administration roles'
-        administration_role: 'Administration role'
+        rbac_role: 'RBAC role'
         edit_administration_role: 'Edit administration role'
         new_administration_role: 'New Administration role'
         permission:

@@ -15,9 +15,6 @@
 
         <service id="Sylius\RbacPlugin\Form\Type\AdministrationRoleChoiceType">
             <argument type="service" id="sylius_rbac.repository.administration_role" />
-            <argument type="collection">
-                <argument>sylius</argument>
-            </argument>
             <tag name="form.type" />
         </service>
 

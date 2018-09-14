@@ -1,4 +1,4 @@
-@managing_administration_roles
+@managing_administrators
 Feature: Assigning Administration role to Administrator
     In order to manage Administrators' permissions
     As an Administrator
@@ -12,18 +12,18 @@ Feature: Assigning Administration role to Administrator
     @ui
     Scenario: Assigning new Administration role to a new Administrator
         Given I want to create a new administrator
-        When I specify its email as "jon.snow@the-wall.com"
-        And I specify its name as "sample_admin"
-        And I specify its password as "super_secret"
+        When I specify its email as "rick.sanchez@wubba-lubba-dub-dub.com"
+        And I specify its name as "Rick Sanchez"
+        And I specify its password as "wubba-lubba-dub-dub"
         And I select "Root" administration role
         And I enable it
         And I add it
-        Then there should be administrator "jon.snow@the-wall.com" with role "Root"
+        Then administrator "rick.sanchez@wubba-lubba-dub-dub.com" should have role "Root"
 
     @ui
     Scenario: Assigning new Administration role to existing Administrator
-        Given there is an administrator "ted@example.com" identified by "bear"
+        Given there is an administrator "morty.smith@nobody-exists-on-purpose.com" identified by "morty"
         When I want to edit this administrator
         And I select "Root" administration role
         And I save my changes
-        Then there should be administrator "ted@example.com" with role "Root"
+        Then administrator "morty.smith@nobody-exists-on-purpose.com" should have role "Root"
