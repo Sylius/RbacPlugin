@@ -8,11 +8,11 @@ use Webmozart\Assert\Assert;
 
 final class Permission
 {
-    private const CATALOG_MANAGEMENT_PERMISSION = 'catalog_management';
-    private const CONFIGURATION_PERMISSION = 'configuration';
-    private const CUSTOMERS_MANAGEMENT_PERMISSION = 'customers_management';
-    private const MARKETING_MANAGEMENT_PERMISSION = 'marketing_management';
-    private const SALES_MANAGEMENT_PERMISSION = 'sales_management';
+    public const CATALOG_MANAGEMENT_PERMISSION = 'catalog_management';
+    public const CONFIGURATION_PERMISSION = 'configuration';
+    public const CUSTOMERS_MANAGEMENT_PERMISSION = 'customers_management';
+    public const MARKETING_MANAGEMENT_PERMISSION = 'marketing_management';
+    public const SALES_MANAGEMENT_PERMISSION = 'sales_management';
 
     /** @var string */
     private $type;

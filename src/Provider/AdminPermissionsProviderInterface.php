@@ -7,5 +7,5 @@ namespace Sylius\RbacPlugin\Provider;
 interface AdminPermissionsProviderInterface
 {
     /** @return array|string[] */
-    public function __invoke(): array;
+    public function getPossiblePermissions(): array;
 }
