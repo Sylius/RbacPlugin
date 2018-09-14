@@ -1,8 +1,9 @@
 sylius_rbac_administration_role:
     resource: |
         alias: sylius_rbac.administration_role
-        only: ['create', 'index']
+        only: ['create', 'index', 'update']
         section: admin
         templates: SyliusAdminBundle:Crud
         grid: sylius_rbac_administration_role
+        redirect: update
     type: sylius.resource

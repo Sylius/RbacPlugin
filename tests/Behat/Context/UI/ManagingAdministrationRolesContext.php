@@ -8,27 +8,34 @@ use Behat\Behat\Context\Context;
 use Sylius\Behat\NotificationType;
 use Sylius\Behat\Page\Admin\Crud\IndexPageInterface;
 use Sylius\Behat\Service\NotificationCheckerInterface;
+use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
 use Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdministrationRoleCreatePageInterface;
+use Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdministrationRoleUpdatePageInterface;
 use Webmozart\Assert\Assert;
 
 final class ManagingAdministrationRolesContext implements Context
 {
     /** @var AdministrationRoleCreatePageInterface */
-    private $administrationRoleCreatePage;
+    private $createPage;
+
+    /** @var AdministrationRoleUpdatePageInterface */
+    private $updatePage;
 
     /** @var IndexPageInterface */
-    private $administrationRoleIndexPage;
+    private $indexPage;
 
     /** @var NotificationCheckerInterface */
     private $notificationChecker;
 
     public function __construct(
-        AdministrationRoleCreatePageInterface $administrationRoleCreatePage,
-        IndexPageInterface $administrationRoleIndexPage,
+        AdministrationRoleCreatePageInterface $createPage,
+        AdministrationRoleUpdatePageInterface $updatePage,
+        IndexPageInterface $indexPage,
         NotificationCheckerInterface $notificationChecker
     ) {
-        $this->administrationRoleCreatePage = $administrationRoleCreatePage;
-        $this->administrationRoleIndexPage = $administrationRoleIndexPage;
+        $this->createPage = $createPage;
+        $this->updatePage = $updatePage;
+        $this->indexPage = $indexPage;
         $this->notificationChecker = $notificationChecker;
     }
 
@@ -37,7 +44,15 @@ final class ManagingAdministrationRolesContext implements Context
      */
     public function wantToAddNewAdministrationRole(): void
     {
-        $this->administrationRoleCreatePage->open();
+        $this->createPage->open();
+    }
+
+    /**
+     * @When I want to manage permissions of :administrationRole Administration role
+     */
+    public function wantToAddSomePermissionsToAdministrationRole(AdministrationRoleInterface $administrationRole): void
+    {
+        $this->updatePage->open(['id' => $administrationRole->getId()]);
     }
 
     /**
@@ -45,7 +60,23 @@ final class ManagingAdministrationRolesContext implements Context
      */
     public function nameIt(string $name): void
     {
-        $this->administrationRoleCreatePage->nameIt($name);
+        $this->createPage->nameIt($name);
+    }
+
+    /**
+     * @When I add :permissionName permission
+     */
+    public function addPermission(string $permissionName): void
+    {
+        $this->updatePage->addPermission($permissionName);
+    }
+
+    /**
+     * @When I remove :permissionName permission
+     */
+    public function removePermission(string $permissionName): void
+    {
+        $this->updatePage->removePermission($permissionName);
     }
 
     /**
@@ -53,7 +84,15 @@ final class ManagingAdministrationRolesContext implements Context
      */
     public function addIt(): void
     {
-        $this->administrationRoleCreatePage->create();
+        $this->createPage->create();
+    }
+
+    /**
+     * @When I save my changes
+     */
+    public function saveChanges(): void
+    {
+        $this->updatePage->saveChanges();
     }
 
     /**
@@ -61,9 +100,33 @@ final class ManagingAdministrationRolesContext implements Context
      */
     public function thereShouldBeAdministrationRoleWithNameWithinTheSystem(int $count, string $name): void
     {
-        $this->administrationRoleIndexPage->open();
-        Assert::eq($this->administrationRoleIndexPage->countItems(), $count);
-        Assert::true($this->administrationRoleIndexPage->isSingleResourceOnPage(['name' => $name]));
+        $this->indexPage->open();
+        Assert::eq($this->indexPage->countItems(), $count);
+        Assert::true($this->indexPage->isSingleResourceOnPage(['name' => $name]));
+    }
+
+    /**
+     * @Then I should be able to select :permissionName permission
+     */
+    public function shouldBeAbleToSelectPermission(string $permissionName): void
+    {
+        Assert::true($this->updatePage->hasPermissionToSelect($permissionName));
+    }
+
+    /**
+     * @Then this Administration role should have :permissionName permission
+     */
+    public function thisAdministrationRoleShouldHavePermission(string $permissionName): void
+    {
+        Assert::true($this->updatePage->hasPermissionSelected($permissionName));
+    }
+
+    /**
+     * @Then this Administration role should not have :permissionName permission
+     */
+    public function thisAdministrationRoleShouldNotHavePermission(string $permissionName): void
+    {
+        Assert::false($this->updatePage->hasPermissionSelected($permissionName));
     }
 
     /**
@@ -78,12 +141,23 @@ final class ManagingAdministrationRolesContext implements Context
     }
 
     /**
+     * @Then I should be notified that Administration role has been successfully updated
+     */
+    public function shouldBeNotifiedThatAdministrationRoleHasBeenSuccessfullyUpdated()
+    {
+        $this->notificationChecker->checkNotification(
+            'Administration role has been successfully updated',
+            NotificationType::success()
+        );
+    }
+
+    /**
      * @Then I should be notified that this name is already taken
      */
     public function shouldBeNotifiedThatThisNameIsAlreadyTaken(): void
     {
         Assert::same(
-            $this->administrationRoleCreatePage->getNameValidationMessage(),
+            $this->createPage->getNameValidationMessage(),
             'This name is already taken'
         );
     }

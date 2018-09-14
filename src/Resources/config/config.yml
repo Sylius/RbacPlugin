@@ -20,3 +20,6 @@ sylius_grid:
                 main:
                     create:
                         type: create
+                item:
+                    update:
+                        type: update
