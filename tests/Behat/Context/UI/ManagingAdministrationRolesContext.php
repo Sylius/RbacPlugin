@@ -88,6 +88,14 @@ final class ManagingAdministrationRolesContext implements Context
     }
 
     /**
+     * @When I save my changes
+     */
+    public function saveChanges(): void
+    {
+        $this->updatePage->saveChanges();
+    }
+
+    /**
      * @Then there should (still) be :count Administration role(s) with name :name within the system
      */
     public function thereShouldBeAdministrationRoleWithNameWithinTheSystem(int $count, string $name): void
@@ -111,6 +119,14 @@ final class ManagingAdministrationRolesContext implements Context
     public function thisAdministrationRoleShouldHavePermission(string $permissionName): void
     {
         Assert::true($this->updatePage->hasPermissionSelected($permissionName));
+    }
+
+    /**
+     * @Then this Administration role should not have :permissionName permission
+     */
+    public function thisAdministrationRoleShouldNotHavePermission(string $permissionName): void
+    {
+        Assert::false($this->updatePage->hasPermissionSelected($permissionName));
     }
 
     /**

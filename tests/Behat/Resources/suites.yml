@@ -12,3 +12,16 @@ default:
                 - Tests\Sylius\RbacPlugin\Behat\Context\UI\ManagingAdministrationRolesContext
             filters:
                 tags: "@managing_administration_roles && @ui"
+        ui_managing_permissions:
+            contexts_services:
+                - sylius.behat.context.hook.doctrine_orm
+
+                - sylius.behat.context.transform.shared_storage
+                - Tests\Sylius\RbacPlugin\Behat\Context\Transform\AdministrationRoleContext
+
+                - sylius.behat.context.setup.admin_security
+                - Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdministrationRolesContext
+
+                - Tests\Sylius\RbacPlugin\Behat\Context\UI\ManagingAdministrationRolesContext
+            filters:
+                tags: "@managing_permissions && @ui"

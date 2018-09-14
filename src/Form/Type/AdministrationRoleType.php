@@ -31,13 +31,13 @@ final class AdministrationRoleType extends AbstractResourceType
     {
         $choices = [];
         foreach (($this->adminPermissionsProvider)() as $permission) {
-            $choices['sylius_rbac.ui.permission.'.$permission] = $permission;
+            $choices['sylius_rbac.ui.permission.' . $permission] = $permission;
         }
 
         $builder
             ->add('name', TextType::class, ['label' => 'sylius.ui.name'])
             ->add('permissions', ChoiceType::class, [
-                'label' => false,
+                'label' => 'sylius.ui.permissions',
                 'choices' => $choices,
                 'multiple' => true,
             ])

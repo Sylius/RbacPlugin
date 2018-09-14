@@ -15,7 +15,7 @@ class AdministrationRole implements AdministrationRoleInterface
     /** @var string|null */
     private $name;
 
-    /** @var array|Permission[] */
+    /** @var array|string[] */
     private $permissions = [];
 
     public function getId(): int

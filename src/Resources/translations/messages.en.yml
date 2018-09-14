@@ -1,6 +1,7 @@
 sylius_rbac:
     ui:
         administration_roles: 'Administration roles'
+        edit_administration_role: 'Edit administration role'
         new_administration_role: 'New Administration role'
         permission:
             catalog_management: 'Catalog management'
@@ -9,4 +10,3 @@ sylius_rbac:
             marketing_management: 'Marketing management'
             sales_management: 'Sales management'
         rbac: 'RBAC'
-

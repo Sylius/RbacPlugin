@@ -10,6 +10,7 @@ use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
+use Sylius\RbacPlugin\Model\Permission;
 
 final class AdministrationRolesContext implements Context
 {
@@ -50,13 +51,16 @@ final class AdministrationRolesContext implements Context
     }
 
     /**
-     * @Given /^(this Administration role) has "([^"]+)" and "([^"]+)" permissions$/
+     * @Given /^(this administration role) has "([^"]+)" and "([^"]+)" permissions$/
      */
     public function thisAdministrationRoleHasAndPermissions(
         AdministrationRoleInterface $administrationRole,
         string $firstPermissionName,
         string $secondPermissionName
     ): void {
-        // TODO: Adding permissions (probably not strings or services codes or sth) to Administration Role
+        $administrationRole->addPermission(new Permission(strtolower(str_replace(' ', '_', $firstPermissionName))));
+        $administrationRole->addPermission(new Permission(strtolower(str_replace(' ', '_', $secondPermissionName))));
+
+        $this->administrationRoleManager->flush();
     }
 }

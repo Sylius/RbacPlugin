@@ -28,9 +28,10 @@ Feature: Managing permissions of Administration roles
     @ui
     Scenario: Removing permissions from Administration role
         Given there is already an Administration role "Customer manager" in the system
-        And this Administration role has "Catalog management" and "Customers management" permissions
+        And this administration role has "Catalog management" and "Customers management" permissions
         When I want to manage permissions of "Customer manager" Administration role
         And I remove "Catalog management" permission
         And I save my changes
         Then I should be notified that Administration role has been successfully updated
         And this Administration role should have "Customers management" permission
+        And this Administration role should not have "Catalog management" permission
