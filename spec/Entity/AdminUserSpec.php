@@ -7,7 +7,6 @@ namespace spec\Sylius\RbacPlugin\Entity;
 use PhpSpec\ObjectBehavior;
 use Sylius\RbacPlugin\Entity\AdministrationRole;
 use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
-use Sylius\RbacPlugin\Entity\AdminUser;
 use Sylius\RbacPlugin\Entity\AdminUserInterface;
 
 final class AdminUserSpec extends ObjectBehavior
@@ -25,6 +24,6 @@ final class AdminUserSpec extends ObjectBehavior
 
     function it_accepts_nullable_administration_role(): void
     {
-        $this->getAdministrationRole()->shouldBeEqualTo(null);
+        $this->getAdministrationRole()->shouldReturn(null);
     }
 }

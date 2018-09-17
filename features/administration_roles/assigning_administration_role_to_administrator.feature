@@ -7,7 +7,6 @@ Feature: Assigning Administration role to Administrator
     Background:
         Given there is already an Administration role "Root" in the system
         And I am logged in as an administrator
-        And I browse administrators
 
     @ui
     Scenario: Assigning new Administration role to a new Administrator
@@ -16,7 +15,6 @@ Feature: Assigning Administration role to Administrator
         And I specify its name as "Rick Sanchez"
         And I specify its password as "wubba-lubba-dub-dub"
         And I select "Root" administration role
-        And I enable it
         And I add it
         Then administrator "rick.sanchez@wubba-lubba-dub-dub.com" should have role "Root"
 

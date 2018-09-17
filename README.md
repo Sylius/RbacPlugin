@@ -43,3 +43,6 @@
     bin/console doctrine:migrations:diff
     bin/console doctrine:migrations:migrate
     ```
+
+7. Copy templates from `vendor/sylius/rbac-plugin/src/Resources/views/SyliusAdminBundle/`
+to `app/Resources/SyliusAdminBundle/views/`

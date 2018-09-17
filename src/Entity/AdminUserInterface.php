@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Sylius\RbacPlugin\Entity;
 
-use \Sylius\Component\Core\Model\AdminUserInterface as BaseAdminUserInterface;
+use Sylius\Component\Core\Model\AdminUserInterface as BaseAdminUserInterface;
 
 interface AdminUserInterface extends BaseAdminUserInterface
 {

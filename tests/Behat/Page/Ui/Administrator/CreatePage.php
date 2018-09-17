@@ -10,6 +10,6 @@ final class CreatePage extends BaseCreatePage implements CreatePageInterface
 {
     public function selectAdministrationRole(string $administrationRoleName): void
     {
-        $this->getDocument()->selectFieldOption('RBAC role', $administrationRoleName);
+        $this->getDocument()->selectFieldOption('sylius_admin_user_administrationRole', $administrationRoleName);
     }
 }

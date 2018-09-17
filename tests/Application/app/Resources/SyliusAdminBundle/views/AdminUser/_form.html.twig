@@ -12,10 +12,6 @@
             {{ form_row(form.plainPassword) }}
             {{ form_row(form.enabled) }}
         </div>
-        <div class="ui segment">
-            <h4 class="ui dividing header">{{ 'sylius_rbac.ui.rbac_role'|trans }}</h4>
-            {{ form_row(form.administrationRole) }}
-        </div>
     </div>
     <div class="column">
         <div class="ui segment">
@@ -28,6 +24,10 @@
         <div class="ui segment">
             <h4 class="ui dividing header">{{ 'sylius.ui.preferences'|trans }}</h4>
             {{ form_row(form.localeCode) }}
+        </div>
+        <div class="ui segment">
+            <h4 class="ui dividing header">{{ 'sylius_rbac.ui.rbac_role'|trans }}</h4>
+            {{ form_row(form.administrationRole) }}
         </div>
     </div>
 </div>
