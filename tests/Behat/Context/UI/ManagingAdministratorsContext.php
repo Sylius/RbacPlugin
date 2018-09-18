@@ -36,6 +36,6 @@ final class ManagingAdministratorsContext implements Context
      */
     public function itsRoleShouldBe(string $email, string $roleName): void
     {
-        Assert::true($this->indexPage->isSingleResourceOnPage(['email' => $email, 'administrationRole' => $roleName]));
+        Assert::true($this->indexPage->isSingleResourceOnPage(['email' => $email, 'administration_role' => $roleName]));
     }
 }
