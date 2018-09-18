@@ -27,7 +27,7 @@ final class AdministrationRoleType extends AbstractResourceType
         $this->adminPermissionsProvider = $adminPermissionsProvider;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $choices = [];
         foreach ($this->adminPermissionsProvider->getPossiblePermissions() as $permission) {
@@ -65,7 +65,7 @@ final class AdministrationRoleType extends AbstractResourceType
         ));
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'sylius_rbac_administration_role';
     }

@@ -5,6 +5,13 @@ sylius_resource:
                 model: Sylius\RbacPlugin\Entity\AdministrationRole
                 form: Sylius\RbacPlugin\Form\Type\AdministrationRoleType
 
+sylius_user:
+    resources:
+        admin:
+            user:
+                classes:
+                    model: Sylius\RbacPlugin\Entity\AdminUser
+
 sylius_grid:
     grids:
         sylius_rbac_administration_role:
@@ -23,3 +30,11 @@ sylius_grid:
                 item:
                     update:
                         type: update
+        sylius_admin_admin_user:
+            fields:
+                administrationRole:
+                    type: twig
+                    label: sylius_rbac.ui.administration_role
+                    sortable: true
+                    options:
+                        template: '@SyliusRbacPlugin/AdministrationRole/Grid/Field/administrationRole.html.twig'

@@ -9,10 +9,19 @@
             <tag name="form.type" />
         </service>
 
+        <service id="Sylius\RbacPlugin\Provider\AdminPermissionsProvider" />
+
         <service id="Sylius\RbacPlugin\Menu\AdminMenuListener">
             <tag name="kernel.event_listener" event="sylius.menu.admin.main" method="addRbacMenu" />
         </service>
 
-        <service id="Sylius\RbacPlugin\Provider\AdminPermissionsProvider" />
+        <service id="Sylius\RbacPlugin\Form\Type\AdministrationRoleChoiceType">
+            <argument type="service" id="sylius_rbac.repository.administration_role" />
+            <tag name="form.type" />
+        </service>
+
+        <service id="Sylius\RbacPlugin\Form\Type\AdminUserTypeExtension">
+            <tag name="form.type_extension" extended-type="Sylius\Bundle\CoreBundle\Form\Type\User\AdminUserType" />
+        </service>
     </services>
 </container>

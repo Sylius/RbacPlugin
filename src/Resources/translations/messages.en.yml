@@ -10,3 +10,4 @@ sylius_rbac:
             marketing_management: 'Marketing management'
             sales_management: 'Sales management'
         rbac: 'RBAC'
+        rbac_role: 'RBAC role'
