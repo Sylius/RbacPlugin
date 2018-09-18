@@ -21,6 +21,7 @@ final class AdministrationRoleContext implements Context
 
     /**
      * @Transform :administrationRole
+     * @Transform /^administration role "([^"]+)"$/
      */
     public function getAdministrationRoleByName(string $name): AdministrationRoleInterface
     {

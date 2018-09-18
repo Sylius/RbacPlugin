@@ -27,6 +27,7 @@ default:
             - sylius.behat.context.setup.admin_security
             - sylius.behat.context.setup.admin_user
 
+            - Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdminUserContext
             - Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdministrationRolesContext
 
             - sylius.behat.context.ui.admin.dashboard
