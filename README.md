@@ -44,5 +44,7 @@
     bin/console doctrine:migrations:migrate
     ```
 
+6. Copy migrations from `vendor/sylius/rbac-plugin/migrations/` to your migrations directory and run `bin/console doctrine:migrations:migrate`.
+
 7. Copy templates from `vendor/sylius/rbac-plugin/src/Resources/views/SyliusAdminBundle/`
 to `app/Resources/SyliusAdminBundle/views/`
