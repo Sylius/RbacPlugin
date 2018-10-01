@@ -12,7 +12,7 @@ class AdminUser extends BaseAdminUser implements AdminUserInterface
     /** @var AdministrationRoleInterface|null */
     private $administrationRole;
 
-    public function setAdministrationRole(AdministrationRole $administrationRole): void
+    public function setAdministrationRole(?AdministrationRoleInterface $administrationRole): void
     {
         $this->administrationRole = $administrationRole;
     }

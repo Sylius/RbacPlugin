@@ -10,6 +10,11 @@
             <tag name="fob.context_service" />
         </service>
 
+        <service id="Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdminUserContext">
+            <argument type="service" id="__symfony__.sylius.manager.admin_user" />
+            <tag name="fob.context_service" />
+        </service>
+
         <service id="Tests\Sylius\RbacPlugin\Behat\Context\Transform\AdministrationRoleContext">
             <argument type="service" id="__symfony__.sylius_rbac.repository.administration_role" />
             <tag name="fob.context_service" />
@@ -24,8 +29,10 @@
         </service>
 
         <service id="Tests\Sylius\RbacPlugin\Behat\Context\UI\ManagingAdministratorsContext">
-            <argument type="service" id="Tests\Sylius\RbacPlugin\Behat\Page\Ui\Administrator\CreatePage" />
-            <argument type="service" id="sylius.behat.page.admin.administrator.index" />
+            <argument type="service" id="Tests\Sylius\RbacPlugin\Behat\Element\AdministrationRolesElement" />
+            <argument type="service" id="Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdminUserIndexPage" />
+            <argument type="service" id="sylius.behat.page.admin.administrator.update" />
+            <argument type="service" id="__symfony__.sylius.repository.admin_user" />
             <tag name="fob.context_service" />
         </service>
 
@@ -35,12 +42,21 @@
         <service id="Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdministrationRoleUpdatePage" parent="sylius.behat.page.admin.crud.update" public="false">
             <argument>sylius_rbac_admin_administration_role_update</argument>
         </service>
-
-        <service id="Tests\Sylius\RbacPlugin\Behat\Page\Ui\Administrator\CreatePage" parent="sylius.behat.page.admin.administrator.create" public="false"/>
-
         <service id="sylius_rbac.behat.page.administration_role.index" class="Sylius\Behat\Page\Admin\Crud\IndexPage" parent="sylius.behat.symfony_page" public="false">
             <argument type="service" id="sylius.behat.table_accessor" />
             <argument>sylius_rbac_admin_administration_role_index</argument>
         </service>
+
+        <service id="Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdminUserIndexPage" parent="sylius.behat.page.admin.administrator.index" public="false" />
+
+        <service id="FriendsOfBehat\PageObjectExtension\Element\Element" abstract="true" public="false">
+            <argument type="service" id="mink.default_session" />
+            <argument>%__behat__.mink.parameters%</argument>
+        </service>
+        <service
+            id="Tests\Sylius\RbacPlugin\Behat\Element\AdministrationRolesElement"
+            parent="FriendsOfBehat\PageObjectExtension\Element\Element"
+            public="false"
+        />
     </services>
 </container>

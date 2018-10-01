@@ -5,22 +5,47 @@ declare(strict_types=1);
 namespace Tests\Sylius\RbacPlugin\Behat\Context\UI;
 
 use Behat\Behat\Context\Context;
-use Sylius\Behat\Page\Admin\Crud\IndexPageInterface;
-use Tests\Sylius\RbacPlugin\Behat\Page\Ui\Administrator\CreatePageInterface;
+use Sylius\Behat\Page\Admin\Administrator\UpdatePageInterface;
+use Sylius\Component\User\Repository\UserRepositoryInterface;
+use Tests\Sylius\RbacPlugin\Behat\Element\AdministrationRolesElementInterface;
+use Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdminUserIndexPageInterface;
 use Webmozart\Assert\Assert;
 
 final class ManagingAdministratorsContext implements Context
 {
-    /** @var CreatePageInterface */
-    private $createPage;
+    /** @var AdministrationRolesElementInterface */
+    private $administrationRolesElement;
 
-    /** @var IndexPageInterface */
+    /** @var AdminUserIndexPageInterface */
     private $indexPage;
 
-    public function __construct(CreatePageInterface $createPage, IndexPageInterface $indexPage)
-    {
-        $this->createPage = $createPage;
+    /** @var UpdatePageInterface */
+    private $updatePage;
+
+    /** @var UserRepositoryInterface */
+    private $adminUserRepository;
+
+    public function __construct(
+        AdministrationRolesElementInterface $administrationRolesElement,
+        AdminUserIndexPageInterface $indexPage,
+        UpdatePageInterface $updatePage,
+        UserRepositoryInterface $adminUserRepository
+    ) {
+        $this->administrationRolesElement = $administrationRolesElement;
         $this->indexPage = $indexPage;
+        $this->updatePage = $updatePage;
+        $this->adminUserRepository = $adminUserRepository;
+    }
+
+    /**
+     * @When I want to edit administrator :email
+     */
+    public function wantToEditAdministrator(string $email): void
+    {
+        $administrator = $this->adminUserRepository->findOneByEmail($email);
+        Assert::notNull($administrator);
+
+        $this->updatePage->open(['id' => $administrator->getId()]);
     }
 
     /**
@@ -28,14 +53,30 @@ final class ManagingAdministratorsContext implements Context
      */
     public function selectAdministrationRole(string $administrationRoleName): void
     {
-        $this->createPage->selectAdministrationRole($administrationRoleName);
+        $this->administrationRolesElement->selectAdministrationRole($administrationRoleName);
+    }
+
+    /**
+     * @Given I remove their role
+     */
+    public function removeAdministratorRole(): void
+    {
+        $this->administrationRolesElement->removeAdministrationRole();
     }
 
     /**
      * @Then administrator :email should have role :roleName
      */
-    public function itsRoleShouldBe(string $email, string $roleName): void
+    public function administratorShouldHaveRoleAssigned(string $email, string $roleName): void
     {
         Assert::true($this->indexPage->isSingleResourceOnPage(['email' => $email, 'administration_role' => $roleName]));
+    }
+
+    /**
+     * @Then administrator :email should have no role assigned
+     */
+    public function administratorShouldHaveNoRoleAssigned(string $email): void
+    {
+        Assert::same('', $this->indexPage->getAdministrationRoleOfAdminWithEmail($email));
     }
 }
