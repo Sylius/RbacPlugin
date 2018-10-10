@@ -1,5 +1,30 @@
 default:
     suites:
+        application_access_restrictions:
+            contexts_services:
+                - sylius.behat.context.hook.doctrine_orm
+
+                - Tests\Sylius\RbacPlugin\Behat\Context\Transform\AdministrationRoleContext
+
+                - sylius.behat.context.setup.admin_security
+                - Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdministrationRolesContext
+
+                - Tests\Sylius\RbacPlugin\Behat\Context\UI\AccessRestrictionsContext
+            filters:
+                tags: "@access_restrictions && @application"
+        ui_access_restrictions:
+            contexts_services:
+                - sylius.behat.context.hook.doctrine_orm
+
+                - Tests\Sylius\RbacPlugin\Behat\Context\Transform\AdministrationRoleContext
+
+                - sylius.behat.context.setup.admin_security
+                - Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdministrationRolesContext
+
+                - Tests\Sylius\RbacPlugin\Behat\Context\UI\AdminMainMenuContext
+                - Tests\Sylius\RbacPlugin\Behat\Context\UI\AccessRestrictionsContext
+            filters:
+                tags: "@access_restrictions && @ui"
         ui_managing_administration_roles:
             contexts_services:
                 - sylius.behat.context.hook.doctrine_orm

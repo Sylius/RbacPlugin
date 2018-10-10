@@ -19,8 +19,8 @@ Feature: Having an access only to configuration management
     @ui @application
     Scenario: Having access only to configuration management section
         When I view the administrator panel
-        Then I should have access to configuration management
+        Then I should have access to configuration
         And I should have no access to catalog management
-        And I should have no access to configuration
+        And I should have no access to customers management
         And I should have no access to marketing management
         And I should have no access to sales management

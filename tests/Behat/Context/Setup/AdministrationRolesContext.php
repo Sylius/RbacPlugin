@@ -51,15 +51,16 @@ final class AdministrationRolesContext implements Context
     }
 
     /**
+     * @Given /^(this administration role) has "([^"]+)" permission$/
      * @Given /^(this administration role) has "([^"]+)" and "([^"]+)" permissions$/
      */
     public function thisAdministrationRoleHasAndPermissions(
         AdministrationRoleInterface $administrationRole,
-        string $firstPermissionName,
-        string $secondPermissionName
+        string ...$permissions
     ): void {
-        $administrationRole->addPermission(new Permission(strtolower(str_replace(' ', '_', $firstPermissionName))));
-        $administrationRole->addPermission(new Permission(strtolower(str_replace(' ', '_', $secondPermissionName))));
+        foreach ($permissions as $permission) {
+            $administrationRole->addPermission(new Permission(strtolower(str_replace(' ', '_', $permission))));
+        }
 
         $this->administrationRoleManager->flush();
     }
