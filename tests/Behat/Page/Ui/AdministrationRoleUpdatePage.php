@@ -9,7 +9,7 @@ use Sylius\Behat\Page\Admin\Crud\UpdatePage;
 
 final class AdministrationRoleUpdatePage extends UpdatePage implements AdministrationRoleUpdatePageInterface
 {
-    public function addPermission(string $permissionName): void
+    public function addPermission(string $permissionName, array $accesses): void
     {
         $this->getDocument()->selectFieldOption('Permissions', $permissionName, true);
     }
@@ -29,6 +29,11 @@ final class AdministrationRoleUpdatePage extends UpdatePage implements Administr
         $this->getDocument()->find('css', 'select')->setValue($values);
     }
 
+    public function removePermissionWithAccess($permissionName, $access): void
+    {
+        // TODO: Implement removePermissionWithAccess() method.
+    }
+
     public function hasPermissionToSelect(string $permissionName): bool
     {
         return
@@ -36,7 +41,7 @@ final class AdministrationRoleUpdatePage extends UpdatePage implements Administr
         ;
     }
 
-    public function hasPermissionSelected(string $permissionName): bool
+    public function hasPermissionSelected(string $permissionName, string $access): bool
     {
         $selectedPermissions = [];
         foreach ($this->getDocument()->find('css', 'select')->getValue() as $value) {

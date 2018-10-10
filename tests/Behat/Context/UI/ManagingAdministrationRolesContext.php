@@ -64,11 +64,12 @@ final class ManagingAdministrationRolesContext implements Context
     }
 
     /**
-     * @When I add :permissionName permission
+     * @When /^I add "([^"]*)" permission with "([^"]*)" access$/
+     * @When /^I add "([^"]*)" permission with "([^"]*)" and "([^"]*)" access$/
      */
-    public function addPermission(string $permissionName): void
+    public function addPermission(string $permissionName, string ... $accesses): void
     {
-        $this->updatePage->addPermission($permissionName);
+        $this->updatePage->addPermission($permissionName, $accesses);
     }
 
     /**
@@ -77,6 +78,14 @@ final class ManagingAdministrationRolesContext implements Context
     public function removePermission(string $permissionName): void
     {
         $this->updatePage->removePermission($permissionName);
+    }
+
+    /**
+     * @When I remove :access access from :permissionName permission
+     */
+    public function removeAccessFromPermission(string $access, string $permissionName): void
+    {
+        $this->updatePage->removePermissionWithAccess($permissionName, $access);
     }
 
     /**
@@ -133,8 +142,20 @@ final class ManagingAdministrationRolesContext implements Context
 
     /**
      * @Then this Administration role should have :permissionName permission
+     * @Then this Administration role should have :permissionName permission with :access access
+     * @Then this Administration role should have :permissionName permission with :firstAccess and :secondAccess access
      */
-    public function thisAdministrationRoleShouldHavePermission(string $permissionName): void
+    public function thisAdministrationRoleShouldHavePermission(string $permissionName, string ... $accesses): void
+    {
+        foreach ($accesses as $access) {
+            Assert::true($this->updatePage->hasPermissionWithAccessSelected($permissionName, $access));
+        }
+    }
+
+    /**
+     * @Then this Administration role should have :permissionName permission with
+     */
+    public function thisAdministrationRoleShouldHavePermissionWithAccess(string $permissionName): void
     {
         Assert::true($this->updatePage->hasPermissionSelected($permissionName));
     }
@@ -145,6 +166,14 @@ final class ManagingAdministrationRolesContext implements Context
     public function thisAdministrationRoleShouldNotHavePermission(string $permissionName): void
     {
         Assert::false($this->updatePage->hasPermissionSelected($permissionName));
+    }
+
+    /**
+     * @Then this Administration role should not have :access access in :permissionName permission
+     */
+    public function thisAdministrationRoleShouldNotHaveAccessInPermission(string $access, string $permissionName): void
+    {
+        Assert::false($this->updatePage->hasPermissionWithAccessSelected($permissionName, $access));
     }
 
     /**

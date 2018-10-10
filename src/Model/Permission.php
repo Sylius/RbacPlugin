@@ -17,6 +17,9 @@ final class Permission
     /** @var string */
     private $type;
 
+    /** @var array */
+    private $accesses;
+
     public static function catalogManagement(): self
     {
         return new self(self::CATALOG_MANAGEMENT_PERMISSION);
@@ -47,20 +50,32 @@ final class Permission
         return new self($serialized);
     }
 
-    public function __construct(string $type)
+    public function __construct(string $type, array $accesses)
     {
         Assert::oneOf(
-            $type,
-            [
+            $type, [
                 self::CATALOG_MANAGEMENT_PERMISSION,
                 self::CONFIGURATION_PERMISSION,
                 self::CUSTOMERS_MANAGEMENT_PERMISSION,
                 self::MARKETING_MANAGEMENT_PERMISSION,
-                self::SALES_MANAGEMENT_PERMISSION,
+                self::SALES_MANAGEMENT_PERMISSION
+            ]
+        );
+
+        Assert::allOneOf(
+            $accesses, [
+                PermissionAccess::READ,
+                PermissionAccess::WRITE
             ]
         );
 
         $this->type = $type;
+        $this->accesses = $accesses;
+    }
+
+    public function accesses(): array
+    {
+        return $this->accesses;
     }
 
     public function type(): string
