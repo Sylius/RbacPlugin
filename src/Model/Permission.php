@@ -20,34 +20,36 @@ final class Permission
     /** @var array */
     private $accesses;
 
-    public static function catalogManagement(): self
+    public static function catalogManagement(array $accesses): self
     {
-        return new self(self::CATALOG_MANAGEMENT_PERMISSION);
+        return new self(self::CATALOG_MANAGEMENT_PERMISSION, $accesses);
     }
 
-    public static function configuration(): self
+    public static function configuration(array $accesses): self
     {
-        return new self(self::CONFIGURATION_PERMISSION);
+        return new self(self::CONFIGURATION_PERMISSION, $accesses);
     }
 
-    public static function customerManagement(): self
+    public static function customerManagement(array $accesses): self
     {
-        return new self(self::CUSTOMERS_MANAGEMENT_PERMISSION);
+        return new self(self::CUSTOMERS_MANAGEMENT_PERMISSION, $accesses);
     }
 
-    public static function marketingManagement(): self
+    public static function marketingManagement(array $accesses): self
     {
-        return new self(self::MARKETING_MANAGEMENT_PERMISSION);
+        return new self(self::MARKETING_MANAGEMENT_PERMISSION, $accesses);
     }
 
-    public static function salesManagement(): self
+    public static function salesManagement(array $accesses): self
     {
-        return new self(self::SALES_MANAGEMENT_PERMISSION);
+        return new self(self::SALES_MANAGEMENT_PERMISSION, $accesses);
     }
 
     public static function unserialize(string $serialized): self
     {
-        return new self($serialized);
+        $data = json_decode($serialized);
+
+        return new self($data['type'], $data['accesses']);
     }
 
     public function __construct(string $type, array $accesses)
@@ -83,9 +85,12 @@ final class Permission
         return $this->type;
     }
 
-    public function serialize(): string
+    public function serialize(): array
     {
-        return $this->type();
+        return json_encode([
+            'type' => $this->type(),
+            'accesses' => $this->accesses,
+        ]);
     }
 
     public function equals(self $permission): bool

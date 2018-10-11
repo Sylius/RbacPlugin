@@ -29,17 +29,26 @@ final class AdministrationRoleType extends AbstractResourceType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $choices = [];
+        $permissionAccesses = $this->adminPermissionsProvider->getPossiblePermissionAccess();
+
+        $permissionChoices = [[]];
         foreach ($this->adminPermissionsProvider->getPossiblePermissions() as $permission) {
-            $choices['sylius_rbac.ui.permission.' . $permission] = $permission;
+
+            $accesses = [];
+            foreach ($permissionAccesses as $permissionAccess) {
+                $accesses['sylius_rbac.ui.permission.access.' . $permissionAccess] = $permissionAccess;
+            }
+
+            $permissionChoices['sylius_rbac.ui.permission.' . $permission] = $accesses;
         }
 
         $builder
             ->add('name', TextType::class, ['label' => 'sylius.ui.name'])
             ->add('permissions', ChoiceType::class, [
                 'label' => 'sylius.ui.permissions',
-                'choices' => $choices,
+                'choices' => $permissionChoices,
                 'multiple' => true,
+//                'expanded' => true,
             ])
         ;
 
@@ -58,8 +67,8 @@ final class AdministrationRoleType extends AbstractResourceType
                     return [];
                 }
 
-                return array_map(function (string $permission): Permission {
-                    return new Permission($permission);
+                return array_map(function ($type): Permission {
+                    return new Permission('', []);
                 }, $permissions);
             }
         ));

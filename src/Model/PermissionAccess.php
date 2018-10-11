@@ -8,4 +8,6 @@ final class PermissionAccess
 {
     public const READ = "read";
     public const WRITE = "write";
+
+    private function __construct() {}
 }

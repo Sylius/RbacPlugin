@@ -8,6 +8,13 @@
 
 <p align="center">This plugin provides basic roles and permissions management functionality for Sylius application.</p>
 
+#### Beware!
+
+Adding Write access to a permission automatically means adding Read access. Similarly, removing Read access from the permission
+means removing Write access.
+
+Write permission access means also updating and deleting. 
+
 ## Installation
 
 1. Require plugin with composer:

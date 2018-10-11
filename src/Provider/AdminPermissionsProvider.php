@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Sylius\RbacPlugin\Provider;
 
 use Sylius\RbacPlugin\Model\Permission;
+use Sylius\RbacPlugin\Model\PermissionAccess;
 
 final class AdminPermissionsProvider implements AdminPermissionsProviderInterface
 {
@@ -17,6 +18,15 @@ final class AdminPermissionsProvider implements AdminPermissionsProviderInterfac
             Permission::CUSTOMERS_MANAGEMENT_PERMISSION,
             Permission::MARKETING_MANAGEMENT_PERMISSION,
             Permission::SALES_MANAGEMENT_PERMISSION,
+        ];
+    }
+
+    /** @return array|string[] */
+    public function getPossiblePermissionAccess(): array
+    {
+        return [
+            PermissionAccess::READ,
+            PermissionAccess::WRITE,
         ];
     }
 }
