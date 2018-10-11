@@ -51,4 +51,12 @@ final class SectionSpec extends ObjectBehavior
             ->during('__construct', ['other_section'])
         ;
     }
+
+    function it_can_be_compared_with_other_section(): void
+    {
+        $this->beConstructedThrough('sales');
+
+        $this->equals(Section::sales())->shouldReturn(true);
+        $this->equals(Section::catalog())->shouldReturn(false);
+    }
 }

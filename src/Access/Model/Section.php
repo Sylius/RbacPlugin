@@ -56,4 +56,9 @@ final class Section
     {
         return $this->type;
     }
+
+    public function equals(Section $section): bool
+    {
+        return $section->__toString() === $this->__toString();
+    }
 }

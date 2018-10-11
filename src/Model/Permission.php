@@ -72,4 +72,9 @@ final class Permission
     {
         return $this->type();
     }
+
+    public function equals(Permission $permission): bool
+    {
+        return $permission->type() === $this->type();
+    }
 }

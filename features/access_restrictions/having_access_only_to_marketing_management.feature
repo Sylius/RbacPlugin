@@ -16,7 +16,7 @@ Feature: Having an access only to marketing management
         When I open administration dashboard
         Then only "Marketing" section should be available in the main menu
 
-    @ui @application
+    @ui
     Scenario: Having access only to marketing management section
         When I view the administrator panel
         Then I should have access to marketing management

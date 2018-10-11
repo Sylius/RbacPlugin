@@ -16,7 +16,7 @@ Feature: Having an access only to products catalog management
         When I open administration dashboard
         Then only "Catalog" section should be available in the main menu
 
-    @ui @application
+    @ui
     Scenario: Having access only to catalog management section
         When I view the administrator panel
         Then I should have access to catalog management

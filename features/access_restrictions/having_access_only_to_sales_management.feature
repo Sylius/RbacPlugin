@@ -16,7 +16,7 @@ Feature: Having an access only to sales management
         When I open administration dashboard
         Then only "Sales" section should be available in the main menu
 
-    @ui @application
+    @ui
     Scenario: Having access only to sales management section
         When I view the administrator panel
         Then I should have access to sales management
