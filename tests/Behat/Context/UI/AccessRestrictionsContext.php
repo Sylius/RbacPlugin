@@ -6,15 +6,43 @@ namespace Tests\Sylius\RbacPlugin\Behat\Context\UI;
 
 use Behat\Behat\Context\Context;
 use Sylius\Behat\Page\Admin\DashboardPageInterface;
+use Tests\Sylius\RbacPlugin\Behat\Service\PagesAvailabilityChecker;
+use Webmozart\Assert\Assert;
 
 final class AccessRestrictionsContext implements Context
 {
     /** @var DashboardPageInterface */
     private $dashboardPage;
 
-    public function __construct(DashboardPageInterface $dashboardPage)
-    {
+    /** @var PagesAvailabilityChecker */
+    private $catalogPagesAvailabilityChecker;
+
+    /** @var PagesAvailabilityChecker */
+    private $configurationPagesAvailabilityChecker;
+
+    /** @var PagesAvailabilityChecker */
+    private $customersPagesAvailabilityChecker;
+
+    /** @var PagesAvailabilityChecker */
+    private $marketingPagesAvailabilityChecker;
+
+    /** @var PagesAvailabilityChecker */
+    private $salesPagesAvailabilityChecker;
+
+    public function __construct(
+        DashboardPageInterface $dashboardPage,
+        PagesAvailabilityChecker $catalogPagesAvailabilityChecker,
+        PagesAvailabilityChecker $configurationPagesAvailabilityChecker,
+        PagesAvailabilityChecker $customersPagesAvailabilityChecker,
+        PagesAvailabilityChecker $marketingPagesAvailabilityChecker,
+        PagesAvailabilityChecker $salesPagesAvailabilityChecker
+    ) {
         $this->dashboardPage = $dashboardPage;
+        $this->catalogPagesAvailabilityChecker = $catalogPagesAvailabilityChecker;
+        $this->configurationPagesAvailabilityChecker = $configurationPagesAvailabilityChecker;
+        $this->customersPagesAvailabilityChecker = $customersPagesAvailabilityChecker;
+        $this->marketingPagesAvailabilityChecker = $marketingPagesAvailabilityChecker;
+        $this->salesPagesAvailabilityChecker = $salesPagesAvailabilityChecker;
     }
 
     /**
@@ -22,7 +50,7 @@ final class AccessRestrictionsContext implements Context
      */
     public function viewTheAdministratorPanel(): void
     {
-        $this->dashboardPage->open();
+        $this->dashboardPage->tryToOpen();
     }
 
     /**
@@ -30,7 +58,7 @@ final class AccessRestrictionsContext implements Context
      */
     public function shouldHaveAccessToConfiguration(): void
     {
-        throw new PendingException();
+        Assert::true($this->configurationPagesAvailabilityChecker->areAllPagesAvailable());
     }
 
     /**
@@ -38,7 +66,7 @@ final class AccessRestrictionsContext implements Context
      */
     public function shouldHaveNoAccessToConfiguration(): void
     {
-        throw new PendingException();
+        Assert::true($this->configurationPagesAvailabilityChecker->areAllPagesUnavailable());
     }
 
     /**
@@ -46,7 +74,7 @@ final class AccessRestrictionsContext implements Context
      */
     public function shouldHaveAccessToCatalogManagement(): void
     {
-        throw new PendingException();
+        Assert::true($this->catalogPagesAvailabilityChecker->areAllPagesAvailable());
     }
 
     /**
@@ -54,7 +82,7 @@ final class AccessRestrictionsContext implements Context
      */
     public function shouldHaveNoAccessToCatalogManagement(): void
     {
-        throw new PendingException();
+        Assert::true($this->catalogPagesAvailabilityChecker->areAllPagesUnavailable());
     }
 
     /**
@@ -62,7 +90,7 @@ final class AccessRestrictionsContext implements Context
      */
     public function shouldHaveAccessToCustomerManagement(): void
     {
-        throw new PendingException();
+        Assert::true($this->customersPagesAvailabilityChecker->areAllPagesAvailable());
     }
 
     /**
@@ -70,7 +98,7 @@ final class AccessRestrictionsContext implements Context
      */
     public function shouldHaveNoAccessToCustomerManagement(): void
     {
-        throw new PendingException();
+        Assert::true($this->customersPagesAvailabilityChecker->areAllPagesUnavailable());
     }
 
     /**
@@ -78,7 +106,7 @@ final class AccessRestrictionsContext implements Context
      */
     public function shouldHaveAccessToMarketingManagement(): void
     {
-        throw new PendingException();
+        Assert::true($this->marketingPagesAvailabilityChecker->areAllPagesAvailable());
     }
 
     /**
@@ -86,7 +114,7 @@ final class AccessRestrictionsContext implements Context
      */
     public function shouldHaveNoAccessToMarketingManagement(): void
     {
-        throw new PendingException();
+        Assert::true($this->marketingPagesAvailabilityChecker->areAllPagesUnavailable());
     }
 
     /**
@@ -94,7 +122,7 @@ final class AccessRestrictionsContext implements Context
      */
     public function shouldHaveAccessToSalesManagement(): void
     {
-        throw new PendingException();
+        Assert::true($this->salesPagesAvailabilityChecker->areAllPagesAvailable());
     }
 
     /**
@@ -102,6 +130,6 @@ final class AccessRestrictionsContext implements Context
      */
     public function shouldHaveNoAccessToSalesManagement(): void
     {
-        throw new PendingException();
+        Assert::true($this->salesPagesAvailabilityChecker->areAllPagesUnavailable());
     }
 }

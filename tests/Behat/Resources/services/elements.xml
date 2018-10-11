@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="FriendsOfBehat\PageObjectExtension\Element\Element" abstract="true" public="false">
+            <argument type="service" id="mink.default_session" />
+            <argument>%__behat__.mink.parameters%</argument>
+        </service>
+
+        <service
+            id="Tests\Sylius\RbacPlugin\Behat\Element\AdministrationRolesElement"
+            parent="FriendsOfBehat\PageObjectExtension\Element\Element"
+            public="false"
+        />
+
+        <service
+            id="Tests\Sylius\RbacPlugin\Behat\Element\AdminMainMenuElement"
+            parent="FriendsOfBehat\PageObjectExtension\Element\Element"
+            public="false"
+        />
+    </services>
+</container>

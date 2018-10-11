@@ -4,10 +4,14 @@ default:
             contexts_services:
                 - sylius.behat.context.hook.doctrine_orm
 
+                - sylius.behat.context.transform.shared_storage
+
                 - Tests\Sylius\RbacPlugin\Behat\Context\Transform\AdministrationRoleContext
 
                 - sylius.behat.context.setup.admin_security
+                - sylius.behat.context.setup.admin_user
                 - Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdministrationRolesContext
+                - Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdminUserContext
 
                 - Tests\Sylius\RbacPlugin\Behat\Context\UI\AdminMainMenuContext
                 - Tests\Sylius\RbacPlugin\Behat\Context\UI\AccessRestrictionsContext
