@@ -20,5 +20,7 @@ final class SyliusRbacExtension extends Extension
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
         $loader->load('services.xml');
+
+        $container->setParameter('sylius_rbac.configuration', $config['section_routes_prefixes']);
     }
 }
