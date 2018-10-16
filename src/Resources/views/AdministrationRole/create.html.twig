@@ -1,0 +1,57 @@
+{% extends 'SyliusAdminBundle::layout.html.twig' %}
+
+{% block title %}{{ 'sylius_rbac.ui.new_administration_role'|trans }} {{ parent() }}{% endblock %}
+
+{% block content %}
+
+{% include '@SyliusRbacPlugin/AdministrationRole/Create/_header.html.twig' %}
+{% include '@SyliusRbacPlugin/AdministrationRole/Create/_breadcrumb.html.twig' %}
+
+    <div class="ui segment">
+        <form name="sylius_rbac_administration_role" method="post" action="/admin/administration-roles/new" class="ui loadable form" novalidate="novalidate">
+            <div id="sylius_rbac_administration_role">
+                <div class="required field">
+                    <label for="sylius_rbac_administration_role_name" class="required">Name</label>
+                    <input type="text" id="sylius_rbac_administration_role_name" name="sylius_rbac_administration_role[name]" required="required" />
+                </div>
+            <div class="required field">
+                <label for="sylius_rbac_administration_role_permissions" class="required">Permissions</label>
+                <select id="sylius_rbac_administration_role_permissions" name="sylius_rbac_administration_role[permissions][]" required="required" class=" ui dropdown" multiple="multiple">
+                    <option value="catalog_management">Catalog management</option>
+                    <option value="configuration">Configuration</option>
+                    <option value="customers_management">Customers management</option>
+                    <option value="marketing_management">Marketing management</option>
+                    <option value="sales_management">Sales management</option>
+                </select>
+            </div>
+                <input type="hidden" id="sylius_rbac_administration_role__token" name="sylius_rbac_administration_role[_token]" value="tUjWyfLBt19TQuqobXj8pAKNEz9POJgdonTvRgJ5VzE" /></div>
+
+            <div class="ui basic segment">
+                <div class="ui buttons">
+                    <button class="ui labeled icon primary button" type="submit"><i class="plus icon"></i>Create</button>
+                    <a href="/admin/administration-roles/" class="ui button">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="ui small basic modal" id="confirmation-modal">
+        <div class="ui icon header">
+            <i class="warning sign icon"></i>
+            Confirm your action
+        </div>
+        <div class="content">
+            <p>Are you sure you want to perform this action?</p>
+        </div>
+        <div class="actions">
+            <div class="ui red basic cancel inverted button">
+                <i class="remove icon"></i>
+                No
+            </div>
+            <div class="ui green ok inverted button" id="confirmation-button">
+                <i class="checkmark icon"></i>
+                Yes
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

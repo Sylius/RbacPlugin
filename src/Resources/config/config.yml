@@ -27,6 +27,9 @@ sylius_grid:
                 main:
                     create:
                         type: create
+                        options:
+                            link:
+                                route: sylius_rbac_administration_role_new
                 item:
                     update:
                         type: update
