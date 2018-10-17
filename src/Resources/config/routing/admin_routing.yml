@@ -11,7 +11,7 @@ sylius_rbac_administration_role:
 
 sylius_rbac_administration_role_new:
     path: /administration-roles/new
-    methods: [GET]
+    methods: [GET, POST]
     defaults:
         _controller: sylius_rbac.controller.administration_role:createAction
         _sylius:
