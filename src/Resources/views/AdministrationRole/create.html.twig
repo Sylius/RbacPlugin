@@ -8,23 +8,20 @@
 {% include '@SyliusRbacPlugin/AdministrationRole/Create/_breadcrumb.html.twig' %}
 
     <div class="ui segment">
-        <form name="sylius_rbac_administration_role" method="post" action="/admin/administration-roles/new" class="ui loadable form" novalidate="novalidate">
+        <form name="sylius_rbac_administration_role" method="POST" action="/admin/administration-roles/create" class="ui loadable form" novalidate="novalidate">
             <div id="sylius_rbac_administration_role">
                 <div class="required field">
-                    <label for="sylius_rbac_administration_role_name" class="required">Name</label>
-                    <input type="text" id="sylius_rbac_administration_role_name" name="sylius_rbac_administration_role[name]" required="required" />
+                    <label for="sylius_rbac_administration_role_name" class="required">{{ 'sylius_rbac.ui.name'|trans }}</label>
+                    <input type="text" id="sylius_rbac_administration_role_name" name="administration_role_name" required="required" />
                 </div>
             <div class="required field">
-                <label for="sylius_rbac_administration_role_permissions" class="required">Permissions</label>
-                <select id="sylius_rbac_administration_role_permissions" name="sylius_rbac_administration_role[permissions][]" required="required" class=" ui dropdown" multiple="multiple">
-                    <option value="catalog_management">Catalog management</option>
-                    <option value="configuration">Configuration</option>
-                    <option value="customers_management">Customers management</option>
-                    <option value="marketing_management">Marketing management</option>
-                    <option value="sales_management">Sales management</option>
+                <label for="sylius_rbac_administration_role_permissions" class="required">{{ 'sylius_rbac.ui.permissions'|trans }}</label>
+                <select id="sylius_rbac_administration_role_permissions" name="permissions" required="required" class="ui dropdown" multiple="multiple">
+                    {% for permission in permissions %}
+                        <option value={{ permission }}>{{ ('sylius_rbac.ui.permission.' ~ permission)|trans }}
+                    {% endfor %}
                 </select>
             </div>
-                <input type="hidden" id="sylius_rbac_administration_role__token" name="sylius_rbac_administration_role[_token]" value="tUjWyfLBt19TQuqobXj8pAKNEz9POJgdonTvRgJ5VzE" /></div>
 
             <div class="ui basic segment">
                 <div class="ui buttons">

@@ -11,8 +11,12 @@ sylius_rbac_administration_role:
 
 sylius_rbac_administration_role_new:
     path: /administration-roles/new
-    methods: [GET, POST]
+    methods: [GET]
     defaults:
-        _controller: sylius_rbac.controller.administration_role:createAction
-        _sylius:
-            template: "@SyliusRbacPlugin/AdministrationRole/create.html.twig"
+        _controller: Sylius\RbacPlugin\Action\NewAdministrationRoleCreatorAction
+
+sylius_rbac_administration_role_create:
+    path: /administration-roles/create
+    methods: [POST]
+    defaults:
+        _controller: Sylius\RbacPlugin\Action\CreateAdministrationRoleAction

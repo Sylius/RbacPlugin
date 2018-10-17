@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <defaults autowire="false" autoconfigure="false" public="true" />
+
+        <service id="Sylius\RbacPlugin\Action\CreateAdministrationRoleAction">
+            <argument type="service" id="prooph_service_bus.sylius_rbac_command_bus" />
+            <argument type="service" id="Sylius\RbacPlugin\Creator\CreateAdministrationRoleCommandCreator" />
+            <argument type="service" id="session" />
+            <argument type="service" id="router" />
+        </service>
+
+        <service id="Sylius\RbacPlugin\Action\NewAdministrationRoleCreatorAction" public="true">
+            <argument type="service" id="Sylius\RbacPlugin\Provider\AdminPermissionsProvider" />
+            <argument type="service" id="twig" />
+            <argument type="service" id="router" />
+        </service>
+    </services>
+</container>

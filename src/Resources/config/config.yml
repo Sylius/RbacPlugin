@@ -1,3 +1,7 @@
+prooph_service_bus:
+    command_buses:
+        sylius_rbac_command_bus: ~
+
 sylius_resource:
     resources:
         sylius_rbac.administration_role:

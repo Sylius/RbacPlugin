@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Sylius\RbacPlugin\Action;
 
-use Hateoas\UrlGenerator\UrlGeneratorInterface;
 use Prooph\ServiceBus\CommandBus;
 use Prooph\ServiceBus\Exception\CommandDispatchException;
 use Sylius\RbacPlugin\Creator\CommandCreatorInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Webmozart\Assert\Assert;
 
 final class CreateAdministrationRoleAction
