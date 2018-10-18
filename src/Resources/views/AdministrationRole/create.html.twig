@@ -7,16 +7,16 @@
 {% include '@SyliusRbacPlugin/AdministrationRole/Create/_header.html.twig' %}
 {% include '@SyliusRbacPlugin/AdministrationRole/Create/_breadcrumb.html.twig' %}
 
-    <div class="ui segment">
-        <form name="sylius_rbac_administration_role" method="POST" action="/admin/administration-roles/create" class="ui loadable form" novalidate="novalidate">
-            <div id="sylius_rbac_administration_role">
+<div class="ui segment">
+    <form name="sylius_rbac_administration_role" method="POST" class="ui loadable form" novalidate="novalidate" action={{ path('sylius_rbac_administration_role_create') }}>
+        <div id="sylius_rbac_administration_role">
                 <div class="required field">
                     <label for="sylius_rbac_administration_role_name" class="required">{{ 'sylius_rbac.ui.name'|trans }}</label>
                     <input type="text" id="sylius_rbac_administration_role_name" name="administration_role_name" required="required" />
                 </div>
             <div class="required field">
                 <label for="sylius_rbac_administration_role_permissions" class="required">{{ 'sylius_rbac.ui.permissions'|trans }}</label>
-                <select id="sylius_rbac_administration_role_permissions" name="permissions" required="required" class="ui dropdown" multiple="multiple">
+                <select id="sylius_rbac_administration_role_permissions" name="permissions[]" required="required" class="ui dropdown" multiple="multiple">
                     {% for permission in permissions %}
                         <option value={{ permission }}>{{ ('sylius_rbac.ui.permission.' ~ permission)|trans }}
                     {% endfor %}
@@ -25,30 +25,11 @@
 
             <div class="ui basic segment">
                 <div class="ui buttons">
-                    <button class="ui labeled icon primary button" type="submit"><i class="plus icon"></i>Create</button>
-                    <a href="/admin/administration-roles/" class="ui button">Cancel</a>
+                    <button class="ui labeled icon primary button" type="submit"><i class="plus icon"></i>{{ 'sylius.ui.create'|trans }}</button>
+                    <a href={{ path('sylius_rbac_admin_administration_role_index') }} class="ui button">{{ 'sylius.ui.cancel'|trans }}</a>
                 </div>
             </div>
-        </form>
-    </div>
-    <div class="ui small basic modal" id="confirmation-modal">
-        <div class="ui icon header">
-            <i class="warning sign icon"></i>
-            Confirm your action
         </div>
-        <div class="content">
-            <p>Are you sure you want to perform this action?</p>
-        </div>
-        <div class="actions">
-            <div class="ui red basic cancel inverted button">
-                <i class="remove icon"></i>
-                No
-            </div>
-            <div class="ui green ok inverted button" id="confirmation-button">
-                <i class="checkmark icon"></i>
-                Yes
-            </div>
-        </div>
-    </div>
-
+    </form>
+</div>
 {% endblock %}

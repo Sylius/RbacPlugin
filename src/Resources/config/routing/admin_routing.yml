@@ -17,6 +17,5 @@ sylius_rbac_administration_role_new:
 
 sylius_rbac_administration_role_create:
     path: /administration-roles/create
-    methods: [POST]
     defaults:
         _controller: Sylius\RbacPlugin\Action\CreateAdministrationRoleAction

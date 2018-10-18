@@ -14,7 +14,7 @@ final class CreateAdministrationRoleCommandCreator implements CommandCreatorInte
     public function fromRequest(Request $request): Command
     {
         /** @var ParameterBag $requestAttributes */
-        $requestAttributes = $request->attributes;
+        $requestAttributes = $request->request;
 
         if (!($requestAttributes->has('administration_role_name') && $requestAttributes->has('permissions'))) {
             throw new \InvalidArgumentException(
