@@ -1,7 +1,7 @@
 sylius_rbac_administration_role:
     resource: |
         alias: sylius_rbac.administration_role
-        only: ['index', 'update']
+        only: ['index']
         section: admin
         templates: SyliusAdminBundle:Crud
         grid: sylius_rbac_administration_role
@@ -19,3 +19,13 @@ sylius_rbac_administration_role_create:
     path: /administration-roles/create
     defaults:
         _controller: Sylius\RbacPlugin\Action\CreateAdministrationRoleAction
+
+sylius_rbac_administration_role_edit:
+    path: /administration-roles/{id}/edit
+    defaults:
+        _controller: Sylius\RbacPlugin\Action\EditAdministrationRoleAction
+
+sylius_rbac_administration_role_update:
+    path: /administration-roles/{id}/update
+    defaults:
+        _controller: Sylius\RbacPlugin\Action\UpdateAdministrationRoleAction

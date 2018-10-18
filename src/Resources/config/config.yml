@@ -37,6 +37,11 @@ sylius_grid:
                 item:
                     update:
                         type: update
+                        options:
+                            link:
+                                route: sylius_rbac_administration_role_edit
+                                parameters:
+                                    id: resource.id
         sylius_admin_admin_user:
             fields:
                 administration_role:

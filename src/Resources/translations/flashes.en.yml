@@ -1,2 +1,3 @@
 sylius_rbac:
     administration_role_added_successfully: 'Administration role added successfully'
+    administration_role_updated_successfully: 'Administration role updated successfully'

@@ -30,7 +30,7 @@ final class NewAdministrationRoleCreatorAction
         $this->router = $router;
     }
 
-    public function __invoke()
+    public function __invoke(): Response
     {
         return new Response(
             $this->twig->render('@SyliusRbacPlugin/AdministrationRole/create.html.twig', [

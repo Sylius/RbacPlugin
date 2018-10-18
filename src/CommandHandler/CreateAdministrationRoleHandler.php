@@ -24,7 +24,7 @@ final class CreateAdministrationRoleHandler
       $this->administrationRoleCreator = $administrationRoleCreator;
     }
 
-    public function __invoke(CreateAdministrationRole $command)
+    public function __invoke(CreateAdministrationRole $command): void
     {
         $administrationRole = $this->administrationRoleCreator->create(
             $command->administrationRoleName(),

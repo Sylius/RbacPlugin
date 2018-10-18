@@ -19,7 +19,7 @@ final class CreateAdministrationRoleCommandCreatorSpec extends ObjectBehavior
 
     function it_creates_create_administration_role_command_from_request(Request $request): void
     {
-        $request->attributes = new ParameterBag([
+        $request->request = new ParameterBag([
             'administration_role_name' => 'rick_sanchez',
             'permissions' => [
                 'catalog_management',
@@ -40,7 +40,7 @@ final class CreateAdministrationRoleCommandCreatorSpec extends ObjectBehavior
 
     function it_throws_an_exception_when_administration_role_name_is_not_provided(Request $request): void
     {
-        $request->attributes = new ParameterBag([
+        $request->request = new ParameterBag([
             'permissions' => [
                 'catalog_management',
                 'configuration',
@@ -52,7 +52,7 @@ final class CreateAdministrationRoleCommandCreatorSpec extends ObjectBehavior
 
     function it_throws_an_exception_when_permissions_are_not_provided(Request $request): void
     {
-        $request->attributes = new ParameterBag([
+        $request->request = new ParameterBag([
             'administration_role_name' => 'rick_sanchez',
         ]);
 

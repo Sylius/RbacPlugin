@@ -8,7 +8,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use PhpSpec\ObjectBehavior;
 use Sylius\RbacPlugin\Command\CreateAdministrationRole;
 use Sylius\RbacPlugin\Creator\AdministrationRoleCreatorInterface;
-use Sylius\RbacPlugin\Entity\AdministrationRole;
+use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
 use Sylius\RbacPlugin\Model\Permission;
 
 final class CreateAdministrationRoleHandlerSpec extends ObjectBehavior
@@ -22,12 +22,14 @@ final class CreateAdministrationRoleHandlerSpec extends ObjectBehavior
 
     function it_handles_command_and_persists_new_administration_role(
         ObjectManager $administrationRoleManager,
-        AdministrationRoleCreatorInterface $administrationRoleCreator
+        AdministrationRoleCreatorInterface $administrationRoleCreator,
+        AdministrationRoleInterface $administrationRole
     ): void {
-        $administrationRole = new AdministrationRole();
-        $administrationRole->setName('rick_sanchez');
-        $administrationRole->addPermission(new Permission('catalog_management'));
-        $administrationRole->addPermission(new Permission('configuration'));
+        $catalogManagementPermission = new Permission('catalog_management');
+        $configurationPermission = new Permission('configuration');
+
+        $administrationRole->getName()->willReturn('rick_sanchez');
+        $administrationRole->getPermissions()->willReturn([$catalogManagementPermission, $configurationPermission]);
 
         $administrationRoleCreator
             ->create('rick_sanchez', ['catalog_management', 'configuration'])

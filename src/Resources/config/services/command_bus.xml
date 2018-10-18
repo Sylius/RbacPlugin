@@ -6,9 +6,18 @@
 
         <service id="Sylius\RbacPlugin\Creator\CreateAdministrationRoleCommandCreator" />
 
+        <service id="Sylius\RbacPlugin\Creator\UpdateAdministrationRoleCommandCreator" />
+
         <service id="Sylius\RbacPlugin\CommandHandler\CreateAdministrationRoleHandler">
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="Sylius\RbacPlugin\Creator\AdministrationRoleCreator"/>
+            <tag name="prooph_service_bus.sylius_rbac_command_bus.route_target" message-detection="true" />
+        </service>
+
+        <service id="Sylius\RbacPlugin\CommandHandler\UpdateAdministrationRoleHandler">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="Sylius\RbacPlugin\Creator\AdministrationRoleCreator"/>
+            <argument type="service" id="sylius_rbac.repository.administration_role"/>
             <tag name="prooph_service_bus.sylius_rbac_command_bus.route_target" message-detection="true" />
         </service>
     </services>

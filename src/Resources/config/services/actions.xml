@@ -4,6 +4,12 @@
     <services>
         <defaults autowire="false" autoconfigure="false" public="true" />
 
+        <service id="Sylius\RbacPlugin\Action\NewAdministrationRoleCreatorAction" public="true">
+            <argument type="service" id="Sylius\RbacPlugin\Provider\AdminPermissionsProvider" />
+            <argument type="service" id="twig" />
+            <argument type="service" id="router" />
+        </service>
+
         <service id="Sylius\RbacPlugin\Action\CreateAdministrationRoleAction">
             <argument type="service" id="prooph_service_bus.sylius_rbac_command_bus" />
             <argument type="service" id="Sylius\RbacPlugin\Creator\CreateAdministrationRoleCommandCreator" />
@@ -11,9 +17,18 @@
             <argument type="service" id="router" />
         </service>
 
-        <service id="Sylius\RbacPlugin\Action\NewAdministrationRoleCreatorAction" public="true">
+        <service id="Sylius\RbacPlugin\Action\EditAdministrationRoleAction" public="true">
             <argument type="service" id="Sylius\RbacPlugin\Provider\AdminPermissionsProvider" />
+            <argument type="service" id="sylius_rbac.repository.administration_role" />
+            <argument type="service" id="Sylius\RbacPlugin\Extractor\PermissionDataExtractor"/>
             <argument type="service" id="twig" />
+            <argument type="service" id="router" />
+        </service>
+
+        <service id="Sylius\RbacPlugin\Action\UpdateAdministrationRoleAction">
+            <argument type="service" id="prooph_service_bus.sylius_rbac_command_bus" />
+            <argument type="service" id="Sylius\RbacPlugin\Creator\UpdateAdministrationRoleCommandCreator" />
+            <argument type="service" id="session" />
             <argument type="service" id="router" />
         </service>
     </services>

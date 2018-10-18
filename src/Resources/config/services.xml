@@ -30,5 +30,7 @@
         </service>
 
         <service id="Sylius\RbacPlugin\Creator\AdministrationRoleCreator" />
+
+        <service id="Sylius\RbacPlugin\Extractor\PermissionDataExtractor" />
     </services>
 </container>

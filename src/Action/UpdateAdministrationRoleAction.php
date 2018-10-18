@@ -14,13 +14,13 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Webmozart\Assert\Assert;
 
-final class CreateAdministrationRoleAction
+final class UpdateAdministrationRoleAction
 {
     /** @var CommandBus */
     private $commandBus;
 
     /** @var CommandCreatorInterface */
-    private $createAdministrationRoleCommandCreator;
+    private $updateAdministrationRoleCommandCreator;
 
     /** @var Session */
     private $session;
@@ -30,12 +30,12 @@ final class CreateAdministrationRoleAction
 
     public function __construct(
         CommandBus $commandBus,
-        CommandCreatorInterface $createAdministrationRoleCommandCreator,
+        CommandCreatorInterface $updateAdministrationRoleCommandCreator,
         Session $session,
         UrlGeneratorInterface $router
     ) {
         $this->commandBus = $commandBus;
-        $this->createAdministrationRoleCommandCreator = $createAdministrationRoleCommandCreator;
+        $this->updateAdministrationRoleCommandCreator = $updateAdministrationRoleCommandCreator;
         $this->session = $session;
         $this->router = $router;
     }
@@ -43,11 +43,11 @@ final class CreateAdministrationRoleAction
     public function __invoke(Request $request): Response
     {
         try {
-            $this->commandBus->dispatch($this->createAdministrationRoleCommandCreator->fromRequest($request));
+            $this->commandBus->dispatch($this->updateAdministrationRoleCommandCreator->fromRequest($request));
 
             $this->session->getFlashBag()->add(
                 'success',
-                'sylius_rbac.administration_role_added_successfully'
+                'sylius_rbac.administration_role_updated_successfully'
             );
         } catch (CommandDispatchException $exception) {
             Assert::notNull($exception->getPrevious());
@@ -56,6 +56,13 @@ final class CreateAdministrationRoleAction
             $this->session->getFlashBag()->add('error', $exception->getMessage());
         }
 
-        return new RedirectResponse($this->router->generate('sylius_rbac_administration_role_new', []));
+        return new RedirectResponse(
+            $this->router->generate(
+                'sylius_rbac_administration_role_edit',
+                [
+                    'id' => $request->attributes->get('id')
+                ]
+            )
+        );
     }
 }
