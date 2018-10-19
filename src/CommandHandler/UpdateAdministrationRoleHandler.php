@@ -9,6 +9,7 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\RbacPlugin\Command\UpdateAdministrationRole;
 use Sylius\RbacPlugin\Creator\AdministrationRoleCreatorInterface;
 use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
+use Sylius\RbacPlugin\Validator\AdministrationRoleValidatorInterface;
 
 final class UpdateAdministrationRoleHandler
 {
@@ -21,14 +22,19 @@ final class UpdateAdministrationRoleHandler
     /** @var RepositoryInterface */
     private $administrationRoleRepository;
 
+    /** @var AdministrationRoleValidatorInterface */
+    private $validator;
+
     public function __construct(
         ObjectManager $administrationRoleManager,
         AdministrationRoleCreatorInterface $administrationRoleCreator,
-        RepositoryInterface $administrationRoleRepository
+        RepositoryInterface $administrationRoleRepository,
+        AdministrationRoleValidatorInterface $validator
     ) {
         $this->administrationRoleManager = $administrationRoleManager;
         $this->administrationRoleCreator = $administrationRoleCreator;
         $this->administrationRoleRepository = $administrationRoleRepository;
+        $this->validator = $validator;
     }
 
     public function __invoke(UpdateAdministrationRole $command): void
@@ -37,6 +43,8 @@ final class UpdateAdministrationRoleHandler
             $command->administrationRoleName(),
             $command->permissions()
         );
+
+        $this->validator->validate($administrationRoleUpdates);
 
         /** @var AdministrationRoleInterface $administrationRole */
         $administrationRole = $this

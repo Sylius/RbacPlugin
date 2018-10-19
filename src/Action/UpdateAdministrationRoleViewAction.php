@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Environment;
 
-final class EditAdministrationRoleAction
+final class UpdateAdministrationRoleViewAction
 {
     /** @var AdminPermissionsProviderInterface */
     private $adminPermissionsProvider;

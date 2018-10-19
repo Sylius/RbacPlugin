@@ -14,6 +14,6 @@ final class AdminUserIndexPage extends IndexPage implements AdminUserIndexPageIn
 
         $row = $this->getTableAccessor()->getRowWithFields($table, ['email' => $email]);
 
-        return $this->getTableAccessor()->getFieldFromRow($table, $row, 'administrationRole')->getText();
+        return $this->getTableAccessor()->getFieldFromRow($table, $row, 'administration_role')->getText();
     }
 }

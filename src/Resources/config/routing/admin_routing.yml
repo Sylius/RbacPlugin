@@ -13,7 +13,7 @@ sylius_rbac_administration_role_new:
     path: /administration-roles/new
     methods: [GET]
     defaults:
-        _controller: Sylius\RbacPlugin\Action\NewAdministrationRoleCreatorAction
+        _controller: Sylius\RbacPlugin\Action\CreateAdministrationRoleCreatorViewAction
 
 sylius_rbac_administration_role_create:
     path: /administration-roles/create
@@ -23,7 +23,7 @@ sylius_rbac_administration_role_create:
 sylius_rbac_administration_role_edit:
     path: /administration-roles/{id}/edit
     defaults:
-        _controller: Sylius\RbacPlugin\Action\EditAdministrationRoleAction
+        _controller: Sylius\RbacPlugin\Action\UpdateAdministrationRoleViewAction
 
 sylius_rbac_administration_role_update:
     path: /administration-roles/{id}/update

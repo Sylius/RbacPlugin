@@ -16,12 +16,6 @@ final class CreateAdministrationRoleCommandCreator implements CommandCreatorInte
         /** @var ParameterBag $requestAttributes */
         $requestAttributes = $request->request;
 
-        if (!($requestAttributes->has('administration_role_name') && $requestAttributes->has('permissions'))) {
-            throw new \InvalidArgumentException(
-                'Expected request to contain administration role name and its permissions'
-            );
-        }
-
         $command = new CreateAdministrationRole(
             $requestAttributes->get('administration_role_name'),
             $requestAttributes->get('permissions')

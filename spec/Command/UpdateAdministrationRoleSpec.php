@@ -12,7 +12,7 @@ final class UpdateAdministrationRoleSpec extends ObjectBehavior
     {
         $this->beConstructedWith('1', 'rick_sanchez', ['catalog_management', 'configuration']);
 
-        $this->administrationRoleId()->shouldReturn('1');
+        $this->administrationRoleId()->shouldReturn(1);
         $this->administrationRoleName()->shouldReturn('rick_sanchez');
         $this->permissions()->shouldReturn(['catalog_management', 'configuration']);
     }

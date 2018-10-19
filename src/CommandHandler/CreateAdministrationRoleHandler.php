@@ -7,6 +7,7 @@ namespace Sylius\RbacPlugin\CommandHandler;
 use Doctrine\Common\Persistence\ObjectManager;
 use Sylius\RbacPlugin\Command\CreateAdministrationRole;
 use Sylius\RbacPlugin\Creator\AdministrationRoleCreatorInterface;
+use Sylius\RbacPlugin\Validator\AdministrationRoleValidatorInterface;
 
 final class CreateAdministrationRoleHandler
 {
@@ -16,12 +17,17 @@ final class CreateAdministrationRoleHandler
     /** @var AdministrationRoleCreatorInterface */
     private $administrationRoleCreator;
 
+    /** @var AdministrationRoleValidatorInterface */
+    private $validator;
+
     public function __construct(
         ObjectManager $objectManager,
-        AdministrationRoleCreatorInterface $administrationRoleCreator
+        AdministrationRoleCreatorInterface $administrationRoleCreator,
+        AdministrationRoleValidatorInterface $validator
     ) {
       $this->administrationRoleManager = $objectManager;
       $this->administrationRoleCreator = $administrationRoleCreator;
+      $this->validator = $validator;
     }
 
     public function __invoke(CreateAdministrationRole $command): void
@@ -30,6 +36,8 @@ final class CreateAdministrationRoleHandler
             $command->administrationRoleName(),
             $command->permissions()
         );
+
+        $this->validator->validate($administrationRole);
 
         $this->administrationRoleManager->persist($administrationRole);
         $this->administrationRoleManager->flush();

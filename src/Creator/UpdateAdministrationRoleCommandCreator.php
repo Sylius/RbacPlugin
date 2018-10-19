@@ -16,18 +16,8 @@ final class UpdateAdministrationRoleCommandCreator implements CommandCreatorInte
         /** @var ParameterBag $requestAttributes */
         $requestAttributes = $request->request;
 
-        if (!(
-            $request->attributes->has('id')) &&
-            $requestAttributes->has('administration_role_name') &&
-            $requestAttributes->has('permissions')
-        ) {
-            throw new \InvalidArgumentException(
-                'Expected request to contain administration role name, its permissions and id'
-            );
-        }
-
         $command = new UpdateAdministrationRole(
-            $request->attributes->get('id'),
+            (int) $request->attributes->get('id'),
             $requestAttributes->get('administration_role_name'),
             $requestAttributes->get('permissions')
         );

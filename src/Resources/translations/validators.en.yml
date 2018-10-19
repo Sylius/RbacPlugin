@@ -2,3 +2,4 @@ sylius_rbac:
     administration_role:
         name:
             unique: 'This name is already taken'
+            not_blank: 'Administration Role name cannot be blank'
