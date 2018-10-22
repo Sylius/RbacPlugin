@@ -29,7 +29,7 @@ final class CreateAdministrationRoleCommandCreatorSpec extends ObjectBehavior
 
         $payload = [
             'administration_role_name' => 'rick_sanchez',
-            'permissions' => ['catalog_management', 'configuration']
+            'permissions' => ['catalog_management', 'configuration'],
         ];
 
         $command = $this->fromRequest($request);

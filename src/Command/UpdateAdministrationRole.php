@@ -17,7 +17,7 @@ final class UpdateAdministrationRole extends Command
         $this->setPayload([
             'administration_role_id' => $id,
             'administration_role_name' => $administrationRoleName === null ? '' : $administrationRoleName,
-            'permissions' => $permissions === null ? [] : $permissions
+            'permissions' => $permissions === null ? [] : $permissions,
         ]);
     }
 

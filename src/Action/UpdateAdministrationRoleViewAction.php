@@ -53,7 +53,7 @@ final class UpdateAdministrationRoleViewAction
             $this->twig->render('@SyliusRbacPlugin/AdministrationRole/update.html.twig', [
                 'permissions' => $this->adminPermissionsProvider->getPossiblePermissions(),
                 'administration_role' => $administrationRole,
-                'rolePermissions' => $this->permissionDataExtractor->extract($administrationRole->getPermissions())
+                'rolePermissions' => $this->permissionDataExtractor->extract($administrationRole->getPermissions()),
             ])
         );
     }

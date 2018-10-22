@@ -25,9 +25,9 @@ final class CreateAdministrationRoleHandler
         AdministrationRoleCreatorInterface $administrationRoleCreator,
         AdministrationRoleValidatorInterface $validator
     ) {
-      $this->administrationRoleManager = $objectManager;
-      $this->administrationRoleCreator = $administrationRoleCreator;
-      $this->validator = $validator;
+        $this->administrationRoleManager = $objectManager;
+        $this->administrationRoleCreator = $administrationRoleCreator;
+        $this->validator = $validator;
     }
 
     public function __invoke(CreateAdministrationRole $command): void

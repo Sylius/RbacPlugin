@@ -56,7 +56,7 @@ final class Permission
                 self::CONFIGURATION_PERMISSION,
                 self::CUSTOMERS_MANAGEMENT_PERMISSION,
                 self::MARKETING_MANAGEMENT_PERMISSION,
-                self::SALES_MANAGEMENT_PERMISSION
+                self::SALES_MANAGEMENT_PERMISSION,
             ]
         );
 

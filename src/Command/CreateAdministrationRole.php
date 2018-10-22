@@ -15,8 +15,8 @@ final class CreateAdministrationRole extends Command
     {
         $this->init();
         $this->setPayload([
-            'administration_role_name' => $administrationRoleName === null ? '': $administrationRoleName,
-            'permissions' => $permissions === null ? [] : $permissions
+            'administration_role_name' => $administrationRoleName === null ? '' : $administrationRoleName,
+            'permissions' => $permissions === null ? [] : $permissions,
         ]);
     }
 

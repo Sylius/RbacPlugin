@@ -60,7 +60,7 @@ final class UpdateAdministrationRoleAction
             $this->router->generate(
                 'sylius_rbac_administration_role_edit',
                 [
-                    'id' => $request->attributes->get('id')
+                    'id' => $request->attributes->get('id'),
                 ]
             )
         );
