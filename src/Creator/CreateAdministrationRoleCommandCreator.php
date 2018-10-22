@@ -6,15 +6,32 @@ namespace Sylius\RbacPlugin\Creator;
 
 use Prooph\Common\Messaging\Command;
 use Sylius\RbacPlugin\Command\CreateAdministrationRole;
+use Sylius\RbacPlugin\Extractor\RequestAdministrationRolePermissionsExtractorInterface;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 
 final class CreateAdministrationRoleCommandCreator implements CommandCreatorInterface
 {
+    /** @var RequestAdministrationRolePermissionsExtractorInterface */
+    private $requestAdministrationROlePermissionsExtractor;
+
+    public function __construct(
+        RequestAdministrationRolePermissionsExtractorInterface
+        $requestAdministrationROlePermissionsExtractor
+    ) {
+        $this->requestAdministrationROlePermissionsExtractor = $requestAdministrationROlePermissionsExtractor;
+    }
+
     public function fromRequest(Request $request): Command
     {
+        /** @var ParameterBag $requestAttributes */
+        $requestAttributes = $request->request;
+
+        $permissions = $this->requestAdministrationROlePermissionsExtractor->extract($requestAttributes->all());
+
         $command = new CreateAdministrationRole(
-            $request->request->get('administration_role_name'),
-            $request->request->get('permissions', [])
+            $requestAttributes->get('administration_role_name'),
+            $permissions
         );
 
         return $command;

@@ -52,7 +52,7 @@ final class Permission
         return new self($data['type'], $data['accesses']);
     }
 
-    public function __construct(string $type, array $accesses)
+    public function __construct(?string $type, ?array $accesses)
     {
         Assert::oneOf(
             $type, [

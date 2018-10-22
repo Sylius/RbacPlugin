@@ -4,9 +4,13 @@
     <services>
         <defaults autowire="false" autoconfigure="false" public="true" />
 
-        <service id="Sylius\RbacPlugin\Creator\CreateAdministrationRoleCommandCreator" />
+        <service id="Sylius\RbacPlugin\Creator\CreateAdministrationRoleCommandCreator">
+            <argument type="service" id="Sylius\RbacPlugin\Extractor\RequestAdministrationRolePermissionsExtractor" />
+        </service>
 
-        <service id="Sylius\RbacPlugin\Creator\UpdateAdministrationRoleCommandCreator" />
+        <service id="Sylius\RbacPlugin\Creator\UpdateAdministrationRoleCommandCreator">
+            <argument type="service" id="Sylius\RbacPlugin\Extractor\RequestAdministrationRolePermissionsExtractor" />
+        </service>
 
         <service id="Sylius\RbacPlugin\CommandHandler\CreateAdministrationRoleHandler">
             <argument type="service" id="doctrine.orm.entity_manager"/>

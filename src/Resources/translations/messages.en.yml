@@ -3,8 +3,8 @@ sylius_rbac:
         access: 'Access'
         administration_role: 'Administration role'
         administration_roles: 'Administration roles'
-        edit_administration_role: 'Edit Administration Role'
-        new_administration_role: 'New Administration Role'
+        edit_administration_role: 'Edit Administration role'
+        new_administration_role: 'New Administration role'
         permission:
             catalog_management: 'Catalog management'
             configuration: 'Configuration'

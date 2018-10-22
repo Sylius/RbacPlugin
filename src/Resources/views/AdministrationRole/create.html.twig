@@ -11,17 +11,35 @@
     <form name="sylius_rbac_administration_role" method="PUT" class="ui loadable form" novalidate="novalidate" action={{ path('sylius_rbac_administration_role_create') }}>
         <div id="sylius_rbac_administration_role">
                 <div class="required field">
-                    <label for="sylius_rbac_administration_role_name" class="required">{{ 'sylius_rbac.ui.name'|trans }}</label>
+                    <label for="sylius_rbac_administration_role_name" class="required">{{ 'sylius.ui.name'|trans }}</label>
                     <input type="text" id="sylius_rbac_administration_role_name" name="administration_role_name" required="required" />
                 </div>
-            <div class="required field">
-                <label for="sylius_rbac_administration_role_permissions">{{ 'sylius_rbac.ui.permissions'|trans }}</label>
-                <select id="sylius_rbac_administration_role_permissions" name="permissions[]" class="ui dropdown" multiple="multiple">
-                    {% for permission in permissions %}
-                        <option value={{ permission }}>{{ ('sylius_rbac.ui.permission.' ~ permission)|trans }}
-                    {% endfor %}
-                </select>
-            </div>
+            <table class="ui celled table">
+                <thead>
+                <tr>
+                    <th>{{ 'sylius_rbac.ui.permissions'|trans }}</th>
+                    <th>{{ 'sylius_rbac.ui.permission.access.read'|trans }}</th>
+                    <th>{{ 'sylius_rbac.ui.permission.access.write'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for permission in permissions %}
+                    <tr>
+                        <td data-label={{ 'sylius_rbac.ui.permissions'|trans }}>{{ ('sylius_rbac.ui.permission.' ~ permission)|trans }}</td>
+                        <td data-label={{ 'sylius_rbac.ui.permission.access.read'|trans }}>
+                            <div class="ui toggle checkbox">
+                                <input type="checkbox" name={{ permission ~ '~read' }}>
+                            </div>
+                        </td>
+                        <td data-label={{ 'sylius_rbac.ui.permission.access.write'|trans }}>
+                            <div class="ui toggle checkbox">
+                                <input type="checkbox" name={{ permission ~ '~write' }}>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
 
             <div class="ui basic segment">
                 <div class="ui buttons">

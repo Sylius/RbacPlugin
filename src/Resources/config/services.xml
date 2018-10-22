@@ -33,6 +33,8 @@
 
         <service id="Sylius\RbacPlugin\Extractor\PermissionDataExtractor" />
 
+        <service id="Sylius\RbacPlugin\Extractor\RequestAdministrationRolePermissionsExtractor" />
+
         <service
              id="sylius_rbac.custom_factory.administration_role"
              class="Sylius\RbacPlugin\Factory\AdministrationRoleFactory"
