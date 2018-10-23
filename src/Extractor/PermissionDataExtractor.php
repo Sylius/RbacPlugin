@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Sylius\RbacPlugin\Extractor;
 
-use Sylius\RbacPlugin\Model\Permission;
+use Sylius\RbacPlugin\Model\PermissionInterface;
 
 final class PermissionDataExtractor implements PermissionDataExtractorInterface
 {
@@ -12,7 +12,7 @@ final class PermissionDataExtractor implements PermissionDataExtractorInterface
     {
         $permissionTypes = [];
 
-        /** @var Permission $permission */
+        /** @var PermissionInterface $permission */
         foreach ($permissions as $permission) {
             $permissionTypes[] = $permission->type();
         }

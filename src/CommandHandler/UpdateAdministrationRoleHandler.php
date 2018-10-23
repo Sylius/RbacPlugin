@@ -9,6 +9,8 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\RbacPlugin\Command\UpdateAdministrationRole;
 use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
 use Sylius\RbacPlugin\Factory\AdministrationRoleFactoryInterface;
+use Sylius\RbacPlugin\Model\Permission;
+use Sylius\RbacPlugin\Normalizer\AdministrationRolePermissionNormalizerInterface;
 use Sylius\RbacPlugin\Validator\AdministrationRoleValidatorInterface;
 
 final class UpdateAdministrationRoleHandler
@@ -25,16 +27,21 @@ final class UpdateAdministrationRoleHandler
     /** @var AdministrationRoleValidatorInterface */
     private $validator;
 
+    /** @var AdministrationRolePermissionNormalizerInterface */
+    private $administrationRolePermissionNormalizer;
+
     public function __construct(
         ObjectManager $administrationRoleManager,
         AdministrationRoleFactoryInterface $administrationRoleFactory,
         RepositoryInterface $administrationRoleRepository,
-        AdministrationRoleValidatorInterface $validator
+        AdministrationRoleValidatorInterface $validator,
+        AdministrationRolePermissionNormalizerInterface $administrationRolePermissionNormalizer
     ) {
         $this->administrationRoleManager = $administrationRoleManager;
         $this->administrationRoleFactory = $administrationRoleFactory;
         $this->administrationRoleRepository = $administrationRoleRepository;
         $this->validator = $validator;
+        $this->administrationRolePermissionNormalizer = $administrationRolePermissionNormalizer;
     }
 
     public function __invoke(UpdateAdministrationRole $command): void
@@ -45,6 +52,10 @@ final class UpdateAdministrationRoleHandler
         );
 
         $this->validator->validate($administrationRoleUpdates);
+
+        foreach ($administrationRoleUpdates->getPermissions() as $permission) {
+            $this->administrationRolePermissionNormalizer->normalize($permission);
+        }
 
         /** @var AdministrationRoleInterface|null $administrationRole */
         $administrationRole = $this
@@ -59,6 +70,7 @@ final class UpdateAdministrationRoleHandler
         $administrationRole->setName($administrationRoleUpdates->getName());
         $administrationRole->clearPermissions();
 
+        /** @var Permission $permission */
         foreach ($administrationRoleUpdates->getPermissions() as $permission) {
             $administrationRole->addPermission($permission);
         }

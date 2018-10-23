@@ -63,5 +63,7 @@
             <argument type="service" id="Sylius\RbacPlugin\Access\Checker\AdministratorAccessCheckerInterface" />
             <tag name="kernel.event_listener" event="sylius.menu.admin.main" method="removeInaccessibleAdminMenuParts" />
         </service>
+
+        <service id="Sylius\RbacPlugin\Normalizer\AdministrationRolePermissionNormalizer" />
     </services>
 </container>

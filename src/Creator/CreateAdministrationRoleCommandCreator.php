@@ -13,13 +13,12 @@ use Symfony\Component\HttpFoundation\Request;
 final class CreateAdministrationRoleCommandCreator implements CommandCreatorInterface
 {
     /** @var RequestAdministrationRolePermissionsExtractorInterface */
-    private $requestAdministrationROlePermissionsExtractor;
+    private $requestAdministrationRolePermissionsExtractor;
 
     public function __construct(
-        RequestAdministrationRolePermissionsExtractorInterface
-        $requestAdministrationROlePermissionsExtractor
+        RequestAdministrationRolePermissionsExtractorInterface $requestAdministrationROlePermissionsExtractor
     ) {
-        $this->requestAdministrationROlePermissionsExtractor = $requestAdministrationROlePermissionsExtractor;
+        $this->requestAdministrationRolePermissionsExtractor = $requestAdministrationROlePermissionsExtractor;
     }
 
     public function fromRequest(Request $request): Command
@@ -27,7 +26,7 @@ final class CreateAdministrationRoleCommandCreator implements CommandCreatorInte
         /** @var ParameterBag $requestAttributes */
         $requestAttributes = $request->request;
 
-        $permissions = $this->requestAdministrationROlePermissionsExtractor->extract($requestAttributes->all());
+        $permissions = $this->requestAdministrationRolePermissionsExtractor->extract($requestAttributes->all());
 
         $command = new CreateAdministrationRole(
             $requestAttributes->get('administration_role_name'),

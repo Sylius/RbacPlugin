@@ -10,8 +10,7 @@
 
 #### Beware!
 
-Adding Write access to a permission automatically means adding Read access. Similarly, removing Read access from the permission
-means removing Write access.
+Adding Write access to a permission automatically means adding Read access.
 
 Write permission access means also updating and deleting. 
 

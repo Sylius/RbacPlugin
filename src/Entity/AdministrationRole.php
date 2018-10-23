@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Sylius\RbacPlugin\Entity;
 
-use Sylius\RbacPlugin\Model\Permission;
+use Sylius\RbacPlugin\Model\PermissionInterface;
 
 /** @final */
 class AdministrationRole implements AdministrationRoleInterface
@@ -33,12 +33,12 @@ class AdministrationRole implements AdministrationRoleInterface
         $this->name = $name;
     }
 
-    public function addPermission(Permission $permission): void
+    public function addPermission(PermissionInterface $permission): void
     {
         $this->permissions[$permission->type()] = $permission->serialize();
     }
 
-    public function removePermission(Permission $permission): void
+    public function removePermission(PermissionInterface $permission): void
     {
         unset($this->permissions[$permission->type()]);
     }
@@ -48,7 +48,7 @@ class AdministrationRole implements AdministrationRoleInterface
         $this->permissions = [];
     }
 
-    public function hasPermission(Permission $permission): bool
+    public function hasPermission(PermissionInterface $permission): bool
     {
         return
             isset($this->permissions[$permission->type()]) &&

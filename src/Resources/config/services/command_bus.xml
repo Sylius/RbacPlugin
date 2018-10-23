@@ -16,6 +16,7 @@
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="sylius_rbac.custom_factory.administration_role"/>
             <argument type="service" id="Sylius\RbacPlugin\Validator\AdministrationRoleValidator" />
+            <argument type="service" id="Sylius\RbacPlugin\Normalizer\AdministrationRolePermissionNormalizer" />
             <tag name="prooph_service_bus.sylius_rbac_command_bus.route_target" message-detection="true" />
         </service>
 
@@ -24,6 +25,7 @@
             <argument type="service" id="sylius_rbac.custom_factory.administration_role"/>
             <argument type="service" id="sylius_rbac.repository.administration_role"/>
             <argument type="service" id="Sylius\RbacPlugin\Validator\AdministrationRoleValidator"/>
+            <argument type="service" id="Sylius\RbacPlugin\Normalizer\AdministrationRolePermissionNormalizer" />
             <tag name="prooph_service_bus.sylius_rbac_command_bus.route_target" message-detection="true" />
         </service>
     </services>
