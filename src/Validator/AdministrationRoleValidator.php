@@ -18,10 +18,10 @@ final class AdministrationRoleValidator implements AdministrationRoleValidatorIn
         $this->validator = $validator;
     }
 
-    public function validate(AdministrationRoleInterface $administrationRole): void
+    public function validate(AdministrationRoleInterface $administrationRole, string $validationGroup): void
     {
         /** @var ConstraintViolationListInterface $constraintViolations */
-        $constraintViolations = $this->validator->validate($administrationRole, null, 'sylius');
+        $constraintViolations = $this->validator->validate($administrationRole, null, $validationGroup);
 
         if ($constraintViolations->count() > 0) {
             throw new \InvalidArgumentException($constraintViolations->get(0)->getMessage());

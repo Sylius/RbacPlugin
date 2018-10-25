@@ -6,7 +6,6 @@ namespace spec\Sylius\RbacPlugin\CommandHandler;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\RbacPlugin\Command\UpdateAdministrationRole;
 use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
@@ -31,7 +30,8 @@ final class UpdateAdministrationRoleHandlerSpec extends ObjectBehavior
             $administrationRoleFactory,
             $administrationRoleRepository,
             $administrationRoleValidator,
-            $administrationRolePermissionNormalizer
+            $administrationRolePermissionNormalizer,
+            'sylius_rbac_administration_role_update'
         );
     }
 
@@ -46,7 +46,9 @@ final class UpdateAdministrationRoleHandlerSpec extends ObjectBehavior
         PermissionInterface $catalogManagementPermission,
         PermissionInterface $configurationPermission,
         PermissionInterface $salesManagementPermission,
-        PermissionInterface $customersManagementPermission
+        PermissionInterface $customersManagementPermission,
+        PermissionInterface $normalizedSalesManagementPermission,
+        PermissionInterface $normalizedCustomersManagementPermission
     ): void {
         $catalogManagementPermission->type()->willReturn(Permission::CATALOG_MANAGEMENT_PERMISSION);
         $catalogManagementPermission->accesses()->willReturn([PermissionAccess::READ, PermissionAccess::WRITE]);
@@ -60,39 +62,6 @@ final class UpdateAdministrationRoleHandlerSpec extends ObjectBehavior
         $customersManagementPermission->type()->willReturn(Permission::CONFIGURATION_PERMISSION);
         $customersManagementPermission->accesses()->willReturn([PermissionAccess::READ]);
 
-        $updatedAdministrationRole->getName()->willReturn('rick_sanchez');
-        $updatedAdministrationRole
-            ->getPermissions()
-            ->willReturn([$catalogManagementPermission, $configurationPermission])
-        ;
-
-        $administrationRoleRepository->find(1)->willReturn($updatedAdministrationRole);
-
-        $administrationRoleUpdates->getName()->willReturn('morty_smith');
-        $administrationRoleUpdates
-            ->getPermissions()
-            ->willReturn([$salesManagementPermission, $customersManagementPermission])
-        ;
-
-        $administrationRoleFactory
-            ->createWithNameAndPermissions('morty_smith', ['sales_management', 'customers_management'])
-            ->willReturn($administrationRoleUpdates)
-        ;
-
-        $administrationRoleValidator->validate($administrationRoleUpdates)->shouldBeCalled();
-
-        $administrationRolePermissionNormalizer->normalize($salesManagementPermission)->shouldBeCalled();
-        $administrationRolePermissionNormalizer->normalize($customersManagementPermission)->shouldBeCalled();
-
-        $updatedAdministrationRole->setName('morty_smith')->shouldBeCalled();
-
-        $updatedAdministrationRole->clearPermissions()->shouldBeCalled();
-
-        $updatedAdministrationRole->addPermission($salesManagementPermission)->shouldBeCalled();
-        $updatedAdministrationRole->addPermission($customersManagementPermission)->shouldBeCalled();
-
-        $administrationRoleManager->flush()->shouldBeCalled();
-
         $command = new UpdateAdministrationRole(
             1,
             'morty_smith',
@@ -101,6 +70,59 @@ final class UpdateAdministrationRoleHandlerSpec extends ObjectBehavior
                 'customers_management' => [PermissionAccess::READ],
             ]
         );
+
+        $administrationRoleFactory
+            ->createWithNameAndPermissions('morty_smith', ['sales_management', 'customers_management'])
+            ->willReturn($administrationRoleUpdates)
+        ;
+
+        $administrationRoleUpdates->getName()->willReturn('morty_smith');
+
+        $administrationRoleUpdates
+            ->getPermissions()
+            ->willReturn(
+                [
+                    $salesManagementPermission,
+                    $customersManagementPermission
+                ],
+                [
+                    $normalizedSalesManagementPermission,
+                    $normalizedCustomersManagementPermission
+                ]
+            )
+        ;
+
+        $administrationRoleValidator
+            ->validate($administrationRoleUpdates, 'sylius_rbac_administration_role_update')
+            ->shouldBeCalled()
+        ;
+
+        $administrationRolePermissionNormalizer
+            ->normalize($salesManagementPermission)
+            ->willReturn($normalizedSalesManagementPermission)
+        ;
+
+        $administrationRolePermissionNormalizer
+            ->normalize($customersManagementPermission)
+            ->willReturn($normalizedCustomersManagementPermission)
+        ;
+
+        $updatedAdministrationRole->getName()->willReturn('rick_sanchez');
+        $updatedAdministrationRole
+            ->getPermissions()
+            ->willReturn([$catalogManagementPermission, $configurationPermission])
+        ;
+
+        $administrationRoleRepository->find(1)->willReturn($updatedAdministrationRole);
+
+        $updatedAdministrationRole->setName('morty_smith')->shouldBeCalled();
+
+        $updatedAdministrationRole->clearPermissions()->shouldBeCalled();
+
+        $updatedAdministrationRole->addPermission($normalizedSalesManagementPermission)->shouldBeCalled();
+        $updatedAdministrationRole->addPermission($normalizedCustomersManagementPermission)->shouldBeCalled();
+
+        $administrationRoleManager->flush()->shouldBeCalled();
 
         $this->__invoke($command);
     }
@@ -124,7 +146,10 @@ final class UpdateAdministrationRoleHandlerSpec extends ObjectBehavior
             ->willReturn($administrationRole)
         ;
 
-        $administrationRoleValidator->validate($administrationRole)->willThrow(new \InvalidArgumentException());
+        $administrationRoleValidator
+            ->validate($administrationRole, 'sylius_rbac_administration_role_update')
+            ->willThrow(new \InvalidArgumentException())
+        ;
 
         $this->shouldThrow(\InvalidArgumentException::class)->during('__invoke', [$command]);
     }

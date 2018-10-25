@@ -7,7 +7,5 @@
         <service id="Sylius\RbacPlugin\Validator\AdministrationRoleValidator" >
             <argument type="service" id="validator"/>
         </service>
-
-        <service id="Sylius\RbacPlugin\Creator\UpdateAdministrationRoleCommandCreator" />
     </services>
 </container>

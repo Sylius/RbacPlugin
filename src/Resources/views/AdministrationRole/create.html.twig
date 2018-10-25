@@ -7,12 +7,16 @@
 {% include '@SyliusRbacPlugin/AdministrationRole/Create/_header.html.twig' %}
 {% include '@SyliusRbacPlugin/AdministrationRole/Create/_breadcrumb.html.twig' %}
 
+{% set readAccess = constant('Sylius\\RbacPlugin\\Model\\PermissionAccess::READ') %}
+{% set writeAccess = constant('Sylius\\RbacPlugin\\Model\\PermissionAccess::WRITE') %}
+{% set permissionAccessDelimiter = constant('Sylius\\RbacPlugin\\Model\\PermissionAccess::PERMISSION_ACCESS_DELIMITER') %}
+
 <div class="ui segment">
     <form name="sylius_rbac_administration_role" method="PUT" class="ui loadable form" novalidate="novalidate" action={{ path('sylius_rbac_administration_role_create') }}>
         <div id="sylius_rbac_administration_role">
                 <div class="required field">
                     <label for="sylius_rbac_administration_role_name" class="required">{{ 'sylius.ui.name'|trans }}</label>
-                    <input type="text" id="sylius_rbac_administration_role_name" name="administration_role_name" required="required" />
+                    <input type="text" id="sylius_rbac_administration_role_name" name="administration_role_name" required="required" >
                 </div>
             <table class="ui celled table">
                 <thead>
@@ -28,12 +32,12 @@
                         <td data-label={{ 'sylius_rbac.ui.permissions'|trans }}>{{ ('sylius_rbac.ui.permission.' ~ permission)|trans }}</td>
                         <td data-label={{ 'sylius_rbac.ui.permission.access.read'|trans }}>
                             <div class="ui toggle checkbox">
-                                <input type="checkbox" name={{ permission ~ '~read' }}>
+                                <input type="checkbox" name={{ 'read~' ~ permission }}>
                             </div>
                         </td>
                         <td data-label={{ 'sylius_rbac.ui.permission.access.write'|trans }}>
                             <div class="ui toggle checkbox">
-                                <input type="checkbox" name={{ permission ~ '~write' }}>
+                                <input type="checkbox" name={{ 'write~' ~ permission }}>
                             </div>
                         </td>
                     </tr>

@@ -4,49 +4,62 @@
 
 {% block content %}
 
-    {% include '@SyliusRbacPlugin/AdministrationRole/Update/_header.html.twig' %}
-    {% include '@SyliusRbacPlugin/AdministrationRole/Update/_breadcrumb.html.twig' %}
+{% include '@SyliusRbacPlugin/AdministrationRole/Update/_header.html.twig' %}
+{% include '@SyliusRbacPlugin/AdministrationRole/Update/_breadcrumb.html.twig' %}
 
-    <div class="ui segment">
-        <form name="sylius_rbac_administration_role" method="POST" class="ui loadable form" novalidate="novalidate" action={{ path('sylius_rbac_administration_role_update', {'id': administration_role.id}) }}>
-            <div id="sylius_rbac_administration_role">
-                <div class="required field">
-                    <label for="sylius_rbac_administration_role_name" class="required">{{ 'sylius.ui.name'|trans }}</label>
-                    <input type="text" id="sylius_rbac_administration_role_name" name="administration_role_name" required="required" value={{ administration_role.name }} />
-                </div>
-                <table class="ui celled table">
-                    <thead>
-                        <tr>
-                            <th>{{ 'sylius_rbac.ui.permissions'|trans }}</th>
-                            <th>{{ 'sylius_rbac.ui.permission.access.read'|trans }}</th>
-                            <th>{{ 'sylius_rbac.ui.permission.access.write'|trans }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for permission in permissions %}
-                        <tr>
-                            <td data-label={{ 'sylius_rbac.ui.permissions'|trans }}>{{ ('sylius_rbac.ui.permission.' ~ permission)|trans }}</td>
-                            <td data-label={{ 'sylius_rbac.ui.permission.access.read'|trans }}>
-                                <div class="ui toggle checkbox">
-                                    <input type="checkbox" name={{ 'read~' ~ permission  }}>
-                                </div>
-                            </td>
-                            <td data-label={{ 'sylius_rbac.ui.permission.access.write'|trans }}>
-                                <div class="ui toggle checkbox">
-                                    <input type="checkbox" name={{ 'write~' ~ permission }}>
-                                </div>
-                            </td>
-                        </tr>
+{% set readAccess = constant('Sylius\\RbacPlugin\\Model\\PermissionAccess::READ') %}
+{% set writeAccess = constant('Sylius\\RbacPlugin\\Model\\PermissionAccess::WRITE') %}
+{% set permissionAccessDelimiter = constant('Sylius\\RbacPlugin\\Model\\PermissionAccess::PERMISSION_ACCESS_DELIMITER') %}
+
+<div class="ui segment">
+    <form name="sylius_rbac_administration_role" method="POST" class="ui loadable form" novalidate="novalidate" action={{ path('sylius_rbac_administration_role_update', {'id': administration_role.id}) }}>
+        <div id="sylius_rbac_administration_role">
+            <div class="required field">
+                <label for="sylius_rbac_administration_role_name" class="required">{{ 'sylius.ui.name'|trans }}</label>
+                <input type="text" id="sylius_rbac_administration_role_name" name="administration_role_name" required="required" value={{ administration_role.name }} >
+            </div>
+            <table class="ui celled table">
+                <thead>
+                    <tr>
+                        <th>{{ 'sylius_rbac.ui.permissions'|trans }}</th>
+                        <th>{{ 'sylius_rbac.ui.permission.access.read'|trans }}</th>
+                        <th>{{ 'sylius_rbac.ui.permission.access.write'|trans }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for permission in permissions %}
+                    {% set is_write_access_granted = false %}
+                    {% set is_read_access_granted = false %}
+
+                    {% for rolePermission in rolePermissions %}
+                        {% if rolePermission.type == permission  %}
+                            {% set is_write_access_granted = (writeAccess in rolePermission.accesses) %}
+                            {% set is_read_access_granted = (readAccess in rolePermission.accesses) %}
+                        {% endif %}
                     {% endfor %}
-                    </tbody>
-                </table>
-                <div class="ui basic segment">
-                    <div class="ui buttons">
-                        <button id="sylius_save_changes_button" class="ui labeled icon primary button" type="submit"><i class="save icon"></i>{{ 'sylius.ui.save_changes'|trans }}</button>
-                        <a href={{ path('sylius_rbac_admin_administration_role_index') }} class="ui button">{{ 'sylius.ui.cancel'|trans }}</a>
-                    </div>
+                    <tr>
+                        <td data-label={{ 'sylius_rbac.ui.permissions'|trans }}>{{ ('sylius_rbac.ui.permission.' ~ permission)|trans }}</td>
+                        <td data-label={{ 'sylius_rbac.ui.permission.access.read'|trans }}>
+                            <div class="ui toggle checkbox">
+                                <input type="checkbox" name={{ readAccess ~ permissionAccessDelimiter ~ permission }} {% if is_read_access_granted %} checked="checked"{% endif %}>
+                            </div>
+                        </td>
+                        <td data-label={{ 'sylius_rbac.ui.permission.access.write'|trans }}>
+                            <div class="ui toggle checkbox">
+                                <input type="checkbox" name={{ writeAccess ~ permissionAccessDelimiter ~ permission }} {% if is_write_access_granted %} checked="checked"{% endif %}>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="ui basic segment">
+                <div class="ui buttons">
+                    <button id="sylius_save_changes_button" class="ui labeled icon primary button" type="submit"><i class="save icon"></i>{{ 'sylius.ui.save_changes'|trans }}</button>
+                    <a href={{ path('sylius_rbac_admin_administration_role_index') }} class="ui button">{{ 'sylius.ui.cancel'|trans }}</a>
                 </div>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
+</div>
 {% endblock %}

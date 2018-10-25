@@ -47,16 +47,6 @@ final class Permission implements PermissionInterface
 
     public static function ofType(string $type, array $accesses = []): self
     {
-        Assert::oneOf(
-            $type, [
-                self::CATALOG_MANAGEMENT_PERMISSION,
-                self::CONFIGURATION_PERMISSION,
-                self::CUSTOMERS_MANAGEMENT_PERMISSION,
-                self::MARKETING_MANAGEMENT_PERMISSION,
-                self::SALES_MANAGEMENT_PERMISSION
-            ]
-        );
-
         return new self($type, $accesses);
     }
 
@@ -70,13 +60,23 @@ final class Permission implements PermissionInterface
 
     public static function unserialize(string $serialized): self
     {
-        $data = json_decode($serialized);
+        $data = json_decode($serialized, true);
 
         return new self($data['type'], $data['accesses']);
     }
 
-    private function __construct(string $type, array $accesses)
+    private function __construct(?string $type, ?array $accesses)
     {
+        Assert::oneOf(
+            $type, [
+                self::CATALOG_MANAGEMENT_PERMISSION,
+                self::CONFIGURATION_PERMISSION,
+                self::CUSTOMERS_MANAGEMENT_PERMISSION,
+                self::MARKETING_MANAGEMENT_PERMISSION,
+                self::SALES_MANAGEMENT_PERMISSION
+            ]
+        );
+
         if (!empty($accesses)) {
             Assert::allOneOf(
                 $accesses, [

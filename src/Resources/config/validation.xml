@@ -5,12 +5,17 @@
         <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
             <option name="fields">name</option>
             <option name="message">sylius_rbac.administration_role.name.unique</option>
-            <option name="groups">sylius</option>
+            <option name="groups">
+                <value>sylius_rbac_administration_role_create</value>
+            </option>
         </constraint>
         <property name="name">
             <constraint name="NotBlank">
                 <option name="message">sylius_rbac.administration_role.name.not_blank</option>
-                <option name="groups">sylius</option>
+                <option name="groups">
+                    <value>sylius_rbac_administration_role_create</value>
+                    <value>sylius_rbac_administration_role_update</value>
+                </option>
             </constraint>
         </property>
     </class>

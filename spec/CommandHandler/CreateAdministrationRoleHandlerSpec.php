@@ -27,7 +27,8 @@ final class CreateAdministrationRoleHandlerSpec extends ObjectBehavior
             $administrationRoleManager,
             $administrationRoleFactory,
             $administrationRoleValidator,
-            $administrationRolePermissionNormalizer
+            $administrationRolePermissionNormalizer,
+            'sylius_rbac_administration_role_create'
         );
     }
 
@@ -38,7 +39,9 @@ final class CreateAdministrationRoleHandlerSpec extends ObjectBehavior
         AdministrationRoleValidatorInterface $administrationRoleValidator,
         AdministrationRolePermissionNormalizerInterface $administrationRolePermissionNormalizer,
         PermissionInterface $catalogManagementPermission,
-        PermissionInterface $configurationPermission
+        PermissionInterface $configurationPermission,
+        PermissionInterface $normalizedCatalogManagementPermission,
+        PermissionInterface $normalizedConfigurationPermission
     ): void {
         $catalogManagementPermission->type()->willReturn(Permission::CATALOG_MANAGEMENT_PERMISSION);
         $catalogManagementPermission->accesses()->willReturn([PermissionAccess::READ]);
@@ -54,10 +57,23 @@ final class CreateAdministrationRoleHandlerSpec extends ObjectBehavior
             ->willReturn($administrationRole)
         ;
 
-        $administrationRoleValidator->validate($administrationRole)->shouldBeCalled();
+        $administrationRoleValidator
+            ->validate($administrationRole, 'sylius_rbac_administration_role_create')
+            ->shouldBeCalled()
+        ;
 
-        $administrationRolePermissionNormalizer->normalize($catalogManagementPermission)->shouldBeCalled();
-        $administrationRolePermissionNormalizer->normalize($configurationPermission)->shouldBeCalled();
+        $administrationRolePermissionNormalizer
+            ->normalize($catalogManagementPermission)
+            ->willReturn($normalizedCatalogManagementPermission)
+        ;
+
+        $administrationRolePermissionNormalizer
+            ->normalize($configurationPermission)
+            ->willReturn($normalizedConfigurationPermission)
+        ;
+
+        $administrationRole->addPermission($normalizedCatalogManagementPermission)->shouldBeCalled();
+        $administrationRole->addPermission($normalizedConfigurationPermission)->shouldBeCalled();
 
         $administrationRoleManager->persist($administrationRole)->shouldBeCalled();
         $administrationRoleManager->flush()->shouldBeCalled();
@@ -84,7 +100,10 @@ final class CreateAdministrationRoleHandlerSpec extends ObjectBehavior
         $administrationRoleFactory
             ->createWithNameAndPermissions('', ['catalog_management', 'configuration']);
 
-        $administrationRoleValidator->validate($administrationRole)->willThrow(new \InvalidArgumentException());
+        $administrationRoleValidator
+            ->validate($administrationRole, 'sylius_rbac_administration_role_create')
+            ->willThrow(new \InvalidArgumentException())
+        ;
 
         $this->shouldThrow(\InvalidArgumentException::class)->during('__invoke', [$command]);
     }

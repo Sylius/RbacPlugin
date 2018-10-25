@@ -8,5 +8,5 @@ use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
 
 interface AdministrationRoleValidatorInterface
 {
-    public function validate(AdministrationRoleInterface $administrationRole): void;
+    public function validate(AdministrationRoleInterface $administrationRole, string $validationGroup): void;
 }
