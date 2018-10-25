@@ -16,7 +16,7 @@ interface AdministrationRoleUpdatePageInterface extends UpdatePageInterface
 
     public function hasPermissionToSelect(string $permissionName): bool;
 
-    public function hasPermissionSelected(string $permissionName): bool;
+    public function hasPermissionSelected(string $permissionName, string $access): bool;
 
     public function hasPermissionWithAccessSelected(string $permissionName, string $access): bool;
 }

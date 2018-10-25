@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Sylius\RbacPlugin\Provider;
 
 use Sylius\RbacPlugin\Model\Permission;
-use Sylius\RbacPlugin\Model\PermissionAccess;
 
 final class AdminPermissionsProvider implements AdminPermissionsProviderInterface
 {

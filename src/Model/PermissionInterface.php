@@ -6,7 +6,7 @@ namespace Sylius\RbacPlugin\Model;
 
 interface PermissionInterface
 {
-    public function accesses(): array;
+    public function accesses(): ?array;
 
     public function addAccess(string $access): void;
 

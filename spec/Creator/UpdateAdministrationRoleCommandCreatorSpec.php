@@ -27,8 +27,7 @@ final class UpdateAdministrationRoleCommandCreatorSpec extends ObjectBehavior
     function it_creates_update_administration_role_command_from_request(
         RequestAdministrationRolePermissionsExtractorInterface $requestAdministrationRolePermissionsExtractor,
         Request $request
-    ): void
-    {
+    ): void {
         $request->request = new ParameterBag([
             'administration_role_name' => 'Product Manager',
             'permissions' => [
@@ -45,7 +44,7 @@ final class UpdateAdministrationRoleCommandCreatorSpec extends ObjectBehavior
             ->willReturn(
                 [
                     'catalog_management' => ['read', 'write'],
-                    'configuration' => ['read']
+                    'configuration' => ['read'],
                 ]
             );
 
@@ -55,7 +54,7 @@ final class UpdateAdministrationRoleCommandCreatorSpec extends ObjectBehavior
             'permissions' =>
                 [
                     'catalog_management' => ['read', 'write'],
-                    'configuration' => ['read']
+                    'configuration' => ['read'],
                 ],
         ];
 

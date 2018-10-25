@@ -11,6 +11,7 @@ use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
 use Sylius\RbacPlugin\Model\Permission;
+use Sylius\RbacPlugin\Model\PermissionAccess;
 
 final class AdministrationRolesContext implements Context
 {
@@ -43,6 +44,7 @@ final class AdministrationRolesContext implements Context
      */
     public function thereIsAlreadyAdministrationRoleInTheSystem(string $name): void
     {
+        /** @var AdministrationRoleInterface $administrationRole */
         $administrationRole = $this->administrationRoleFactory->createNew();
         $administrationRole->setName($name);
 
@@ -56,11 +58,20 @@ final class AdministrationRolesContext implements Context
      */
     public function thisAdministrationRoleHasAndPermissions(
         AdministrationRoleInterface $administrationRole,
-        string ...$permissions
+        string $firstPermissionName,
+        string $secondPermissionName
     ): void {
-        foreach ($permissions as $permission) {
-            $administrationRole->addPermission(new Permission(strtolower(str_replace(' ', '_', $permission))));
-        }
+        $administrationRole
+            ->addPermission(Permission::ofType(strtolower(str_replace(' ', '_', $firstPermissionName)),
+                [PermissionAccess::READ, PermissionAccess::WRITE]
+            )
+        );
+
+        $administrationRole
+            ->addPermission(Permission::ofType(strtolower(str_replace(' ', '_', $secondPermissionName)),
+                [PermissionAccess::READ, PermissionAccess::WRITE]
+            )
+        );
 
         $this->administrationRoleManager->flush();
     }

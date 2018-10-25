@@ -44,7 +44,7 @@ final class CreateAdministrationRoleCommandCreatorSpec extends ObjectBehavior
             ->willReturn(
                 [
                     'catalog_management' => ['read', 'write'],
-                    'configuration' => ['read']
+                    'configuration' => ['read'],
                 ]
             )
         ;
@@ -54,7 +54,7 @@ final class CreateAdministrationRoleCommandCreatorSpec extends ObjectBehavior
             'permissions' =>
             [
                 'catalog_management' => ['read', 'write'],
-                'configuration' => ['read']
+                'configuration' => ['read'],
             ],
         ];
 

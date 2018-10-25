@@ -12,8 +12,7 @@ final class RequestAdministrationRolePermissionsExtractor implements RequestAdmi
     {
         $permissions = [];
 
-        foreach (array_keys($requestParameters) as $parameterKey)
-        {
+        foreach (array_keys($requestParameters) as $parameterKey) {
             if (!(
                 strpos($parameterKey, PermissionAccess::READ) !== false ||
                 strpos($parameterKey, PermissionAccess::WRITE) !== false

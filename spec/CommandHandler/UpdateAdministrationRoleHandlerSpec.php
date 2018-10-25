@@ -83,11 +83,11 @@ final class UpdateAdministrationRoleHandlerSpec extends ObjectBehavior
             ->willReturn(
                 [
                     $salesManagementPermission,
-                    $customersManagementPermission
+                    $customersManagementPermission,
                 ],
                 [
                     $normalizedSalesManagementPermission,
-                    $normalizedCustomersManagementPermission
+                    $normalizedCustomersManagementPermission,
                 ]
             )
         ;

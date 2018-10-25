@@ -17,7 +17,7 @@ final class Permission implements PermissionInterface
     /** @var string */
     private $type;
 
-    /** @var array */
+    /** @var array|null */
     private $accesses;
 
     public static function catalogManagement(array $accesses = []): self
@@ -52,10 +52,13 @@ final class Permission implements PermissionInterface
 
     public function serialize(): string
     {
-        return json_encode([
+        /** @var string $serializedPermission */
+        $serializedPermission = json_encode([
             'type' => $this->type(),
             'accesses' => $this->accesses,
         ]);
+
+        return $serializedPermission;
     }
 
     public static function unserialize(string $serialized): self
@@ -65,7 +68,7 @@ final class Permission implements PermissionInterface
         return new self($data['type'], $data['accesses']);
     }
 
-    private function __construct(?string $type, ?array $accesses)
+    private function __construct(string $type, ?array $accesses)
     {
         Assert::oneOf(
             $type, [
@@ -73,7 +76,7 @@ final class Permission implements PermissionInterface
                 self::CONFIGURATION_PERMISSION,
                 self::CUSTOMERS_MANAGEMENT_PERMISSION,
                 self::MARKETING_MANAGEMENT_PERMISSION,
-                self::SALES_MANAGEMENT_PERMISSION
+                self::SALES_MANAGEMENT_PERMISSION,
             ]
         );
 
@@ -81,7 +84,7 @@ final class Permission implements PermissionInterface
             Assert::allOneOf(
                 $accesses, [
                     PermissionAccess::READ,
-                    PermissionAccess::WRITE
+                    PermissionAccess::WRITE,
                 ]
             );
         }
@@ -90,7 +93,7 @@ final class Permission implements PermissionInterface
         $this->accesses = $accesses;
     }
 
-    public function accesses(): array
+    public function accesses(): ?array
     {
         return $this->accesses;
     }
@@ -100,7 +103,7 @@ final class Permission implements PermissionInterface
         Assert::oneOf(
             $access, [
                 PermissionAccess::READ,
-                PermissionAccess::WRITE
+                PermissionAccess::WRITE,
             ]
         );
 
