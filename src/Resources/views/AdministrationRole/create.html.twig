@@ -18,7 +18,7 @@
                     <label for="sylius_rbac_administration_role_name" class="required">{{ 'sylius.ui.name'|trans }}</label>
                     <input type="text" id="sylius_rbac_administration_role_name" name="administration_role_name" required="required" >
                 </div>
-            <table class="ui celled table">
+            <table class="ui celled table" id="permission_table">
                 <thead>
                 <tr>
                     <th>{{ 'sylius_rbac.ui.permissions'|trans }}</th>
@@ -32,12 +32,14 @@
                         <td data-label={{ 'sylius_rbac.ui.permissions'|trans }}>{{ ('sylius_rbac.ui.permission.' ~ permission)|trans }}</td>
                         <td data-label={{ 'sylius_rbac.ui.permission.access.read'|trans }}>
                             <div class="ui toggle checkbox">
-                                <input type="checkbox" name={{ 'read~' ~ permission }}>
+                                {% set permissionReadAccess = readAccess ~ permissionAccessDelimiter ~ permission %}
+                                <input type="checkbox" id={{ permissionReadAccess }} name={{ permissionReadAccess }}>
                             </div>
                         </td>
                         <td data-label={{ 'sylius_rbac.ui.permission.access.write'|trans }}>
                             <div class="ui toggle checkbox">
-                                <input type="checkbox" name={{ 'write~' ~ permission }}>
+                                {% set permissionWriteAccess = writeAccess ~ permissionAccessDelimiter ~ permission %}
+                                <input type="checkbox" id={{ permissionWriteAccess }} name={{ permissionWriteAccess }}>
                             </div>
                         </td>
                     </tr>

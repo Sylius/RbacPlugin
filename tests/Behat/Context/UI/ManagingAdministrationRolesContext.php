@@ -9,6 +9,7 @@ use Sylius\Behat\NotificationType;
 use Sylius\Behat\Page\Admin\Crud\IndexPageInterface;
 use Sylius\Behat\Service\NotificationCheckerInterface;
 use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
+use Sylius\RbacPlugin\Model\PermissionAccess;
 use Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdministrationRoleCreatePageInterface;
 use Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdministrationRoleUpdatePageInterface;
 use Webmozart\Assert\Assert;
@@ -81,11 +82,12 @@ final class ManagingAdministrationRolesContext implements Context
     }
 
     /**
-     * @When I remove :access access from :permissionName permission
+     * @When I remove all accesses from :permissionName permission
      */
-    public function removeAccessFromPermission(string $access, string $permissionName): void
+    public function removeAccessFromPermission(string $permissionName): void
     {
-        $this->updatePage->removePermissionWithAccess($permissionName, $access);
+        $this->updatePage->removePermissionAccess($permissionName, PermissionAccess::READ);
+        $this->updatePage->removePermissionAccess($permissionName, PermissionAccess::WRITE);
     }
 
     /**
@@ -133,11 +135,11 @@ final class ManagingAdministrationRolesContext implements Context
     }
 
     /**
-     * @Then I should be able to select :permissionName permission
+     * @Then I should be able to manage :permissionName permission
      */
     public function shouldBeAbleToSelectPermission(string $permissionName): void
     {
-        Assert::true($this->updatePage->hasPermissionToSelect($permissionName));
+        Assert::true($this->updatePage->isPermissionManageable($permissionName));
     }
 
     /**
@@ -153,19 +155,12 @@ final class ManagingAdministrationRolesContext implements Context
     }
 
     /**
-     * @Then this Administration role should have :permissionName permission with
-     */
-    public function thisAdministrationRoleShouldHavePermissionWithAccess(string $permissionName): void
-    {
-        Assert::true($this->updatePage->hasPermissionSelected($permissionName));
-    }
-
-    /**
      * @Then this Administration role should not have :permissionName permission
      */
     public function thisAdministrationRoleShouldNotHavePermission(string $permissionName): void
     {
-        Assert::false($this->updatePage->hasPermissionSelected($permissionName));
+        Assert::false($this->updatePage->hasActivePermission($permissionName, PermissionAccess::READ));
+        Assert::false($this->updatePage->hasActivePermission($permissionName, PermissionAccess::WRITE));
     }
 
     /**
