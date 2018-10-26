@@ -1,0 +1,57 @@
+imports:
+    - { resource: "@SyliusCoreBundle/Resources/config/app/config.yml" }
+
+    - { resource: "@SyliusAdminBundle/Resources/config/app/config.yml" }
+    - { resource: "@SyliusAdminApiBundle/Resources/config/app/config.yml" }
+
+    - { resource: "@SyliusShopBundle/Resources/config/app/config.yml" }
+
+    - { resource: "@SyliusRbacPlugin/Resources/config/config.yml" }
+
+parameters:
+    sylius_core.public_dir: '%kernel.project_dir%/public'
+
+sylius_shop:
+    product_grid:
+        include_all_descendants: true
+
+sylius_resource:
+    resources:
+        sylius_rbac.administration_role:
+            classes:
+                model: Sylius\RbacPlugin\Entity\AdministrationRole
+                form: Sylius\RbacPlugin\Form\Type\AdministrationRoleType
+
+sylius_user:
+    resources:
+        admin:
+            user:
+                classes:
+                    model: Sylius\RbacPlugin\Entity\AdminUser
+
+sylius_grid:
+    grids:
+        sylius_rbac_administration_role:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: Sylius\RbacPlugin\Entity\AdministrationRole
+            fields:
+                name:
+                    type: string
+                    label: sylius.ui.name
+            actions:
+                main:
+                    create:
+                        type: create
+                item:
+                    update:
+                        type: update
+        sylius_admin_admin_user:
+            fields:
+                administration_role:
+                    type: twig
+                    label: sylius_rbac.ui.administration_role
+                    sortable: true
+                    options:
+                        template: '@SyliusRbacPlugin/AdministrationRole/Grid/Field/administrationRole.html.twig'

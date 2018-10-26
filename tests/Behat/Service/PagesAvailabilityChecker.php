@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Sylius\RbacPlugin\Behat\Service;
 
-use Sylius\Behat\Page\PageInterface;
-use Sylius\Behat\Page\UnexpectedPageException;
+use FriendsOfBehat\PageObjectExtension\Page\PageInterface;
+use FriendsOfBehat\PageObjectExtension\Page\UnexpectedPageException;
 
 final class PagesAvailabilityChecker
 {
