@@ -5,7 +5,8 @@ Feature: Having an access only to configuration management
     I want to be able to access only configuration section in Admin panel
 
     Background:
-        Given there is already an Administration role "Configurator" in the system
+        Given the store operates on a single channel in "United States"
+        And there is already an Administration role "Configurator" in the system
         And this administration role has "Configuration" permission
         And there is an administrator "scary.terry@nightmare.com" identified by "youCanRunButYouCannotHide"
         And this administrator has administration role "Configurator"
@@ -14,7 +15,7 @@ Feature: Having an access only to configuration management
     @ui
     Scenario: Seeing only configuration section in Admin panel main menu
         When I open administration dashboard
-        Then only "Customers" section should be available in the main menu
+        Then only "Configuration" section should be available in the main menu
 
     @ui
     Scenario: Having access only to configuration management section

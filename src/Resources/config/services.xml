@@ -40,5 +40,19 @@
         >
             <argument type="service" id="sylius_rbac.custom_factory.administration_role.inner" />
         </service>
+
+        <service id="Sylius\RbacPlugin\Access\Checker\AdministratorAccessCheckerInterface" class="Sylius\RbacPlugin\Access\Checker\AdministratorAccessChecker" />
+
+        <service id="Sylius\RbacPlugin\Access\Creator\AccessRequestCreatorInterface" class="Sylius\RbacPlugin\Access\Creator\AccessRequestCreator">
+            <argument>%sylius_rbac.configuration%</argument>
+        </service>
+
+        <service id="Sylius\RbacPlugin\Access\Listener\AccessCheckListener">
+            <argument type="service" id="Sylius\RbacPlugin\Access\Creator\AccessRequestCreatorInterface" />
+            <argument type="service" id="Sylius\RbacPlugin\Access\Checker\AdministratorAccessCheckerInterface" />
+            <argument type="service" id="security.token_storage" />
+            <argument type="service" id="router" />
+            <tag name="kernel.event_listener" event="kernel.request" />
+        </service>
     </services>
 </container>

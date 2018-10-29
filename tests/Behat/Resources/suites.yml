@@ -10,9 +10,11 @@ default:
 
                 - sylius.behat.context.setup.admin_security
                 - sylius.behat.context.setup.admin_user
+                - sylius.behat.context.setup.channel
                 - Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdministrationRolesContext
                 - Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdminUserContext
 
+                - sylius.behat.context.ui.admin.dashboard
                 - Tests\Sylius\RbacPlugin\Behat\Context\UI\AdminMainMenuContext
                 - Tests\Sylius\RbacPlugin\Behat\Context\UI\AccessRestrictionsContext
             filters:

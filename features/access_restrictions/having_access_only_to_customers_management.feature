@@ -5,10 +5,11 @@ Feature: Having an access only to customers management
     I want to be able to access only customers section in Admin panel
 
     Background:
-        Given there is already an Administration role "Customer manager" in the system
+        Given the store operates on a single channel in "United States"
+        And there is already an Administration role "Customer manager" in the system
         And this administration role has "Customers management" permission
         And there is an administrator "scary.terry@nightmare.com" identified by "youCanRunButYouCannotHide"
-        And this administrator has administration role "Product manager"
+        And this administrator has administration role "Customer manager"
         And I am logged in as "scary.terry@nightmare.com" administrator
 
     @ui

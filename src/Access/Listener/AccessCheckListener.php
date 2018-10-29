@@ -41,7 +41,15 @@ final class AccessCheckListener
 
     public function __invoke(GetResponseEvent $event): void
     {
-        $routeName = $event->getRequest()->attributes->get('_route');
+        if (!$event->isMasterRequest()) {
+            return;
+        }
+
+        $routeName = $event->getRequest()->get('_route');
+
+        if ($routeName === null) {
+            return;
+        }
 
         if (strpos($routeName, 'sylius_admin') === false) {
             return;

@@ -68,6 +68,7 @@ sylius_rbac:
             - sylius_admin_exchange_rate
             - sylius_admin_locale
             - sylius_admin_payment_method
+            - sylius_admin_shipping_method
             - sylius_admin_shipping_category
             - sylius_admin_tax_category
             - sylius_admin_tax_rate

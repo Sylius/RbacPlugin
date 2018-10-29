@@ -5,7 +5,8 @@ Feature: Having an access only to products catalog management
     I want to be able to access only products catalog section in Admin panel
 
     Background:
-        Given there is already an Administration role "Product manager" in the system
+        Given the store operates on a single channel in "United States"
+        And there is already an Administration role "Product manager" in the system
         And this administration role has "Catalog management" permission
         And there is an administrator "scary.terry@nightmare.com" identified by "youCanRunButYouCannotHide"
         And this administrator has administration role "Product manager"

@@ -13,6 +13,6 @@ final class AdminMainMenuElement extends Element implements AdminMainMenuElement
     {
         return array_map(function(NodeElement $header): string {
             return $header->getText();
-        }, $this->getDocument()->find('css', '#sidebar .item .header'));
+        }, $this->getDocument()->findAll('css', '#sidebar .item .header'));
     }
 }
