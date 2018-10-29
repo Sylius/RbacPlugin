@@ -34,5 +34,7 @@
         <service id="Sylius\RbacPlugin\Creator\AdministrationRoleCreator" />
 
         <service id="Sylius\RbacPlugin\Extractor\PermissionDataExtractor" />
+
+        <service id="Sylius\RbacPlugin\Factory\AdministrationRoleFactory" decorates="sylius_rbac.factory.administration_role" />
     </services>
 </container>

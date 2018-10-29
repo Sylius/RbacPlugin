@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace spec\Sylius\RbacPlugin\Creator;
 
 use PhpSpec\ObjectBehavior;
-use Sylius\RbacPlugin\Command\CreateAdministrationRole;
 use Sylius\RbacPlugin\Creator\CommandCreatorInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,9 +31,16 @@ final class CreateAdministrationRoleCommandCreatorSpec extends ObjectBehavior
             'permissions' => ['catalog_management', 'configuration'],
         ];
 
-        $command = $this->fromRequest($request);
+        $this->fromRequest($request)->shouldBeCommandWithPayload($payload);
+    }
 
-        $command->shouldHaveType(CreateAdministrationRole::class);
-        $command->payload()->shouldBeLike($payload);
+    public function getMatchers(): array
+    {
+        return [
+            'beCommandWithPayload' => function ($subject, $payload) {
+                return $subject->administrationRoleName() === $payload['administration_role_name'] &&
+                    $subject->permissions() === $payload['permissions'];
+            },
+        ];
     }
 }

@@ -43,6 +43,11 @@ class AdministrationRole implements AdministrationRoleInterface
         unset($this->permissions[$permission->type()]);
     }
 
+    public function clearPermissions(): void
+    {
+        $this->permissions = [];
+    }
+
     public function hasPermission(Permission $permission): bool
     {
         return

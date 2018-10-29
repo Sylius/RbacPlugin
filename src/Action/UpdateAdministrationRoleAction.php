@@ -47,7 +47,7 @@ final class UpdateAdministrationRoleAction
 
             $this->session->getFlashBag()->add(
                 'success',
-                'sylius_rbac.administration_role_updated_successfully'
+                'sylius_rbac.administration_role_successfully_updated'
             );
         } catch (CommandDispatchException $exception) {
             Assert::notNull($exception->getPrevious());

@@ -17,6 +17,8 @@ interface AdministrationRoleInterface extends ResourceInterface
 
     public function removePermission(Permission $permission): void;
 
+    public function clearPermissions(): void;
+
     public function hasPermission(Permission $permission): bool;
 
     public function getPermissions(): array;

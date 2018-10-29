@@ -7,8 +7,8 @@ namespace spec\Sylius\RbacPlugin\CommandHandler;
 use Doctrine\Common\Persistence\ObjectManager;
 use PhpSpec\ObjectBehavior;
 use Sylius\RbacPlugin\Command\CreateAdministrationRole;
-use Sylius\RbacPlugin\Creator\AdministrationRoleCreatorInterface;
 use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
+use Sylius\RbacPlugin\Factory\AdministrationRoleFactoryInterface;
 use Sylius\RbacPlugin\Model\Permission;
 use Sylius\RbacPlugin\Validator\AdministrationRoleValidatorInterface;
 
@@ -16,26 +16,23 @@ final class CreateAdministrationRoleHandlerSpec extends ObjectBehavior
 {
     function let(
         ObjectManager $administrationRoleManager,
-        AdministrationRoleCreatorInterface $administrationRoleCreator,
+        AdministrationRoleFactoryInterface $administrationRoleFactory,
         AdministrationRoleValidatorInterface $administrationRoleValidator
     ): void {
-        $this->beConstructedWith($administrationRoleManager, $administrationRoleCreator, $administrationRoleValidator);
+        $this->beConstructedWith($administrationRoleManager, $administrationRoleFactory, $administrationRoleValidator);
     }
 
     function it_handles_command_and_persists_new_administration_role(
         ObjectManager $administrationRoleManager,
-        AdministrationRoleCreatorInterface $administrationRoleCreator,
+        AdministrationRoleFactoryInterface $administrationRoleFactory,
         AdministrationRoleInterface $administrationRole,
         AdministrationRoleValidatorInterface $administrationRoleValidator
     ): void {
-        $catalogManagementPermission = new Permission('catalog_management');
-        $configurationPermission = new Permission('configuration');
+        $administrationRole->getName()->willReturn('Product Manager');
+        $administrationRole->getPermissions()->willReturn([Permission::catalogManagement(), Permission::configuration()]);
 
-        $administrationRole->getName()->willReturn('rick_sanchez');
-        $administrationRole->getPermissions()->willReturn([$catalogManagementPermission, $configurationPermission]);
-
-        $administrationRoleCreator
-            ->create('rick_sanchez', ['catalog_management', 'configuration'])
+        $administrationRoleFactory
+            ->createWithNameAndPermissions('Product Manager', ['catalog_management', 'configuration'])
             ->willReturn($administrationRole)
         ;
 
@@ -44,17 +41,15 @@ final class CreateAdministrationRoleHandlerSpec extends ObjectBehavior
         $administrationRoleManager->persist($administrationRole)->shouldBeCalled();
         $administrationRoleManager->flush()->shouldBeCalled();
 
-        $command = new CreateAdministrationRole(
-            'rick_sanchez',
+        $this->__invoke(new CreateAdministrationRole(
+            'Product Manager',
             ['catalog_management', 'configuration']
-        );
-
-        $this->__invoke($command);
+        ));
     }
 
     function it_propagates_an_exception_when_administration_role_is_not_valid(
         AdministrationRoleInterface $administrationRole,
-        AdministrationRoleCreatorInterface $administrationRoleCreator,
+        AdministrationRoleFactoryInterface $administrationRoleFactory,
         AdministrationRoleValidatorInterface $administrationRoleValidator
     ): void {
         $command = new CreateAdministrationRole(
@@ -62,8 +57,8 @@ final class CreateAdministrationRoleHandlerSpec extends ObjectBehavior
             ['catalog_management', 'configuration']
         );
 
-        $administrationRoleCreator
-            ->create('', ['catalog_management', 'configuration'])
+        $administrationRoleFactory
+            ->createWithNameAndPermissions('', ['catalog_management', 'configuration'])
             ->willReturn($administrationRole)
         ;
 

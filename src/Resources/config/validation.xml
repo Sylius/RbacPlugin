@@ -8,7 +8,10 @@
             <option name="groups">sylius</option>
         </constraint>
         <property name="name">
-            <constraint name="NotBlank" />
+            <constraint name="NotBlank">
+                <option name="message">sylius_rbac.administration_role.name.not_blank</option>
+                <option name="groups">sylius</option>
+            </constraint>
         </property>
     </class>
 </constraint-mapping>

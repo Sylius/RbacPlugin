@@ -1,3 +1,4 @@
 sylius_rbac:
-    administration_role_added_successfully: 'Administration role has been successfully created'
-    administration_role_updated_successfully: 'Administration role has been successfully updated'
+    administration_role_successfully_created: 'Administration role has been successfully created'
+    administration_role_successfully_updated: 'Administration role has been successfully updated'
+    administration_role_does_not_exist: 'Administration role does not exist'

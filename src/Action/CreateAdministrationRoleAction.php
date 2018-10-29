@@ -47,7 +47,7 @@ final class CreateAdministrationRoleAction
 
             $this->session->getFlashBag()->add(
                 'success',
-                'sylius_rbac.administration_role_added_successfully'
+                'sylius_rbac.administration_role_successfully_created'
             );
         } catch (CommandDispatchException $exception) {
             Assert::notNull($exception->getPrevious());

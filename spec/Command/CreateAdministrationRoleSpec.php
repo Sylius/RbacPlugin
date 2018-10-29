@@ -10,9 +10,9 @@ final class CreateAdministrationRoleSpec extends ObjectBehavior
 {
     function it_represents_an_intention_to_create_an_administration_role(): void
     {
-        $this->beConstructedWith('rick_sanchez', ['catalog_management', 'configuration']);
+        $this->beConstructedWith('Product Manager', ['catalog_management', 'configuration']);
 
-        $this->administrationRoleName()->shouldReturn('rick_sanchez');
+        $this->administrationRoleName()->shouldReturn('Product Manager');
         $this->permissions()->shouldReturn(['catalog_management', 'configuration']);
     }
 }

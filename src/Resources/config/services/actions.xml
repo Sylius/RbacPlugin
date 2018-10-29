@@ -4,7 +4,7 @@
     <services>
         <defaults autowire="false" autoconfigure="false" public="true" />
 
-        <service id="Sylius\RbacPlugin\Action\CreateAdministrationRoleCreatorViewAction" public="true">
+        <service id="Sylius\RbacPlugin\Action\CreateAdministrationRoleViewAction" public="true">
             <argument type="service" id="Sylius\RbacPlugin\Provider\AdminPermissionsProvider" />
             <argument type="service" id="twig" />
             <argument type="service" id="router" />

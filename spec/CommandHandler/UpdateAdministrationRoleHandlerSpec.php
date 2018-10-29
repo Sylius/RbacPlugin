@@ -8,8 +8,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\RbacPlugin\Command\UpdateAdministrationRole;
-use Sylius\RbacPlugin\Creator\AdministrationRoleCreatorInterface;
 use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
+use Sylius\RbacPlugin\Factory\AdministrationRoleFactoryInterface;
 use Sylius\RbacPlugin\Model\Permission;
 use Sylius\RbacPlugin\Validator\AdministrationRoleValidatorInterface;
 
@@ -17,13 +17,13 @@ final class UpdateAdministrationRoleHandlerSpec extends ObjectBehavior
 {
     function let(
         ObjectManager $administrationRoleManager,
-        AdministrationRoleCreatorInterface $administrationRoleCreator,
+        AdministrationRoleFactoryInterface $administrationRoleFactory,
         RepositoryInterface $administrationRoleRepository,
         AdministrationRoleValidatorInterface $administrationRoleValidator
     ): void {
         $this->beConstructedWith(
             $administrationRoleManager,
-            $administrationRoleCreator,
+            $administrationRoleFactory,
             $administrationRoleRepository,
             $administrationRoleValidator
         );
@@ -31,7 +31,7 @@ final class UpdateAdministrationRoleHandlerSpec extends ObjectBehavior
 
     function it_handles_command_and_updates_administration_role_with_given_id(
         ObjectManager $administrationRoleManager,
-        AdministrationRoleCreatorInterface $administrationRoleCreator,
+        AdministrationRoleFactoryInterface $administrationRoleFactory,
         RepositoryInterface $administrationRoleRepository,
         AdministrationRoleInterface $updatedAdministrationRole,
         AdministrationRoleInterface $administrationRoleUpdates,
@@ -56,8 +56,8 @@ final class UpdateAdministrationRoleHandlerSpec extends ObjectBehavior
             ->willReturn([$salesManagementPermission, $customersManagementPermission])
         ;
 
-        $administrationRoleCreator
-            ->create('morty_smith', ['sales_management', 'customers_management'])
+        $administrationRoleFactory
+            ->createWithNameAndPermissions('morty_smith', ['sales_management', 'customers_management'])
             ->willReturn($administrationRoleUpdates)
         ;
 
@@ -65,13 +65,11 @@ final class UpdateAdministrationRoleHandlerSpec extends ObjectBehavior
 
         $updatedAdministrationRole->setName('morty_smith')->shouldBeCalled();
 
-        $updatedAdministrationRole->removePermission($catalogManagementPermission)->shouldBeCalled();
-        $updatedAdministrationRole->removePermission($configurationPermission)->shouldBeCalled();
+        $updatedAdministrationRole->clearPermissions()->shouldBeCalled();
 
         $updatedAdministrationRole->addPermission($salesManagementPermission)->shouldBeCalled();
         $updatedAdministrationRole->addPermission($customersManagementPermission)->shouldBeCalled();
 
-        $administrationRoleManager->persist($updatedAdministrationRole)->shouldBeCalled();
         $administrationRoleManager->flush()->shouldBeCalled();
 
         $command = new UpdateAdministrationRole(
@@ -85,7 +83,7 @@ final class UpdateAdministrationRoleHandlerSpec extends ObjectBehavior
 
     function it_propagates_an_exception_when_administration_role_is_not_valid(
         AdministrationRoleInterface $administrationRole,
-        AdministrationRoleCreatorInterface $administrationRoleCreator,
+        AdministrationRoleFactoryInterface $administrationRoleFactory,
         AdministrationRoleValidatorInterface $administrationRoleValidator
     ): void {
         $command = new UpdateAdministrationRole(
@@ -94,8 +92,8 @@ final class UpdateAdministrationRoleHandlerSpec extends ObjectBehavior
             ['catalog_management', 'configuration']
         );
 
-        $administrationRoleCreator
-            ->create('', ['catalog_management', 'configuration'])
+        $administrationRoleFactory
+            ->createWithNameAndPermissions('', ['catalog_management', 'configuration'])
             ->willReturn($administrationRole)
         ;
 

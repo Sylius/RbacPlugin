@@ -11,13 +11,13 @@ final class UpdateAdministrationRole extends Command
 {
     use PayloadTrait;
 
-    public function __construct(int $id, ?string $administrationRoleName, ?array $permissions)
+    public function __construct(int $id, string $administrationRoleName, ?array $permissions = [])
     {
         $this->init();
         $this->setPayload([
             'administration_role_id' => $id,
-            'administration_role_name' => $administrationRoleName === null ? '' : $administrationRoleName,
-            'permissions' => $permissions === null ? [] : $permissions,
+            'administration_role_name' => $administrationRoleName,
+            'permissions' => $permissions,
         ]);
     }
 
