@@ -54,5 +54,11 @@
             <argument type="service" id="router" />
             <tag name="kernel.event_listener" event="kernel.request" />
         </service>
+
+        <service id="Sylius\RbacPlugin\Access\Menu\AdminMenuAccessListener">
+            <argument type="service" id="security.token_storage" />
+            <argument type="service" id="Sylius\RbacPlugin\Access\Checker\AdministratorAccessCheckerInterface" />
+            <tag name="kernel.event_listener" event="sylius.menu.admin.main" method="removeInaccessibleAdminMenuParts" />
+        </service>
     </services>
 </container>

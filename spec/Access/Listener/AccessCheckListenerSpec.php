@@ -42,6 +42,7 @@ final class AccessCheckListenerSpec extends ObjectBehavior
         TokenInterface $token,
         AdminUserInterface $adminUser
     ): void {
+        $event->isMasterRequest()->willReturn(true);
         $event->getRequest()->willReturn($request);
         $request->attributes = new ParameterBag(['_route' => 'sylius_admin_some_route']);
 
@@ -70,6 +71,7 @@ final class AccessCheckListenerSpec extends ObjectBehavior
         TokenInterface $token,
         AdminUserInterface $adminUser
     ): void {
+        $event->isMasterRequest()->willReturn(true);
         $event->getRequest()->willReturn($request);
         $request->attributes = new ParameterBag(['_route' => 'sylius_admin_some_route']);
 
@@ -91,6 +93,7 @@ final class AccessCheckListenerSpec extends ObjectBehavior
         GetResponseEvent $event,
         Request $request
     ): void {
+        $event->isMasterRequest()->willReturn(true);
         $event->getRequest()->willReturn($request);
         $request->attributes = new ParameterBag(['_route' => 'sylius_admin_some_route']);
 
@@ -109,10 +112,20 @@ final class AccessCheckListenerSpec extends ObjectBehavior
         GetResponseEvent $event,
         Request $request
     ): void {
+        $event->isMasterRequest()->willReturn(true);
         $event->getRequest()->willReturn($request);
         $request->attributes = new ParameterBag(['_route' => 'sylius_shop_some_route']);
 
         $accessRequestCreator->createFromRouteName('sylius_admin_some_route')->shouldNotBeCalled();
+
+        $this->__invoke($event);
+    }
+
+    function it_does_nothing_if_request_is_not_master_request(GetResponseEvent $event): void
+    {
+        $event->isMasterRequest()->willReturn(false);
+
+        $event->getRequest()->shouldNotBeCalled();
 
         $this->__invoke($event);
     }

@@ -45,7 +45,7 @@ final class AccessCheckListener
             return;
         }
 
-        $routeName = $event->getRequest()->get('_route');
+        $routeName = $event->getRequest()->attributes->get('_route');
 
         if ($routeName === null) {
             return;
