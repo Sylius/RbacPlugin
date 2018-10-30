@@ -52,6 +52,7 @@
             <argument type="service" id="Sylius\RbacPlugin\Access\Checker\AdministratorAccessCheckerInterface" />
             <argument type="service" id="security.token_storage" />
             <argument type="service" id="router" />
+            <argument type="service" id="session" />
             <tag name="kernel.event_listener" event="kernel.request" />
         </service>
 

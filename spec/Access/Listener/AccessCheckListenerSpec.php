@@ -16,6 +16,8 @@ use Sylius\RbacPlugin\Entity\AdminUserInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -27,9 +29,10 @@ final class AccessCheckListenerSpec extends ObjectBehavior
         AccessRequestCreatorInterface $accessRequestCreator,
         AdministratorAccessCheckerInterface $administratorAccessChecker,
         TokenStorageInterface $tokenStorage,
-        UrlGeneratorInterface $router
+        UrlGeneratorInterface $router,
+        Session $session
     ): void {
-        $this->beConstructedWith($accessRequestCreator, $administratorAccessChecker, $tokenStorage, $router);
+        $this->beConstructedWith($accessRequestCreator, $administratorAccessChecker, $tokenStorage, $router, $session);
     }
 
     function it_redirects_to_admin_dashboard_if_admin_does_not_have_access_to_target_route(
@@ -37,10 +40,12 @@ final class AccessCheckListenerSpec extends ObjectBehavior
         AdministratorAccessCheckerInterface $administratorAccessChecker,
         TokenStorageInterface $tokenStorage,
         UrlGeneratorInterface $router,
+        Session $session,
         GetResponseEvent $event,
         Request $request,
         TokenInterface $token,
-        AdminUserInterface $adminUser
+        AdminUserInterface $adminUser,
+        FlashBagInterface $flashBag
     ): void {
         $event->isMasterRequest()->willReturn(true);
         $event->getRequest()->willReturn($request);
@@ -58,6 +63,9 @@ final class AccessCheckListenerSpec extends ObjectBehavior
         $event->setResponse(Argument::that(function (RedirectResponse $response): bool {
             return $response->getTargetUrl() === 'http://sylius.dev/admin/';
         }))->shouldBeCalled();
+
+        $session->getFlashBag()->willReturn($flashBag);
+        $flashBag->add('error', 'sylius_rbac.you_have_no_access_to_this_section')->shouldBeCalled();
 
         $this->__invoke($event);
     }

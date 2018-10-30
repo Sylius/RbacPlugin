@@ -9,6 +9,7 @@ use Sylius\RbacPlugin\Access\Creator\AccessRequestCreatorInterface;
 use Sylius\RbacPlugin\Access\Exception\UnresolvedRouteNameException;
 use Sylius\RbacPlugin\Entity\AdminUserInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -29,16 +30,21 @@ final class AccessCheckListener
     /** @var UrlGeneratorInterface */
     private $router;
 
+    /** @var Session */
+    private $session;
+
     public function __construct(
         AccessRequestCreatorInterface $accessRequestCreator,
         AdministratorAccessCheckerInterface $administratorAccessChecker,
         TokenStorageInterface $tokenStorage,
-        UrlGeneratorInterface $router
+        UrlGeneratorInterface $router,
+        Session $session
     ) {
         $this->accessRequestCreator = $accessRequestCreator;
         $this->administratorAccessChecker = $administratorAccessChecker;
         $this->tokenStorage = $tokenStorage;
         $this->router = $router;
+        $this->session = $session;
     }
 
     public function __invoke(GetResponseEvent $event): void
@@ -75,5 +81,7 @@ final class AccessCheckListener
         }
 
         $event->setResponse(new RedirectResponse($this->router->generate('sylius_admin_dashboard')));
+
+        $this->session->getFlashBag()->add('error', 'sylius_rbac.you_have_no_access_to_this_section');
     }
 }
