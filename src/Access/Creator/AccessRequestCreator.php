@@ -21,12 +21,6 @@ final class AccessRequestCreator implements AccessRequestCreatorInterface
 
     public function createFromRouteName(string $routeName): AccessRequest
     {
-        foreach ($this->configuration['catalog'] as $catalogRoutePrefix) {
-            if (strpos($routeName, $catalogRoutePrefix) === 0) {
-                return new AccessRequest(Section::catalog(), OperationType::write());
-            }
-        }
-
         foreach ($this->configuration['configuration'] as $configurationRoutePrefix) {
             if (strpos($routeName, $configurationRoutePrefix) === 0) {
                 return new AccessRequest(Section::configuration(), OperationType::write());
@@ -48,6 +42,12 @@ final class AccessRequestCreator implements AccessRequestCreatorInterface
         foreach ($this->configuration['sales'] as $salesRoutePrefix) {
             if (strpos($routeName, $salesRoutePrefix) === 0) {
                 return new AccessRequest(Section::sales(), OperationType::write());
+            }
+        }
+
+        foreach ($this->configuration['catalog'] as $catalogRoutePrefix) {
+            if (strpos($routeName, $catalogRoutePrefix) === 0) {
+                return new AccessRequest(Section::catalog(), OperationType::write());
             }
         }
 

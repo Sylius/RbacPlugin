@@ -15,7 +15,7 @@ Feature: Having an access only to customers management
     @ui
     Scenario: Seeing only customers section in Admin panel main menu
         When I open administration dashboard
-        Then only "Customers" section should be available in the main menu
+        Then only "Customer" section should be available in the main menu
 
     @ui
     Scenario: Having access only to customers management section

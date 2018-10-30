@@ -8,12 +8,14 @@ use Sylius\RbacPlugin\Access\Model\AccessRequest;
 use Sylius\RbacPlugin\Access\Model\Section;
 use Sylius\RbacPlugin\Entity\AdminUserInterface;
 use Sylius\RbacPlugin\Model\Permission;
+use Webmozart\Assert\Assert;
 
 final class AdministratorAccessChecker implements AdministratorAccessCheckerInterface
 {
     public function hasAccessToSection(AdminUserInterface $admin, AccessRequest $accessRequest): bool
     {
         $administrationRole = $admin->getAdministrationRole();
+        Assert::notNull($administrationRole);
 
         foreach ($administrationRole->getPermissions() as $permission) {
             if ($this->getSectionForPermission($permission)->equals($accessRequest->section())) {

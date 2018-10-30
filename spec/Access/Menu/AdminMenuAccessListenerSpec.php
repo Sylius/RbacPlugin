@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace spec\Sylius\RbacPlugin\Access\Menu;
 
-use function Clue\StreamFilter\fun;
 use Knp\Menu\ItemInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -13,9 +12,7 @@ use Sylius\Component\Core\Model\ShopUserInterface;
 use Sylius\RbacPlugin\Access\Checker\AdministratorAccessCheckerInterface;
 use Sylius\RbacPlugin\Access\Model\AccessRequest;
 use Sylius\RbacPlugin\Access\Model\Section;
-use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
 use Sylius\RbacPlugin\Entity\AdminUserInterface;
-use Sylius\RbacPlugin\Model\Permission;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 

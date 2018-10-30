@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Sylius\RbacPlugin\Menu;
 
 use Sylius\Bundle\UiBundle\Menu\Event\MenuBuilderEvent;
+use Webmozart\Assert\Assert;
 
 final class AdminMenuListener
 {
@@ -12,13 +13,10 @@ final class AdminMenuListener
     {
         $menu = $event->getMenu();
 
-        $rbacSubmenu = $menu
-            ->addChild('rbac')
-            ->setLabel('sylius_rbac.ui.rbac')
-            ->setLabelAttribute('icon', 'key')
-        ;
+        $configuration = $menu->getChild('configuration');
+        Assert::notNull($configuration);
 
-        $rbacSubmenu
+        $configuration
             ->addChild('administration_roles', ['route' => 'sylius_rbac_admin_administration_role_index'])
             ->setLabel('sylius_rbac.ui.administration_roles')
             ->setLabelAttribute('icon', 'address card')
