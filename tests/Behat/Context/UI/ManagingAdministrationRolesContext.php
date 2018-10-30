@@ -106,6 +106,24 @@ final class ManagingAdministrationRolesContext implements Context
     }
 
     /**
+     * @Then there should (still) be :count Administration role(s) within the system
+     */
+    public function thereShouldBeCountAdministrationRolesWithinTheSystem(int $count): void
+    {
+        $this->indexPage->open();
+        Assert::eq($this->indexPage->countItems(), $count);
+    }
+
+    /**
+     * @Then there should be Administration role with name :name
+     */
+    public function thereShouldBeAdministrationRoleWithName(string $name): void
+    {
+        $this->indexPage->open();
+        Assert::true($this->indexPage->isSingleResourceOnPage(['name' => $name]));
+    }
+
+    /**
      * @Then I should be able to select :permissionName permission
      */
     public function shouldBeAbleToSelectPermission(string $permissionName): void

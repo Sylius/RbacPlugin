@@ -5,8 +5,13 @@ Feature: Managing permissions of Administration roles
     I want to be able to manage permissions on Administration roles
 
     Background:
+        Given the store operates on a single channel in "United States"
         Given there is already an Administration role "Product manager" in the system
-        And I am logged in as an administrator
+        And there is already an Administration role "Configurator" in the system
+        And this administration role has "Configuration" permission
+        And there is an administrator "scary.terry@nightmare.com" identified by "youCanRunButYouCannotHide"
+        And this administrator has administration role "Configurator"
+        And I am logged in as "scary.terry@nightmare.com" administrator
 
     @ui
     Scenario: Seeing available permissions to choose on the list
