@@ -14,7 +14,7 @@ final class CreateAdministrationRoleCommandCreator implements CommandCreatorInte
     {
         $command = new CreateAdministrationRole(
             $request->request->get('administration_role_name'),
-            $request->request->get('permissions')
+            $request->request->get('permissions', [])
         );
 
         return $command;

@@ -101,4 +101,30 @@ final class UpdateAdministrationRoleHandlerSpec extends ObjectBehavior
 
         $this->shouldThrow(\InvalidArgumentException::class)->during('__invoke', [$command]);
     }
+
+    function it_propagates_an_exception_when_administration_role_does_not_exist(
+        AdministrationRoleFactoryInterface $administrationRoleFactory,
+        AdministrationRoleInterface $administrationRole,
+        AdministrationRoleValidatorInterface $administrationRoleValidator,
+        RepositoryInterface $administrationRoleRepository
+    ): void {
+        $administrationRoleFactory->createWithNameAndPermissions(
+            'Product Manager',
+            [Permission::CONFIGURATION_PERMISSION, Permission::CATALOG_MANAGEMENT_PERMISSION]
+        )->willReturn($administrationRole);
+
+        $administrationRoleValidator->validate($administrationRole)->shouldBeCalled();
+
+        $administrationRoleRepository->find(1)->willReturn(null);
+
+        $this->shouldThrow(\InvalidArgumentException::class)->during(
+            '__invoke',
+            [
+                new UpdateAdministrationRole(
+                1,
+                'Product Manager',
+                [Permission::CONFIGURATION_PERMISSION, Permission::CATALOG_MANAGEMENT_PERMISSION]),
+            ]
+        );
+    }
 }

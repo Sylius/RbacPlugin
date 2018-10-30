@@ -8,7 +8,7 @@
 {% include '@SyliusRbacPlugin/AdministrationRole/Create/_breadcrumb.html.twig' %}
 
 <div class="ui segment">
-    <form name="sylius_rbac_administration_role" method="POST" class="ui loadable form" novalidate="novalidate" action={{ path('sylius_rbac_administration_role_create') }}>
+    <form name="sylius_rbac_administration_role" method="PUT" class="ui loadable form" novalidate="novalidate" action={{ path('sylius_rbac_administration_role_create') }}>
         <div id="sylius_rbac_administration_role">
                 <div class="required field">
                     <label for="sylius_rbac_administration_role_name" class="required">{{ 'sylius_rbac.ui.name'|trans }}</label>

@@ -56,6 +56,6 @@ final class CreateAdministrationRoleAction
             $this->session->getFlashBag()->add('error', $exception->getMessage());
         }
 
-        return new RedirectResponse($this->router->generate('sylius_rbac_administration_role_new', []));
+        return new RedirectResponse($this->router->generate('sylius_rbac_administration_role_create_view', []));
     }
 }

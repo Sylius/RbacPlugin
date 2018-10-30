@@ -15,7 +15,7 @@ final class UpdateAdministrationRoleCommandCreator implements CommandCreatorInte
         $command = new UpdateAdministrationRole(
             $request->attributes->getInt('id'),
             $request->request->get('administration_role_name'),
-            $request->request->get('permissions')
+            $request->request->get('permissions', [])
         );
 
         return $command;

@@ -11,7 +11,7 @@ final class UpdateAdministrationRole extends Command
 {
     use PayloadTrait;
 
-    public function __construct(int $id, string $administrationRoleName, ?array $permissions = [])
+    public function __construct(int $id, string $administrationRoleName, array $permissions = [])
     {
         $this->init();
         $this->setPayload([

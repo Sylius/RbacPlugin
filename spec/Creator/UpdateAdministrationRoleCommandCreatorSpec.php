@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace spec\Sylius\RbacPlugin\Creator;
 
 use PhpSpec\ObjectBehavior;
+use Sylius\RbacPlugin\Command\UpdateAdministrationRole;
 use Sylius\RbacPlugin\Creator\CommandCreatorInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +20,7 @@ final class UpdateAdministrationRoleCommandCreatorSpec extends ObjectBehavior
     function it_creates_update_administration_role_command_from_request(Request $request): void
     {
         $request->request = new ParameterBag([
-            'administration_role_name' => 'rick_sanchez',
+            'administration_role_name' => 'Product Manager',
             'permissions' => [
                 'catalog_management',
                 'configuration',
@@ -30,7 +31,7 @@ final class UpdateAdministrationRoleCommandCreatorSpec extends ObjectBehavior
 
         $payload = [
             'administration_role_id' => 1,
-            'administration_role_name' => 'rick_sanchez',
+            'administration_role_name' => 'Product Manager',
             'permissions' => ['catalog_management', 'configuration'],
         ];
 
@@ -40,10 +41,12 @@ final class UpdateAdministrationRoleCommandCreatorSpec extends ObjectBehavior
     public function getMatchers(): array
     {
         return [
-            'beCommandWithPayload' => function ($subject, $payload) {
-                return $subject->administrationRoleId() === $payload['administration_role_id'] &&
+            'beCommandWithPayload' => function (UpdateAdministrationRole $subject, array $payload): bool {
+                return
+                    $subject->administrationRoleId() === $payload['administration_role_id'] &&
                     $subject->administrationRoleName() === $payload['administration_role_name'] &&
-                    $subject->permissions() === $payload['permissions'];
+                    $subject->permissions() === $payload['permissions']
+                ;
             },
         ];
     }

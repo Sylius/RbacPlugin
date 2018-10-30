@@ -18,8 +18,8 @@
                     <label for="sylius_rbac_administration_role_permissions" class="required">{{ 'sylius_rbac.ui.permissions'|trans }}</label>
                     <select id="sylius_rbac_administration_role_permissions" name="permissions[]" required="required" class="ui dropdown" multiple="multiple">
                         {% for permission in permissions %}
-                        <option value={{ permission }} {% if permission in rolePermissions %} selected {% endif %}>{{ ('sylius_rbac.ui.permission.' ~ permission)|trans }}</option>
-                            {% endfor %}
+                            <option value={{ permission }} {% if permission in rolePermissions %} selected {% endif %}>{{ ('sylius_rbac.ui.permission.' ~ permission)|trans }}</option>
+                        {% endfor %}
                     </select>
                 </div>
 

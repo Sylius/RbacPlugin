@@ -31,10 +31,14 @@
             <tag name="form.type_extension" extended-type="Sylius\Bundle\CoreBundle\Form\Type\User\AdminUserType" />
         </service>
 
-        <service id="Sylius\RbacPlugin\Creator\AdministrationRoleCreator" />
-
         <service id="Sylius\RbacPlugin\Extractor\PermissionDataExtractor" />
 
-        <service id="Sylius\RbacPlugin\Factory\AdministrationRoleFactory" decorates="sylius_rbac.factory.administration_role" />
+        <service
+                 id="sylius_rbac.custom_factory.administration_role"
+                 class="Sylius\RbacPlugin\Factory\AdministrationRoleFactory"
+                 decorates="sylius_rbac.factory.administration_role"
+        >
+            <argument type="service" id="sylius_rbac.custom_factory.administration_role.inner" />
+        </service>
     </services>
 </container>
