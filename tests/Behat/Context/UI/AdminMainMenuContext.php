@@ -28,4 +28,22 @@ final class AdminMainMenuContext implements Context
             throw new \Exception(sprintf('There should be only one section available in main menu, named "%s"', $sectionName));
         }
     }
+
+    /**
+     * @Then :firstSection, :secondSection and :thirdSection sections should be available in the main menu
+     */
+    public function someSectionsShouldBeAvailableInTheMainMenu(string ...$sections): void
+    {
+        $availableSections = $this->adminMainMenuElement->getAvailableSections();
+
+        if (count($availableSections) !== count($sections)) {
+            throw new \Exception(sprintf('There should be %d sections available in main menu', count($availableSections)));
+        }
+
+        foreach ($availableSections as $availableSection) {
+            if (!in_array($availableSection, $sections)) {
+                throw new \Exception(sprintf('Section named "%s" should not be available', $availableSection));
+            }
+        }
+    }
 }

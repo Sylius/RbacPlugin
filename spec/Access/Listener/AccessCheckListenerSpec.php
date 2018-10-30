@@ -67,7 +67,7 @@ final class AccessCheckListenerSpec extends ObjectBehavior
         $session->getFlashBag()->willReturn($flashBag);
         $flashBag->add('error', 'sylius_rbac.you_have_no_access_to_this_section')->shouldBeCalled();
 
-        $this->__invoke($event);
+        $this->onKernelRequest($event);
     }
 
     function it_does_nothing_if_administrator_has_access_to_given_route(
@@ -93,7 +93,7 @@ final class AccessCheckListenerSpec extends ObjectBehavior
 
         $event->setResponse(Argument::any())->shouldNotBeCalled();
 
-        $this->__invoke($event);
+        $this->onKernelRequest($event);
     }
 
     function it_does_nothing_if_route_is_not_secured_with_rbac_system(
@@ -112,7 +112,7 @@ final class AccessCheckListenerSpec extends ObjectBehavior
 
         $event->setResponse(Argument::any())->shouldNotBeCalled();
 
-        $this->__invoke($event);
+        $this->onKernelRequest($event);
     }
 
     function it_does_nothing_if_route_is_not_from_admin_panel(
@@ -126,7 +126,7 @@ final class AccessCheckListenerSpec extends ObjectBehavior
 
         $accessRequestCreator->createFromRouteName('sylius_admin_some_route')->shouldNotBeCalled();
 
-        $this->__invoke($event);
+        $this->onKernelRequest($event);
     }
 
     function it_does_nothing_if_request_is_not_master_request(GetResponseEvent $event): void
@@ -135,6 +135,6 @@ final class AccessCheckListenerSpec extends ObjectBehavior
 
         $event->getRequest()->shouldNotBeCalled();
 
-        $this->__invoke($event);
+        $this->onKernelRequest($event);
     }
 }

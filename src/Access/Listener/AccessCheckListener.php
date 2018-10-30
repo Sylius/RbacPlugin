@@ -6,7 +6,9 @@ namespace Sylius\RbacPlugin\Access\Listener;
 
 use Sylius\RbacPlugin\Access\Checker\AdministratorAccessCheckerInterface;
 use Sylius\RbacPlugin\Access\Creator\AccessRequestCreatorInterface;
+use Sylius\RbacPlugin\Access\Exception\InsecureRequestException;
 use Sylius\RbacPlugin\Access\Exception\UnresolvedRouteNameException;
+use Sylius\RbacPlugin\Access\Model\AccessRequest;
 use Sylius\RbacPlugin\Entity\AdminUserInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -47,34 +49,15 @@ final class AccessCheckListener
         $this->session = $session;
     }
 
-    public function __invoke(GetResponseEvent $event): void
+    public function onKernelRequest(GetResponseEvent $event): void
     {
-        if (!$event->isMasterRequest()) {
-            return;
-        }
-
-        $routeName = $event->getRequest()->attributes->get('_route');
-
-        if ($routeName === null) {
-            return;
-        }
-
-        if (strpos($routeName, 'sylius_admin') === false) {
-            return;
-        }
-
         try {
-            $accessRequest = $this->accessRequestCreator->createFromRouteName($routeName);
-        } catch (UnresolvedRouteNameException $exception) {
+            $accessRequest = $this->createAccessRequestFromEvent($event);
+        } catch (InsecureRequestException $exception) {
             return;
         }
 
-        $token = $this->tokenStorage->getToken();
-        Assert::notNull($token);
-
-        /** @var AdminUserInterface|null $currentAdmin */
-        $currentAdmin = $token->getUser();
-        Assert::isInstanceOf($currentAdmin, UserInterface::class);
+        $currentAdmin = $this->getCurrentAdmin();
 
         if ($this->administratorAccessChecker->hasAccessToSection($currentAdmin, $accessRequest)) {
             return;
@@ -83,5 +66,43 @@ final class AccessCheckListener
         $event->setResponse(new RedirectResponse($this->router->generate('sylius_admin_dashboard')));
 
         $this->session->getFlashBag()->add('error', 'sylius_rbac.you_have_no_access_to_this_section');
+    }
+
+    /** @throws InsecureRequestException */
+    private function createAccessRequestFromEvent(GetResponseEvent $event): AccessRequest
+    {
+        if (!$event->isMasterRequest()) {
+            throw new InsecureRequestException();
+        }
+
+        $routeName = $event->getRequest()->attributes->get('_route');
+
+        if ($routeName === null) {
+            throw new InsecureRequestException();
+        }
+
+        if (strpos($routeName, 'sylius_admin') === false) {
+            throw new InsecureRequestException();
+        }
+
+        try {
+            $accessRequest = $this->accessRequestCreator->createFromRouteName($routeName);
+        } catch (UnresolvedRouteNameException $exception) {
+            throw new InsecureRequestException();
+        }
+
+        return $accessRequest;
+    }
+
+    private function getCurrentAdmin(): AdminUserInterface
+    {
+        $token = $this->tokenStorage->getToken();
+        Assert::notNull($token);
+
+        /** @var AdminUserInterface|null $currentAdmin */
+        $currentAdmin = $token->getUser();
+        Assert::isInstanceOf($currentAdmin, UserInterface::class);
+
+        return $currentAdmin;
     }
 }
