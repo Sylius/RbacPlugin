@@ -1,7 +1,7 @@
 @access_restrictions
 Feature: Having an access only to customers management
-    In order to not be able to provide changes in all areas of the system
-    As a Administrator - Customers Manager
+    In order not to be able to provide changes in all areas of the system
+    As an Administrator with Customers Management permission
     I want to be able to access only customers section in Admin panel
 
     Background:

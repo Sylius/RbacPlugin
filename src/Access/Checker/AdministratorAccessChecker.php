@@ -12,7 +12,7 @@ use Webmozart\Assert\Assert;
 
 final class AdministratorAccessChecker implements AdministratorAccessCheckerInterface
 {
-    public function hasAccessToSection(AdminUserInterface $admin, AccessRequest $accessRequest): bool
+    public function canAccessSection(AdminUserInterface $admin, AccessRequest $accessRequest): bool
     {
         $administrationRole = $admin->getAdministrationRole();
         Assert::notNull($administrationRole);
@@ -28,24 +28,17 @@ final class AdministratorAccessChecker implements AdministratorAccessCheckerInte
 
     private function getSectionForPermission(Permission $permission): Section
     {
-        if ($permission->equals(Permission::configuration())) {
-            return Section::configuration();
-        }
-
-        if ($permission->equals(Permission::catalogManagement())) {
-            return Section::catalog();
-        }
-
-        if ($permission->equals(Permission::marketingManagement())) {
-            return Section::marketing();
-        }
-
-        if ($permission->equals(Permission::customerManagement())) {
-            return Section::customers();
-        }
-
-        if ($permission->equals(Permission::salesManagement())) {
-            return Section::sales();
+        switch (true) {
+            case $permission->equals(Permission::configuration()):
+                return Section::configuration();
+            case $permission->equals(Permission::catalogManagement()):
+                return Section::catalog();
+            case $permission->equals(Permission::marketingManagement()):
+                return Section::marketing();
+            case $permission->equals(Permission::customerManagement()):
+                return Section::customers();
+            case $permission->equals(Permission::salesManagement()):
+                return Section::sales();
         }
 
         throw new \Exception('Unrecognized permission');

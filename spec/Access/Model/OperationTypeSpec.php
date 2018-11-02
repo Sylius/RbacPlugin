@@ -9,14 +9,14 @@ use Sylius\RbacPlugin\Access\Model\OperationType;
 
 final class OperationTypeSpec extends ObjectBehavior
 {
-    function it_can_be_write_operation_type(): void
+    function it_can_represent_write_operation_type(): void
     {
         $this->beConstructedThrough('write');
 
         $this->__toString()->shouldReturn(OperationType::WRITE);
     }
 
-    function it_can_be_read_operation_type(): void
+    function it_can_represent_read_operation_type(): void
     {
         $this->beConstructedThrough('read');
 

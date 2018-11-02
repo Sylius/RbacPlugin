@@ -1,7 +1,7 @@
 @access_restrictions
 Feature: Having an access only to marketing management
-    In order to not be able to provide changes in all areas of the system
-    As a Administrator - Marketing Manager
+    In order not to be able to provide changes in all areas of the system
+    As an Administrator with Marketing Management permission
     I want to be able to access only marketing section in Admin panel
 
     Background:

@@ -36,23 +36,23 @@ final class AdminMenuAccessListenerSpec extends ObjectBehavior
         $tokenStorage->getToken()->willReturn($token);
         $token->getUser()->willReturn($adminUser);
 
-        $accessChecker->hasAccessToSection($adminUser, Argument::that(function (AccessRequest $accessRequest): bool {
+        $accessChecker->canAccessSection($adminUser, Argument::that(function (AccessRequest $accessRequest): bool {
             return $accessRequest->section() == Section::catalog();
         }))->willReturn(false);
 
-        $accessChecker->hasAccessToSection($adminUser, Argument::that(function (AccessRequest $accessRequest): bool {
+        $accessChecker->canAccessSection($adminUser, Argument::that(function (AccessRequest $accessRequest): bool {
             return $accessRequest->section() == Section::configuration();
         }))->willReturn(true);
 
-        $accessChecker->hasAccessToSection($adminUser, Argument::that(function (AccessRequest $accessRequest): bool {
+        $accessChecker->canAccessSection($adminUser, Argument::that(function (AccessRequest $accessRequest): bool {
             return $accessRequest->section() == Section::customers();
         }))->willReturn(true);
 
-        $accessChecker->hasAccessToSection($adminUser, Argument::that(function (AccessRequest $accessRequest): bool {
+        $accessChecker->canAccessSection($adminUser, Argument::that(function (AccessRequest $accessRequest): bool {
             return $accessRequest->section() == Section::marketing();
         }))->willReturn(false);
 
-        $accessChecker->hasAccessToSection($adminUser, Argument::that(function (AccessRequest $accessRequest): bool {
+        $accessChecker->canAccessSection($adminUser, Argument::that(function (AccessRequest $accessRequest): bool {
             return $accessRequest->section() == Section::sales();
         }))->willReturn(false);
 

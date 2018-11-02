@@ -57,9 +57,7 @@ final class AccessCheckListener
             return;
         }
 
-        $currentAdmin = $this->getCurrentAdmin();
-
-        if ($this->administratorAccessChecker->hasAccessToSection($currentAdmin, $accessRequest)) {
+        if ($this->administratorAccessChecker->canAccessSection($this->getCurrentAdmin(), $accessRequest)) {
             return;
         }
 

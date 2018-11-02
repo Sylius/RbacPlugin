@@ -1,7 +1,7 @@
 @access_restrictions
 Feature: Having an access only to sales management
-    In order to not be able to provide changes in all areas of the system
-    As a Administrator - Sales Manager
+    In order not to be able to provide changes in all areas of the system
+    As an Administrator with Sales Management permission
     I want to be able to access only sales section in Admin panel
 
     Background:

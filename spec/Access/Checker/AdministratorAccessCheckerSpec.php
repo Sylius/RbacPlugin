@@ -28,7 +28,7 @@ final class AdministratorAccessCheckerSpec extends ObjectBehavior
 
         $administrationRole->getPermissions()->willReturn([Permission::configuration(), Permission::marketingManagement()]);
 
-        $this->hasAccessToSection($admin, new AccessRequest(Section::catalog(), OperationType::write()))->shouldReturn(false);
+        $this->canAccessSection($admin, new AccessRequest(Section::catalog(), OperationType::write()))->shouldReturn(false);
     }
 
     function it_returns_true_if_admin_is_allowed_to_access_requested_section(
@@ -39,6 +39,6 @@ final class AdministratorAccessCheckerSpec extends ObjectBehavior
 
         $administrationRole->getPermissions()->willReturn([Permission::catalogManagement(), Permission::marketingManagement()]);
 
-        $this->hasAccessToSection($admin, new AccessRequest(Section::catalog(), OperationType::write()))->shouldReturn(true);
+        $this->canAccessSection($admin, new AccessRequest(Section::catalog(), OperationType::write()))->shouldReturn(true);
     }
 }

@@ -1,7 +1,7 @@
 @access_restrictions
 Feature: Having an access to multiple sections
     In order to be able to provide changes only in specific areas of the system
-    As a Administrator
+    As an Administrator
     I want to be able to access specific sections in Admin panel
 
     Background:

@@ -61,7 +61,7 @@ final class AdminMenuAccessListener
 
     private function hasAdminAccessToSection(AdminUserInterface $adminUser, Section $section): bool
     {
-        return !$this->accessChecker->hasAccessToSection(
+        return !$this->accessChecker->canAccessSection(
             $adminUser,
             new AccessRequest($section, OperationType::write())
         );

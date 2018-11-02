@@ -1,7 +1,7 @@
 @access_restrictions
 Feature: Having an access only to configuration management
-    In order to not be able to provide changes in all areas of the system
-    As a Administrator - Configurator
+    In order not to be able to provide changes in all areas of the system
+    As an Administrator with Configuration permission
     I want to be able to access only configuration section in Admin panel
 
     Background:

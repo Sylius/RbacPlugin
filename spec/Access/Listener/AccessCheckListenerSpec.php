@@ -57,7 +57,7 @@ final class AccessCheckListenerSpec extends ObjectBehavior
         $tokenStorage->getToken()->willReturn($token);
         $token->getUser()->willReturn($adminUser);
 
-        $administratorAccessChecker->hasAccessToSection($adminUser, $accessRequest)->willReturn(false);
+        $administratorAccessChecker->canAccessSection($adminUser, $accessRequest)->willReturn(false);
         $router->generate('sylius_admin_dashboard')->willReturn('http://sylius.dev/admin/');
 
         $event->setResponse(Argument::that(function (RedirectResponse $response): bool {
@@ -89,7 +89,7 @@ final class AccessCheckListenerSpec extends ObjectBehavior
         $tokenStorage->getToken()->willReturn($token);
         $token->getUser()->willReturn($adminUser);
 
-        $administratorAccessChecker->hasAccessToSection($adminUser, $accessRequest)->willReturn(true);
+        $administratorAccessChecker->canAccessSection($adminUser, $accessRequest)->willReturn(true);
 
         $event->setResponse(Argument::any())->shouldNotBeCalled();
 

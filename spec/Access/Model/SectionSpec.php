@@ -11,35 +11,35 @@ final class SectionSpec extends ObjectBehavior
 {
     function it_can_be_catalog_section(): void
     {
-        $this->beConstructedThrough('catalog');
+        $this->beConstructedThrough(Section::CATALOG);
 
         $this->__toString()->shouldReturn(Section::CATALOG);
     }
 
     function it_can_be_configuration_section(): void
     {
-        $this->beConstructedThrough('configuration');
+        $this->beConstructedThrough(Section::CONFIGURATION);
 
         $this->__toString()->shouldReturn(Section::CONFIGURATION);
     }
 
     function it_can_be_customers_section(): void
     {
-        $this->beConstructedThrough('customers');
+        $this->beConstructedThrough(Section::CUSTOMERS);
 
         $this->__toString()->shouldReturn(Section::CUSTOMERS);
     }
 
     function it_can_be_marketing_section(): void
     {
-        $this->beConstructedThrough('marketing');
+        $this->beConstructedThrough(Section::MARKETING);
 
         $this->__toString()->shouldReturn(Section::MARKETING);
     }
 
     function it_can_be_sales_section(): void
     {
-        $this->beConstructedThrough('sales');
+        $this->beConstructedThrough(Section::SALES);
 
         $this->__toString()->shouldReturn(Section::SALES);
     }
@@ -54,7 +54,7 @@ final class SectionSpec extends ObjectBehavior
 
     function it_can_be_compared_with_other_section(): void
     {
-        $this->beConstructedThrough('sales');
+        $this->beConstructedThrough(Section::SALES);
 
         $this->equals(Section::sales())->shouldReturn(true);
         $this->equals(Section::catalog())->shouldReturn(false);

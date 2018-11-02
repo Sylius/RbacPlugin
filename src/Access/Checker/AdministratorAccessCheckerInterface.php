@@ -9,5 +9,5 @@ use Sylius\RbacPlugin\Entity\AdminUserInterface;
 
 interface AdministratorAccessCheckerInterface
 {
-    public function hasAccessToSection(AdminUserInterface $admin, AccessRequest $accessRequest): bool;
+    public function canAccessSection(AdminUserInterface $admin, AccessRequest $accessRequest): bool;
 }

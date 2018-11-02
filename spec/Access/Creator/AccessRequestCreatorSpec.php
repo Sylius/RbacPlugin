@@ -33,7 +33,7 @@ final class AccessRequestCreatorSpec extends ObjectBehavior
         $this->shouldImplement(AccessRequestCreatorInterface::class);
     }
 
-    function it_creates_access_request_with_default_right_operation_type_from_route_name(): void
+    function it_creates_access_request_with_default_write_operation_type_from_route_name(): void
     {
         $this
             ->createFromRouteName('sylius_admin_weapons_index')
