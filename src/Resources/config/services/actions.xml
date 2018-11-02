@@ -7,7 +7,6 @@
         <service id="Sylius\RbacPlugin\Action\CreateAdministrationRoleViewAction">
             <argument type="service" id="Sylius\RbacPlugin\Provider\AdminPermissionsProvider" />
             <argument type="service" id="twig" />
-            <argument type="service" id="router" />
         </service>
 
         <service id="Sylius\RbacPlugin\Action\CreateAdministrationRoleAction">

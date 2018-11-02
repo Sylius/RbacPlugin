@@ -6,7 +6,6 @@ namespace Sylius\RbacPlugin\Action;
 
 use Sylius\RbacPlugin\Provider\AdminPermissionsProviderInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Environment;
 
 final class CreateAdministrationRoleViewAction
@@ -17,17 +16,12 @@ final class CreateAdministrationRoleViewAction
     /** @var Environment */
     private $twig;
 
-    /** @var UrlGeneratorInterface */
-    private $router;
-
     public function __construct(
         AdminPermissionsProviderInterface $adminPermissionsProvider,
-        Environment $twig,
-        UrlGeneratorInterface $router
+        Environment $twig
     ) {
         $this->adminPermissionsProvider = $adminPermissionsProvider;
         $this->twig = $twig;
-        $this->router = $router;
     }
 
     public function __invoke(): Response
