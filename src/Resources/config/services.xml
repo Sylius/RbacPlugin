@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <imports>
+        <import resource="services/actions.xml"/>
+        <import resource="services/command_bus.xml"/>
+        <import resource="services/validators.xml"/>
+    </imports>
+
     <services>
         <service id="Sylius\RbacPlugin\Form\Type\AdministrationRoleType">
             <argument>%sylius_rbac.model.administration_role.class%</argument>
@@ -22,6 +29,16 @@
 
         <service id="Sylius\RbacPlugin\Form\Type\AdminUserTypeExtension">
             <tag name="form.type_extension" extended-type="Sylius\Bundle\CoreBundle\Form\Type\User\AdminUserType" />
+        </service>
+
+        <service id="Sylius\RbacPlugin\Extractor\PermissionDataExtractor" />
+
+        <service
+                 id="sylius_rbac.custom_factory.administration_role"
+                 class="Sylius\RbacPlugin\Factory\AdministrationRoleFactory"
+                 decorates="sylius_rbac.factory.administration_role"
+        >
+            <argument type="service" id="sylius_rbac.custom_factory.administration_role.inner" />
         </service>
     </services>
 </container>

@@ -156,9 +156,9 @@ final class ManagingAdministrationRolesContext implements Context
      */
     public function shouldBeNotifiedThatThisNameIsAlreadyTaken(): void
     {
-        Assert::same(
-            $this->createPage->getNameValidationMessage(),
-            'This name is already taken'
+        $this->notificationChecker->checkNotification(
+            'This name is already taken',
+            NotificationType::failure()
         );
     }
 }

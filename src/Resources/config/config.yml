@@ -1,3 +1,7 @@
+prooph_service_bus:
+    command_buses:
+        sylius_rbac_command_bus: ~
+
 sylius_resource:
     resources:
         sylius_rbac.administration_role:
@@ -27,9 +31,17 @@ sylius_grid:
                 main:
                     create:
                         type: create
+                        options:
+                            link:
+                                route: sylius_rbac_administration_role_create_view
                 item:
                     update:
                         type: update
+                        options:
+                            link:
+                                route: sylius_rbac_administration_role_update_view
+                                parameters:
+                                    id: resource.id
         sylius_admin_admin_user:
             fields:
                 administration_role:

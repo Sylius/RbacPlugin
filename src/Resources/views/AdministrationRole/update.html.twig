@@ -1,0 +1,35 @@
+{% extends 'SyliusAdminBundle::layout.html.twig' %}
+
+{% block title %}{{ 'sylius_rbac.ui.edit_administration_role'|trans }} {{ parent() }}{% endblock %}
+
+{% block content %}
+
+    {% include '@SyliusRbacPlugin/AdministrationRole/Update/_header.html.twig' %}
+    {% include '@SyliusRbacPlugin/AdministrationRole/Update/_breadcrumb.html.twig' %}
+
+    <div class="ui segment">
+        <form name="sylius_rbac_administration_role" method="POST" class="ui loadable form" novalidate="novalidate" action={{ path('sylius_rbac_administration_role_update', {'id': administration_role.id}) }}>
+            <div id="sylius_rbac_administration_role">
+                <div class="required field">
+                    <label for="sylius_rbac_administration_role_name" class="required">{{ 'sylius_rbac.ui.name'|trans }}</label>
+                    <input type="text" id="sylius_rbac_administration_role_name" name="administration_role_name" required="required" value={{ administration_role.name }} />
+                </div>
+                <div class="required field">
+                    <label for="sylius_rbac_administration_role_permissions" class="required">{{ 'sylius_rbac.ui.permissions'|trans }}</label>
+                    <select id="sylius_rbac_administration_role_permissions" name="permissions[]" required="required" class="ui dropdown" multiple="multiple">
+                        {% for permission in permissions %}
+                            <option value={{ permission }} {% if permission in rolePermissions %} selected {% endif %}>{{ ('sylius_rbac.ui.permission.' ~ permission)|trans }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="ui basic segment">
+                    <div class="ui buttons">
+                        <button id="sylius_save_changes_button" class="ui labeled icon primary button" type="submit"><i class="save icon"></i>{{ 'sylius.ui.save_changes'|trans }}</button>
+                        <a href={{ path('sylius_rbac_admin_administration_role_index') }} class="ui button">{{ 'sylius.ui.cancel'|trans }}</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
