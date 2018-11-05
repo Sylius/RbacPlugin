@@ -51,8 +51,7 @@ final class UpdateAdministrationRoleCommandCreatorSpec extends ObjectBehavior
         $payload = [
             'administration_role_id' => 1,
             'administration_role_name' => 'Product Manager',
-            'permissions' =>
-                [
+            'permissions' => [
                     'catalog_management' => ['read', 'write'],
                     'configuration' => ['read'],
                 ],

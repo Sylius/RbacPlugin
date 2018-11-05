@@ -8,8 +8,8 @@ use Behat\Behat\Context\Context;
 use Sylius\Behat\NotificationType;
 use Sylius\Behat\Page\Admin\Crud\IndexPageInterface;
 use Sylius\Behat\Service\NotificationCheckerInterface;
+use Sylius\RbacPlugin\Access\Model\OperationType;
 use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
-use Sylius\RbacPlugin\Model\PermissionAccess;
 use Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdministrationRoleCreatePageInterface;
 use Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdministrationRoleUpdatePageInterface;
 use Webmozart\Assert\Assert;
@@ -86,8 +86,8 @@ final class ManagingAdministrationRolesContext implements Context
      */
     public function removeAccessFromPermission(string $permissionName): void
     {
-        $this->updatePage->removePermissionAccess($permissionName, PermissionAccess::READ);
-        $this->updatePage->removePermissionAccess($permissionName, PermissionAccess::WRITE);
+        $this->updatePage->removePermissionAccess($permissionName, OperationType::READ);
+        $this->updatePage->removePermissionAccess($permissionName, OperationType::WRITE);
     }
 
     /**
@@ -159,8 +159,8 @@ final class ManagingAdministrationRolesContext implements Context
      */
     public function thisAdministrationRoleShouldNotHavePermission(string $permissionName): void
     {
-        Assert::false($this->updatePage->hasActivePermission($permissionName, PermissionAccess::READ));
-        Assert::false($this->updatePage->hasActivePermission($permissionName, PermissionAccess::WRITE));
+        Assert::false($this->updatePage->hasActivePermission($permissionName, OperationType::READ));
+        Assert::false($this->updatePage->hasActivePermission($permissionName, OperationType::WRITE));
     }
 
     /**

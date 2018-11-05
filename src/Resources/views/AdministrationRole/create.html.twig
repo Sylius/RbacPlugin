@@ -7,9 +7,9 @@
 {% include '@SyliusRbacPlugin/AdministrationRole/Create/_header.html.twig' %}
 {% include '@SyliusRbacPlugin/AdministrationRole/Create/_breadcrumb.html.twig' %}
 
-{% set readAccess = constant('Sylius\\RbacPlugin\\Model\\PermissionAccess::READ') %}
-{% set writeAccess = constant('Sylius\\RbacPlugin\\Model\\PermissionAccess::WRITE') %}
-{% set permissionAccessDelimiter = constant('Sylius\\RbacPlugin\\Model\\PermissionAccess::PERMISSION_ACCESS_DELIMITER') %}
+{% set readOperationType = constant('Sylius\\RbacPlugin\\Access\\Model\\OperationType::READ') %}
+{% set writeOperationType = constant('Sylius\\RbacPlugin\\Access\\Model\\OperationType::WRITE') %}
+{% set operationTypeDelimiter = constant('Sylius\\RbacPlugin\\Access\\Model\\OperationType::OPERATION_TYPE_DELIMITER') %}
 
 <div class="ui segment">
     <form name="sylius_rbac_administration_role" method="PUT" class="ui loadable form" novalidate="novalidate" action={{ path('sylius_rbac_administration_role_create') }}>
@@ -22,24 +22,24 @@
                 <thead>
                 <tr>
                     <th>{{ 'sylius_rbac.ui.permissions'|trans }}</th>
-                    <th>{{ 'sylius_rbac.ui.permission.access.read'|trans }}</th>
-                    <th>{{ 'sylius_rbac.ui.permission.access.write'|trans }}</th>
+                    <th>{{ 'sylius_rbac.ui.permission.operation_type.read'|trans }}</th>
+                    <th>{{ 'sylius_rbac.ui.permission.operation_type.write'|trans }}</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for permission in permissions %}
                     <tr>
                         <td data-label={{ 'sylius_rbac.ui.permissions'|trans }}>{{ ('sylius_rbac.ui.permission.' ~ permission)|trans }}</td>
-                        <td data-label={{ 'sylius_rbac.ui.permission.access.read'|trans }}>
+                        <td data-label={{ 'sylius_rbac.ui.permission.operation_type.read'|trans }}>
                             <div class="ui toggle checkbox">
-                                {% set permissionReadAccess = readAccess ~ permissionAccessDelimiter ~ permission %}
-                                <input type="checkbox" id={{ permissionReadAccess }} name={{ permissionReadAccess }}>
+                                {% set permissionReadOperationType = readOperationType ~ operationTypeDelimiter ~ permission %}
+                                <input type="checkbox" id={{ permissionReadOperationType }} name={{ permissionReadOperationType }}>
                             </div>
                         </td>
-                        <td data-label={{ 'sylius_rbac.ui.permission.access.write'|trans }}>
+                        <td data-label={{ 'sylius_rbac.ui.permission.operation_type.write'|trans }}>
                             <div class="ui toggle checkbox">
-                                {% set permissionWriteAccess = writeAccess ~ permissionAccessDelimiter ~ permission %}
-                                <input type="checkbox" id={{ permissionWriteAccess }} name={{ permissionWriteAccess }}>
+                                {% set permissionWriteOperationType = writeOperationType ~ operationTypeDelimiter ~ permission %}
+                                <input type="checkbox" id={{ permissionWriteOperationType }} name={{ permissionWriteOperationType }}>
                             </div>
                         </td>
                     </tr>

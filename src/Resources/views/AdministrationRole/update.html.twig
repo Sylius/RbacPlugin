@@ -7,9 +7,9 @@
 {% include '@SyliusRbacPlugin/AdministrationRole/Update/_header.html.twig' %}
 {% include '@SyliusRbacPlugin/AdministrationRole/Update/_breadcrumb.html.twig' %}
 
-{% set readAccess = constant('Sylius\\RbacPlugin\\Model\\PermissionAccess::READ') %}
-{% set writeAccess = constant('Sylius\\RbacPlugin\\Model\\PermissionAccess::WRITE') %}
-{% set permissionAccessDelimiter = constant('Sylius\\RbacPlugin\\Model\\PermissionAccess::PERMISSION_ACCESS_DELIMITER') %}
+{% set readOperationType = constant('Sylius\\RbacPlugin\\Access\\Model\\OperationType::READ') %}
+{% set writeOperationType = constant('Sylius\\RbacPlugin\\Access\\Model\\OperationType::WRITE') %}
+{% set operationTypeDelimiter = constant('Sylius\\RbacPlugin\\Access\\Model\\OperationType::OPERATION_TYPE_DELIMITER') %}
 
 <div class="ui segment">
     <form name="sylius_rbac_administration_role" method="POST" class="ui loadable form" novalidate="novalidate" action={{ path('sylius_rbac_administration_role_update', {'id': administration_role.id}) }}>
@@ -22,8 +22,8 @@
                 <thead>
                     <tr>
                         <th>{{ 'sylius_rbac.ui.permissions'|trans }}</th>
-                        <th>{{ 'sylius_rbac.ui.permission.access.read'|trans }}</th>
-                        <th>{{ 'sylius_rbac.ui.permission.access.write'|trans }}</th>
+                        <th>{{ 'sylius_rbac.ui.permission.operation_type.read'|trans }}</th>
+                        <th>{{ 'sylius_rbac.ui.permission.operation_type.write'|trans }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,22 +33,22 @@
 
                     {% for rolePermission in rolePermissions %}
                         {% if rolePermission.type == permission  %}
-                            {% set is_write_access_granted = (writeAccess in rolePermission.accesses) %}
-                            {% set is_read_access_granted = (readAccess in rolePermission.accesses) %}
+                            {% set is_write_access_granted = (writeOperationType in rolePermission.operationTypes) %}
+                            {% set is_read_access_granted = (readOperationType in rolePermission.operationTypes) %}
                         {% endif %}
                     {% endfor %}
                     <tr>
                         <td data-label={{ 'sylius_rbac.ui.permissions'|trans }}>{{ ('sylius_rbac.ui.permission.' ~ permission)|trans }}</td>
-                        <td data-label={{ 'sylius_rbac.ui.permission.access.read'|trans }}>
+                        <td data-label={{ 'sylius_rbac.ui.permission.operation_type.read'|trans }}>
                             <div class="ui toggle checkbox">
-                                {% set permissionReadAccess = readAccess ~ permissionAccessDelimiter ~ permission %}
-                                <input type="checkbox" id={{ permissionReadAccess }} name={{ permissionReadAccess }} {% if is_read_access_granted %} checked="checked"{% endif %}>
+                                {% set permissionreadOperationType = readOperationType ~ operationTypeDelimiter ~ permission %}
+                                <input type="checkbox" id={{ permissionreadOperationType }} name={{ permissionreadOperationType }} {% if is_read_access_granted %} checked="checked"{% endif %}>
                             </div>
                         </td>
-                        <td data-label={{ 'sylius_rbac.ui.permission.access.write'|trans }}>
+                        <td data-label={{ 'sylius_rbac.ui.permission.operation_type.write'|trans }}>
                             <div class="ui toggle checkbox">
-                                {% set permissionWriteAccess = writeAccess ~ permissionAccessDelimiter ~ permission %}
-                                <input type="checkbox" id={{ permissionWriteAccess }} name={{ permissionWriteAccess }} {% if is_write_access_granted %} checked="checked"{% endif %}>
+                                {% set permissionwriteOperationType = writeOperationType ~ operationTypeDelimiter ~ permission %}
+                                <input type="checkbox" id={{ permissionwriteOperationType }} name={{ permissionwriteOperationType }} {% if is_write_access_granted %} checked="checked"{% endif %}>
                             </div>
                         </td>
                     </tr>

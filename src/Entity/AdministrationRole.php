@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sylius\RbacPlugin\Entity;
 
+use Sylius\RbacPlugin\Model\Permission;
 use Sylius\RbacPlugin\Model\PermissionInterface;
 
 /** @final */

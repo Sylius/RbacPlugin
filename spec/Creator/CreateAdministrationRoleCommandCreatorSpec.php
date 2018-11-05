@@ -46,16 +46,14 @@ final class CreateAdministrationRoleCommandCreatorSpec extends ObjectBehavior
                     'catalog_management' => ['read', 'write'],
                     'configuration' => ['read'],
                 ]
-            )
-        ;
+            );
 
         $payload = [
             'administration_role_name' => 'Product Manager',
-            'permissions' =>
-            [
-                'catalog_management' => ['read', 'write'],
-                'configuration' => ['read'],
-            ],
+            'permissions' => [
+                    'catalog_management' => ['read', 'write'],
+                    'configuration' => ['read'],
+                ],
         ];
 
         $this->fromRequest($request)->shouldBeCommandWithPayload($payload);
@@ -67,8 +65,8 @@ final class CreateAdministrationRoleCommandCreatorSpec extends ObjectBehavior
             'beCommandWithPayload' => function (CreateAdministrationRole $subject, array $payload): bool {
                 return
                     $subject->administrationRoleName() === $payload['administration_role_name'] &&
-                    $subject->permissions() === $payload['permissions']
-                ;
+                    $subject->permissions() === $payload['permissions'];
             },
         ];
+    }
 }

@@ -51,6 +51,16 @@ final class UpdateAdministrationRoleHandler
 
     public function __invoke(UpdateAdministrationRole $command): void
     {
+        /** @var AdministrationRoleInterface|null $administrationRole */
+        $administrationRole = $this
+            ->administrationRoleRepository
+            ->find($command->administrationRoleId())
+        ;
+
+        if (null === $administrationRole) {
+            throw new \InvalidArgumentException('sylius_rbac.administration_role_does_not_exist');
+        }
+
         $administrationRoleUpdates = $this->administrationRoleFactory->createWithNameAndPermissions(
             $command->administrationRoleName(),
             $command->permissions()
@@ -62,16 +72,6 @@ final class UpdateAdministrationRoleHandler
             $normalizedPermission = $this->administrationRolePermissionNormalizer->normalize($permission);
 
             $administrationRoleUpdates->addPermission($normalizedPermission);
-        }
-
-        /** @var AdministrationRoleInterface|null $administrationRole */
-        $administrationRole = $this
-            ->administrationRoleRepository
-            ->find($command->administrationRoleId())
-        ;
-
-        if (null === $administrationRole) {
-            throw new \InvalidArgumentException('sylius_rbac.administration_role_does_not_exist');
         }
 
         $administrationRole->setName($administrationRoleUpdates->getName());

@@ -29,13 +29,13 @@ final class CreateAdministrationRoleHandler
 
     public function __construct(
         ObjectManager $objectManager,
-        AdministrationRoleFactoryInterface $administrationRoleCreator,
+        AdministrationRoleFactoryInterface $administrationRoleFactory,
         AdministrationRolePermissionNormalizerInterface $administrationRolePermissionNormalizer,
         AdministrationRoleValidatorInterface $validator,
         string $validationGroup
     ) {
         $this->administrationRoleManager = $objectManager;
-        $this->administrationRoleFactory = $administrationRoleCreator;
+        $this->administrationRoleFactory = $administrationRoleFactory;
         $this->administrationRolePermissionNormalizer = $administrationRolePermissionNormalizer;
         $this->validator = $validator;
         $this->validationGroup = $validationGroup;

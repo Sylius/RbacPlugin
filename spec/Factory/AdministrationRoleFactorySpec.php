@@ -7,9 +7,11 @@ namespace spec\Sylius\RbacPlugin\Factory;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Sylius\Component\Resource\Factory\FactoryInterface;
+use Sylius\RbacPlugin\Access\Model\OperationType;
 use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
 use Sylius\RbacPlugin\Factory\AdministrationRoleFactoryInterface;
 use Sylius\RbacPlugin\Model\Permission;
+use Sylius\RbacPlugin\Model\PermissionInterface;
 
 final class AdministrationRoleFactorySpec extends ObjectBehavior
 {
@@ -38,11 +40,11 @@ final class AdministrationRoleFactorySpec extends ObjectBehavior
     ): void {
         $administrationRole->setName('Product Manager')->shouldBeCalled();
 
-        $administrationRole->addPermission(Argument::that(function (Permission $permission): bool {
+        $administrationRole->addPermission(Argument::that(function (PermissionInterface $permission): bool {
             return $permission->type() === Permission::CONFIGURATION_PERMISSION;
         }))->shouldBeCalled();
 
-        $administrationRole->addPermission(Argument::that(function (Permission $permission): bool {
+        $administrationRole->addPermission(Argument::that(function (PermissionInterface $permission): bool {
             return $permission->type() === Permission::CATALOG_MANAGEMENT_PERMISSION;
         }))->shouldBeCalled();
 
@@ -51,8 +53,8 @@ final class AdministrationRoleFactorySpec extends ObjectBehavior
         $this->createWithNameAndPermissions(
             'Product Manager',
             [
-                Permission::CONFIGURATION_PERMISSION,
-                Permission::CATALOG_MANAGEMENT_PERMISSION,
+                Permission::CONFIGURATION_PERMISSION => [OperationType::READ],
+                Permission::CATALOG_MANAGEMENT_PERMISSION => [OperationType::READ],
             ]
         )->shouldReturn($administrationRole);
     }

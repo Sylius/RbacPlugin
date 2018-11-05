@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace spec\Sylius\RbacPlugin\Normalizer;
 
 use PhpSpec\ObjectBehavior;
+use Sylius\RbacPlugin\Access\Model\OperationType;
 use Sylius\RbacPlugin\Model\Permission;
-use Sylius\RbacPlugin\Model\PermissionAccess;
 use Sylius\RbacPlugin\Normalizer\AdministrationRolePermissionNormalizerInterface;
 
 final class AdministrationRolePermissionNormalizerSpec extends ObjectBehavior
@@ -18,14 +18,13 @@ final class AdministrationRolePermissionNormalizerSpec extends ObjectBehavior
 
     function it_adds_read_access_to_administration_role_when_only_write_access_is_added(): void
     {
-        $permission = Permission::customerManagement([PermissionAccess::WRITE]);
+        $permission = Permission::customerManagement([OperationType::WRITE]);
 
         $normalizedPermissionAccesses = [
-                PermissionAccess::WRITE,
-                PermissionAccess::READ,
-            ]
-        ;
+            OperationType::WRITE,
+            OperationType::READ,
+        ];
 
-        $this->normalize($permission)->accesses()->shouldBeLike($normalizedPermissionAccesses);
+        $this->normalize($permission)->operationTypes()->shouldBeLike($normalizedPermissionAccesses);
     }
 }

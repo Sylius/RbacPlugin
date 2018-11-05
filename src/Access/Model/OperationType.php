@@ -10,6 +10,7 @@ final class OperationType
 {
     public const READ = 'read';
     public const WRITE = 'write';
+    public const OPERATION_TYPE_DELIMITER = '~';
 
     /** @var string */
     private $type;

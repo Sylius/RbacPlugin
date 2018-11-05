@@ -6,7 +6,7 @@ namespace Tests\Sylius\RbacPlugin\Behat\Page\Ui;
 
 use Behat\Mink\Element\NodeElement;
 use Sylius\Behat\Page\Admin\Crud\UpdatePage;
-use Sylius\RbacPlugin\Model\PermissionAccess;
+use Sylius\RbacPlugin\Access\Model\OperationType;
 
 final class AdministrationRoleUpdatePage extends UpdatePage implements AdministrationRoleUpdatePageInterface
 {
@@ -22,7 +22,7 @@ final class AdministrationRoleUpdatePage extends UpdatePage implements Administr
 
     public function removePermission(string $permissionName): void
     {
-        $accesses = [PermissionAccess::READ, PermissionAccess::WRITE];
+        $accesses = [OperationType::READ, OperationType::WRITE];
 
         foreach ($accesses as $access) {
             /** @var NodeElement $administrationRolePermissionAccess */
@@ -41,16 +41,16 @@ final class AdministrationRoleUpdatePage extends UpdatePage implements Administr
 
     public function isPermissionManageable(string $permissionName): bool
     {
-        $isReadAccessGrantable = $this->findPermissionRoleAccessSwitch($permissionName, PermissionAccess::READ) !== null;
-        $isWriteAccessGrantable = $this->findPermissionRoleAccessSwitch($permissionName, PermissionAccess::READ) !== null;
+        $isReadAccessGrantable = $this->findPermissionRoleAccessSwitch($permissionName, OperationType::READ) !== null;
+        $isWriteAccessGrantable = $this->findPermissionRoleAccessSwitch($permissionName, OperationType::READ) !== null;
 
         return $isReadAccessGrantable && $isWriteAccessGrantable;
     }
 
     public function hasActivePermission(string $permissionName, string $access): bool
     {
-        $hasReadAccess = $this->findPermissionRoleAccessSwitch($permissionName, PermissionAccess::READ)->isChecked();
-        $hasWriteAccess = $this->findPermissionRoleAccessSwitch($permissionName, PermissionAccess::WRITE)->isChecked();
+        $hasReadAccess = $this->findPermissionRoleAccessSwitch($permissionName, OperationType::READ)->isChecked();
+        $hasWriteAccess = $this->findPermissionRoleAccessSwitch($permissionName, OperationType::WRITE)->isChecked();
 
         return $hasReadAccess && $hasWriteAccess;
     }
@@ -67,7 +67,7 @@ final class AdministrationRoleUpdatePage extends UpdatePage implements Administr
     {
         return $this
             ->getDocument()
-            ->findById(strtolower($access) . PermissionAccess::PERMISSION_ACCESS_DELIMITER .
+            ->findById(strtolower($access) . OperationType::OPERATION_TYPE_DELIMITER .
                 strtolower(str_replace(' ', '_', $permissionName))
             )
         ;

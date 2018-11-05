@@ -26,8 +26,8 @@ final class AdministrationRoleFactory implements AdministrationRoleFactoryInterf
         $administrationRole->setName($name);
 
         /** @var string $permission */
-        foreach ($permissions as $permission) {
-            $administrationRole->addPermission(Permission::unserialize($permission));
+        foreach (array_keys($permissions) as $permission) {
+            $administrationRole->addPermission(Permission::ofType($permission, $permissions[$permission]));
         }
 
         return $administrationRole;

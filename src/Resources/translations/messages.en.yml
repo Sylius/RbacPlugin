@@ -10,10 +10,10 @@ sylius_rbac:
             configuration: 'Configuration'
             customers_management: 'Customers management'
             marketing_management: 'Marketing management'
-            sales_management: 'Sales management'
-            access:
+            operation_type:
                 read: 'Read'
                 write: 'Write'
+            sales_management: 'Sales management'
         permissions: 'Permissions'
         rbac: 'RBAC'
         rbac_role: 'RBAC role'

@@ -6,11 +6,11 @@ namespace spec\Sylius\RbacPlugin\CommandHandler;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use PhpSpec\ObjectBehavior;
+use Sylius\RbacPlugin\Access\Model\OperationType;
 use Sylius\RbacPlugin\Command\CreateAdministrationRole;
 use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
 use Sylius\RbacPlugin\Factory\AdministrationRoleFactoryInterface;
 use Sylius\RbacPlugin\Model\Permission;
-use Sylius\RbacPlugin\Model\PermissionAccess;
 use Sylius\RbacPlugin\Model\PermissionInterface;
 use Sylius\RbacPlugin\Normalizer\AdministrationRolePermissionNormalizerInterface;
 use Sylius\RbacPlugin\Validator\AdministrationRoleValidatorInterface;
@@ -26,8 +26,8 @@ final class CreateAdministrationRoleHandlerSpec extends ObjectBehavior
         $this->beConstructedWith(
             $administrationRoleManager,
             $administrationRoleFactory,
-            $administrationRoleValidator,
             $administrationRolePermissionNormalizer,
+            $administrationRoleValidator,
             'sylius_rbac_administration_role_create'
         );
     }
@@ -44,16 +44,20 @@ final class CreateAdministrationRoleHandlerSpec extends ObjectBehavior
         PermissionInterface $normalizedConfigurationPermission
     ): void {
         $catalogManagementPermission->type()->willReturn(Permission::CATALOG_MANAGEMENT_PERMISSION);
-        $catalogManagementPermission->accesses()->willReturn([PermissionAccess::READ]);
+        $catalogManagementPermission->operationTypes()->willReturn([OperationType::READ]);
 
         $configurationPermission->type()->willReturn(Permission::CONFIGURATION_PERMISSION);
-        $configurationPermission->accesses()->willReturn([PermissionAccess::READ]);
+        $configurationPermission->operationTypes()->willReturn([OperationType::READ]);
 
         $administrationRole->getName()->willReturn('Product Manager');
-        $administrationRole->getPermissions()->willReturn([Permission::catalogManagement(), Permission::configuration()]);
+        $administrationRole->getPermissions()->willReturn([$catalogManagementPermission, $configurationPermission]);
 
         $administrationRoleFactory
-            ->createWithNameAndPermissions('Product Manager', ['catalog_management', 'configuration'])
+            ->createWithNameAndPermissions('Product Manager',
+                [
+                    'catalog_management' => [OperationType::READ],
+                    'configuration' => [OperationType::READ],
+                ])
             ->willReturn($administrationRole)
         ;
 
@@ -80,7 +84,10 @@ final class CreateAdministrationRoleHandlerSpec extends ObjectBehavior
 
         $this->__invoke(new CreateAdministrationRole(
             'Product Manager',
-            ['catalog_management', 'configuration']
+            [
+                'catalog_management' => [OperationType::READ],
+                'configuration' => [OperationType::READ],
+            ]
         ));
     }
 
@@ -90,15 +97,21 @@ final class CreateAdministrationRoleHandlerSpec extends ObjectBehavior
         AdministrationRoleValidatorInterface $administrationRoleValidator
     ): void {
         $command = new CreateAdministrationRole(
-            '',
+            'Product Manager',
             [
-                'catalog_management' => [PermissionAccess::READ],
-                'configuration' => [PermissionAccess::READ],
+                'catalog_management' => [OperationType::READ],
+                'configuration' => [OperationType::READ],
             ]
         );
 
         $administrationRoleFactory
-            ->createWithNameAndPermissions('', ['catalog_management', 'configuration']);
+            ->createWithNameAndPermissions(
+                'Product Manager',
+                [
+                    'catalog_management' => [OperationType::READ],
+                    'configuration' => [OperationType::READ],
+                ]
+        )->willReturn($administrationRole);
 
         $administrationRoleValidator
             ->validate($administrationRole, 'sylius_rbac_administration_role_create')
