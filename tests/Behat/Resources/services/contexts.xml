@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdministrationRolesContext">
+            <argument type="service" id="__symfony__.sylius_rbac.factory.administration_role" />
+            <argument type="service" id="__symfony__.sylius_rbac.repository.administration_role" />
+            <argument type="service" id="__symfony__.sylius_rbac.manager.administration_role" />
+            <argument type="service" id="sylius.behat.shared_storage" />
+            <tag name="fob.context_service" />
+        </service>
+
+        <service id="Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdminUserContext">
+            <argument type="service" id="__symfony__.sylius.manager.admin_user" />
+            <tag name="fob.context_service" />
+        </service>
+
+        <service id="Tests\Sylius\RbacPlugin\Behat\Context\Transform\AdministrationRoleContext">
+            <argument type="service" id="__symfony__.sylius_rbac.repository.administration_role" />
+            <tag name="fob.context_service" />
+        </service>
+
+        <service id="Tests\Sylius\RbacPlugin\Behat\Context\UI\ManagingAdministrationRolesContext">
+            <argument type="service" id="Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdministrationRoleCreatePage" />
+            <argument type="service" id="Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdministrationRoleUpdatePage" />
+            <argument type="service" id="sylius_rbac.behat.page.administration_role.index" />
+            <argument type="service" id="sylius.behat.notification_checker" />
+            <tag name="fob.context_service" />
+        </service>
+
+        <service id="Tests\Sylius\RbacPlugin\Behat\Context\UI\ManagingAdministratorsContext">
+            <argument type="service" id="Tests\Sylius\RbacPlugin\Behat\Element\AdministrationRolesElement" />
+            <argument type="service" id="Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdminUserIndexPage" />
+            <argument type="service" id="sylius.behat.page.admin.administrator.update" />
+            <argument type="service" id="__symfony__.sylius.repository.admin_user" />
+            <tag name="fob.context_service" />
+        </service>
+
+        <service id="Tests\Sylius\RbacPlugin\Behat\Context\UI\AdminMainMenuContext">
+            <argument type="service" id="Tests\Sylius\RbacPlugin\Behat\Element\AdminMainMenuElement" />
+            <tag name="fob.context_service" />
+        </service>
+
+        <service id="Tests\Sylius\RbacPlugin\Behat\Context\UI\AccessRestrictionsContext">
+            <argument type="service" id="sylius.behat.page.admin.dashboard" />
+            <argument type="service" id="sylius_rbac.behat.pages_availability_checker.catalog" />
+            <argument type="service" id="sylius_rbac.behat.pages_availability_checker.configuration" />
+            <argument type="service" id="sylius_rbac.behat.pages_availability_checker.customers" />
+            <argument type="service" id="sylius_rbac.behat.pages_availability_checker.marketing" />
+            <argument type="service" id="sylius_rbac.behat.pages_availability_checker.sales" />
+            <tag name="fob.context_service" />
+        </service>
+    </services>
+</container>

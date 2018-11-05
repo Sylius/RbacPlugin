@@ -1,41 +1,62 @@
 default:
     suites:
-        ui_managing_administration_roles:
+        ui_access_restrictions:
             contexts_services:
                 - sylius.behat.context.hook.doctrine_orm
+
+                - sylius.behat.context.transform.shared_storage
 
                 - Tests\Sylius\RbacPlugin\Behat\Context\Transform\AdministrationRoleContext
 
                 - sylius.behat.context.setup.admin_security
+                - sylius.behat.context.setup.admin_user
+                - sylius.behat.context.setup.channel
                 - Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdministrationRolesContext
+                - Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdminUserContext
+
+                - sylius.behat.context.ui.admin.dashboard
+                - Tests\Sylius\RbacPlugin\Behat\Context\UI\AdminMainMenuContext
+                - Tests\Sylius\RbacPlugin\Behat\Context\UI\AccessRestrictionsContext
+            filters:
+                tags: "@access_restrictions && @ui"
+        ui_managing_administration_roles:
+            contexts_services:
+                - sylius.behat.context.hook.doctrine_orm
+
+                - sylius.behat.context.transform.shared_storage
+                - Tests\Sylius\RbacPlugin\Behat\Context\Transform\AdministrationRoleContext
+
+                - sylius.behat.context.setup.admin_security
+                - sylius.behat.context.setup.admin_user
+                - sylius.behat.context.setup.channel
+                - Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdministrationRolesContext
+                - Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdminUserContext
 
                 - Tests\Sylius\RbacPlugin\Behat\Context\UI\ManagingAdministrationRolesContext
             filters:
                 tags: "@managing_administration_roles && @ui"
         ui_managing_administrators:
             contexts_services:
-            - sylius.behat.context.hook.doctrine_orm
+                - sylius.behat.context.hook.doctrine_orm
 
-            - sylius.behat.context.transform.shared_storage
-            - sylius.behat.context.transform.lexical
-            - sylius.behat.context.transform.locale
+                - sylius.behat.context.transform.shared_storage
+                - sylius.behat.context.transform.lexical
+                - sylius.behat.context.transform.locale
+                - Tests\Sylius\RbacPlugin\Behat\Context\Transform\AdministrationRoleContext
 
-            - Tests\Sylius\RbacPlugin\Behat\Context\Transform\AdministrationRoleContext
+                - sylius.behat.context.setup.channel
+                - sylius.behat.context.setup.locale
+                - sylius.behat.context.setup.admin_security
+                - sylius.behat.context.setup.admin_user
+                - Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdminUserContext
+                - Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdministrationRolesContext
 
-            - sylius.behat.context.setup.channel
-            - sylius.behat.context.setup.locale
-            - sylius.behat.context.setup.admin_security
-            - sylius.behat.context.setup.admin_user
+                - sylius.behat.context.ui.admin.dashboard
+                - sylius.behat.context.ui.admin.managing_administrators
+                - sylius.behat.context.ui.admin.notification
+                - sylius.behat.context.ui.admin.login
 
-            - Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdminUserContext
-            - Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdministrationRolesContext
-
-            - sylius.behat.context.ui.admin.dashboard
-            - sylius.behat.context.ui.admin.managing_administrators
-            - sylius.behat.context.ui.admin.notification
-            - sylius.behat.context.ui.admin.login
-
-            - Tests\Sylius\RbacPlugin\Behat\Context\UI\ManagingAdministratorsContext
+                - Tests\Sylius\RbacPlugin\Behat\Context\UI\ManagingAdministratorsContext
             filters:
                 tags: "@managing_administrators && @ui"
         ui_managing_permissions:
@@ -46,7 +67,10 @@ default:
                 - Tests\Sylius\RbacPlugin\Behat\Context\Transform\AdministrationRoleContext
 
                 - sylius.behat.context.setup.admin_security
+                - sylius.behat.context.setup.admin_user
+                - sylius.behat.context.setup.channel
                 - Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdministrationRolesContext
+                - Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdminUserContext
 
                 - Tests\Sylius\RbacPlugin\Behat\Context\UI\ManagingAdministrationRolesContext
             filters:

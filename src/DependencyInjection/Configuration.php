@@ -15,7 +15,22 @@ final class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('sylius_rbac_plugin');
+        $rootNode = $treeBuilder->root('sylius_rbac');
+
+        $rootNode
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('section_routes_prefixes')
+                    ->children()
+                        ->variableNode('catalog')->end()
+                        ->variableNode('configuration')->end()
+                        ->variableNode('customers')->end()
+                        ->variableNode('marketing')->end()
+                        ->variableNode('sales')->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
 
         return $treeBuilder;
     }

@@ -1,39 +1,75 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <imports>
+        <import resource="services/contexts.xml" />
+        <import resource="services/elements.xml" />
+        <import resource="services/pages.xml" />
+    </imports>
+
     <services>
-        <service id="Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdministrationRolesContext">
-            <argument type="service" id="__symfony__.sylius_rbac.factory.administration_role" />
-            <argument type="service" id="__symfony__.sylius_rbac.repository.administration_role" />
-            <argument type="service" id="__symfony__.sylius_rbac.manager.administration_role" />
-            <argument type="service" id="sylius.behat.shared_storage" />
-            <tag name="fob.context_service" />
+        <service id="sylius_rbac.behat.pages_availability_checker.catalog" class="Tests\Sylius\RbacPlugin\Behat\Service\PagesAvailabilityChecker">
+            <argument type="collection">
+                <argument type="service" id="sylius.behat.page.admin.taxon.create" />
+                <argument type="service" id="sylius.behat.page.admin.product.index" />
+                <argument type="service" id="sylius.behat.page.admin.product.create_simple" />
+                <argument type="service" id="sylius.behat.page.admin.inventory.index" />
+                <argument type="service" id="sylius.behat.page.admin.product_attribute.index" />
+                <argument type="service" id="sylius.behat.page.admin.product_option.index" />
+                <argument type="service" id="sylius.behat.page.admin.product_option.create" />
+                <argument type="service" id="sylius.behat.page.admin.product_association_type.index" />
+                <argument type="service" id="sylius.behat.page.admin.product_association_type.create" />
+            </argument>
         </service>
 
-        <service id="Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdminUserContext">
-            <argument type="service" id="__symfony__.sylius.manager.admin_user" />
-            <tag name="fob.context_service" />
+        <service id="sylius_rbac.behat.pages_availability_checker.configuration" class="Tests\Sylius\RbacPlugin\Behat\Service\PagesAvailabilityChecker">
+            <argument type="collection">
+                <argument type="service" id="sylius.behat.page.admin.channel.index" />
+                <argument type="service" id="sylius.behat.page.admin.channel.create" />
+                <argument type="service" id="sylius.behat.page.admin.country.index" />
+                <argument type="service" id="sylius.behat.page.admin.country.create" />
+                <argument type="service" id="sylius.behat.page.admin.zone.index" />
+                <argument type="service" id="sylius.behat.page.admin.currency.index" />
+                <argument type="service" id="sylius.behat.page.admin.currency.create" />
+                <argument type="service" id="sylius.behat.page.admin.exchange_rate.index" />
+                <argument type="service" id="sylius.behat.page.admin.exchange_rate.create" />
+                <argument type="service" id="sylius.behat.page.admin.locale.index" />
+                <argument type="service" id="sylius.behat.page.admin.locale.create" />
+                <argument type="service" id="sylius.behat.page.admin.payment_method.index" />
+                <argument type="service" id="sylius.behat.page.admin.shipping_method.index" />
+                <argument type="service" id="sylius.behat.page.admin.shipping_method.create" />
+                <argument type="service" id="sylius.behat.page.admin.shipping_category.index" />
+                <argument type="service" id="sylius.behat.page.admin.shipping_category.create" />
+                <argument type="service" id="sylius.behat.page.admin.tax_category.index" />
+                <argument type="service" id="sylius.behat.page.admin.tax_category.create" />
+                <argument type="service" id="sylius.behat.page.admin.tax_rate.index" />
+                <argument type="service" id="sylius.behat.page.admin.tax_rate.create" />
+                <argument type="service" id="sylius.behat.page.admin.administrator.index" />
+                <argument type="service" id="sylius.behat.page.admin.administrator.create" />
+            </argument>
         </service>
 
-        <service id="Tests\Sylius\RbacPlugin\Behat\Context\Transform\AdministrationRoleContext">
-            <argument type="service" id="__symfony__.sylius_rbac.repository.administration_role" />
-            <tag name="fob.context_service" />
+        <service id="sylius_rbac.behat.pages_availability_checker.customers" class="Tests\Sylius\RbacPlugin\Behat\Service\PagesAvailabilityChecker">
+            <argument type="collection">
+                <argument type="service" id="sylius.behat.page.admin.customer.index" />
+                <argument type="service" id="sylius.behat.page.admin.customer.create" />
+                <argument type="service" id="sylius.behat.page.admin.customer_group.index" />
+                <argument type="service" id="sylius.behat.page.admin.customer_group.create" />
+            </argument>
         </service>
 
-        <service id="Tests\Sylius\RbacPlugin\Behat\Context\UI\ManagingAdministrationRolesContext">
-            <argument type="service" id="Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdministrationRoleCreatePage" />
-            <argument type="service" id="Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdministrationRoleUpdatePage" />
-            <argument type="service" id="sylius_rbac.behat.page.administration_role.index" />
-            <argument type="service" id="sylius.behat.notification_checker" />
-            <tag name="fob.context_service" />
+        <service id="sylius_rbac.behat.pages_availability_checker.marketing" class="Tests\Sylius\RbacPlugin\Behat\Service\PagesAvailabilityChecker">
+            <argument type="collection">
+                <argument type="service" id="sylius.behat.page.admin.promotion.index" />
+                <argument type="service" id="sylius.behat.page.admin.promotion.create" />
+                <argument type="service" id="sylius.behat.page.admin.product_review.index" />
+            </argument>
         </service>
 
-        <service id="Tests\Sylius\RbacPlugin\Behat\Context\UI\ManagingAdministratorsContext">
-            <argument type="service" id="Tests\Sylius\RbacPlugin\Behat\Element\AdministrationRolesElement" />
-            <argument type="service" id="Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdminUserIndexPage" />
-            <argument type="service" id="sylius.behat.page.admin.administrator.update" />
-            <argument type="service" id="__symfony__.sylius.repository.admin_user" />
-            <tag name="fob.context_service" />
+        <service id="sylius_rbac.behat.pages_availability_checker.sales" class="Tests\Sylius\RbacPlugin\Behat\Service\PagesAvailabilityChecker">
+            <argument type="collection">
+                <argument type="service" id="sylius.behat.page.admin.order.index" />
+            </argument>
         </service>
 
         <service id="Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdministrationRoleCreatePage" parent="sylius.behat.page.admin.crud.create" public="false">
@@ -46,17 +82,5 @@
             <argument type="service" id="sylius.behat.table_accessor" />
             <argument>sylius_rbac_admin_administration_role_index</argument>
         </service>
-
-        <service id="Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdminUserIndexPage" parent="sylius.behat.page.admin.administrator.index" public="false" />
-
-        <service id="FriendsOfBehat\PageObjectExtension\Element\Element" abstract="true" public="false">
-            <argument type="service" id="mink.default_session" />
-            <argument>%__behat__.mink.parameters%</argument>
-        </service>
-        <service
-            id="Tests\Sylius\RbacPlugin\Behat\Element\AdministrationRolesElement"
-            parent="FriendsOfBehat\PageObjectExtension\Element\Element"
-            public="false"
-        />
     </services>
 </container>
