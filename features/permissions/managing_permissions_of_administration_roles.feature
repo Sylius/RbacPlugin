@@ -28,7 +28,7 @@ Feature: Managing permissions of Administration roles
         And I add "Catalog management" permission with "Read" and "Write" access
         And I save my changes
         Then I should be notified that Administration role has been successfully updated
-        And this Administration role should have "Catalog management" permission with "Read" and "Write" access
+        And this administration role should have "Catalog management" permission with "Read" and "Write" access
 
     @ui
     Scenario: Adding permissions with read access
@@ -36,7 +36,7 @@ Feature: Managing permissions of Administration roles
         And I add "Catalog management" permission with "Read" access
         And I save my changes
         Then I should be notified that Administration role has been successfully updated
-        And this Administration role should have "Catalog management" permission with "Read" access
+        And this administration role should have "Catalog management" permission with "Read" access
 
     @ui
     Scenario: Adding permissions with write access
@@ -44,7 +44,7 @@ Feature: Managing permissions of Administration roles
         And I add "Catalog management" permission with "Write" access
         And I save my changes
         Then I should be notified that Administration role has been successfully updated
-        And this Administration role should have "Catalog management" permission with "Read" and "Write" access
+        And this administration role should have "Catalog management" permission with "Read" and "Write" access
 
     @ui
     Scenario: Removing permissions from Administration role
@@ -54,8 +54,8 @@ Feature: Managing permissions of Administration roles
         And I remove "Catalog management" permission
         And I save my changes
         Then I should be notified that Administration role has been successfully updated
-        And this Administration role should have "Customers management" permission with "Read" and "Write" access
-        And this Administration role should not have "Catalog management" permission
+        And this administration role should have "Customers management" permission with "Read" and "Write" access
+        And this administration role should not have "Catalog management" permission
 
     @ui
     Scenario: Removing permissions' accesses
@@ -65,5 +65,5 @@ Feature: Managing permissions of Administration roles
         And I remove all accesses from "Catalog management" permission
         And I save my changes
         Then I should be notified that Administration role has been successfully updated
-        And this Administration role should have "Customers management" permission with "Read" and "Write" access
-        And this Administration role should not have "Catalog management" permission
+        And this administration role should have "Customers management" permission with "Read" and "Write" access
+        And this administration role should not have "Catalog management" permission

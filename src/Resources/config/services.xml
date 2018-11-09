@@ -9,13 +9,6 @@
     </imports>
 
     <services>
-        <service id="Sylius\RbacPlugin\Form\Type\AdministrationRoleType">
-            <argument>%sylius_rbac.model.administration_role.class%</argument>
-            <argument type="collection"><argument>sylius</argument></argument>
-            <argument type="service" id="Sylius\RbacPlugin\Provider\AdminPermissionsProvider" />
-            <tag name="form.type" />
-        </service>
-
         <service id="Sylius\RbacPlugin\Provider\AdminPermissionsProvider" />
 
         <service id="Sylius\RbacPlugin\Menu\AdminMenuListener">
@@ -32,8 +25,6 @@
         </service>
 
         <service id="Sylius\RbacPlugin\Extractor\PermissionDataExtractor" />
-
-        <service id="Sylius\RbacPlugin\Extractor\RequestAdministrationRolePermissionsExtractor" />
 
         <service
              id="sylius_rbac.custom_factory.administration_role"

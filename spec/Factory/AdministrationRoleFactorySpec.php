@@ -41,11 +41,17 @@ final class AdministrationRoleFactorySpec extends ObjectBehavior
         $administrationRole->setName('Product Manager')->shouldBeCalled();
 
         $administrationRole->addPermission(Argument::that(function (PermissionInterface $permission): bool {
-            return $permission->type() === Permission::CONFIGURATION_PERMISSION;
+            return
+                $permission->type() === Permission::CONFIGURATION_PERMISSION &&
+                $permission->operationTypes()[0] === OperationType::read()
+            ;
         }))->shouldBeCalled();
 
         $administrationRole->addPermission(Argument::that(function (PermissionInterface $permission): bool {
-            return $permission->type() === Permission::CATALOG_MANAGEMENT_PERMISSION;
+            return
+                $permission->type() === Permission::CATALOG_MANAGEMENT_PERMISSION &&
+                $permission->operationTypes()[0] === OperationType::read()
+            ;
         }))->shouldBeCalled();
 
         $decoratedFactory->createNew()->willReturn($administrationRole);
@@ -53,8 +59,8 @@ final class AdministrationRoleFactorySpec extends ObjectBehavior
         $this->createWithNameAndPermissions(
             'Product Manager',
             [
-                Permission::CONFIGURATION_PERMISSION => [OperationType::READ],
-                Permission::CATALOG_MANAGEMENT_PERMISSION => [OperationType::READ],
+                Permission::CONFIGURATION_PERMISSION => [OperationType::read()],
+                Permission::CATALOG_MANAGEMENT_PERMISSION => [OperationType::read()],
             ]
         )->shouldReturn($administrationRole);
     }

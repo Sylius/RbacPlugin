@@ -10,19 +10,32 @@ final class OperationType
 {
     public const READ = 'read';
     public const WRITE = 'write';
-    public const OPERATION_TYPE_DELIMITER = '~';
 
     /** @var string */
     private $type;
 
+    /** @var OperationType */
+    private static $readOperationType;
+
+    /** @var OperationType */
+    private static $writeOperationType;
+
     public static function read(): self
     {
-        return new self(self::READ);
+        if (null === self::$readOperationType) {
+            self::$readOperationType = new self(self::READ);
+        }
+
+        return self::$readOperationType;
     }
 
     public static function write(): self
     {
-        return new self(self::WRITE);
+        if (null === self::$writeOperationType) {
+            self::$writeOperationType = new self(self::WRITE);
+        }
+
+        return self::$writeOperationType;
     }
 
     public function __construct(string $type)

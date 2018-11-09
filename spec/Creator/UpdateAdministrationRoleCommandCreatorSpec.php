@@ -7,16 +7,16 @@ namespace spec\Sylius\RbacPlugin\Creator;
 use PhpSpec\ObjectBehavior;
 use Sylius\RbacPlugin\Command\UpdateAdministrationRole;
 use Sylius\RbacPlugin\Creator\CommandCreatorInterface;
-use Sylius\RbacPlugin\Extractor\RequestAdministrationRolePermissionsExtractorInterface;
+use Sylius\RbacPlugin\Normalizer\AdministrationRolePermissionNormalizerInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 
 final class UpdateAdministrationRoleCommandCreatorSpec extends ObjectBehavior
 {
     function let(
-        RequestAdministrationRolePermissionsExtractorInterface $requestAdministrationRolePermissionsExtractor
+        AdministrationRolePermissionNormalizerInterface $administrationRolePermissionNormalizer
     ): void {
-        $this->beConstructedWith($requestAdministrationRolePermissionsExtractor);
+        $this->beConstructedWith($administrationRolePermissionNormalizer);
     }
 
     function it_implements_command_creator_interface(): void
@@ -25,36 +25,48 @@ final class UpdateAdministrationRoleCommandCreatorSpec extends ObjectBehavior
     }
 
     function it_creates_update_administration_role_command_from_request(
-        RequestAdministrationRolePermissionsExtractorInterface $requestAdministrationRolePermissionsExtractor,
+        AdministrationRolePermissionNormalizerInterface $administrationRolePermissionNormalizer,
         Request $request
     ): void {
         $request->request = new ParameterBag([
             'administration_role_name' => 'Product Manager',
             'permissions' => [
-                'catalog_management~read',
-                'catalog_management~write',
-                'configuration~read',
+                'catalog_management' => [
+                    'read' => 'on',
+                    'write' => 'on',
+                ],
+                'configuration' => [
+                    'read' => 'on',
+                ],
             ],
         ]);
 
         $request->attributes = new ParameterBag(['id' => 1]);
 
-        $requestAdministrationRolePermissionsExtractor
-            ->extract($request->request->all())
-            ->willReturn(
-                [
-                    'catalog_management' => ['read', 'write'],
-                    'configuration' => ['read'],
-                ]
-            );
+        $administrationRolePermissionNormalizer->normalize(
+            [
+                'catalog_management' => [
+                    'read' => 'on',
+                    'write' => 'on',
+                ],
+                'configuration' => [
+                    'read' => 'on',
+                ],
+            ]
+        )->willReturn(
+            [
+                'catalog_management' => ['read', 'write'],
+                'configuration' => ['read'],
+            ]
+        );
 
         $payload = [
             'administration_role_id' => 1,
             'administration_role_name' => 'Product Manager',
             'permissions' => [
-                    'catalog_management' => ['read', 'write'],
-                    'configuration' => ['read'],
-                ],
+                'catalog_management' => ['read', 'write'],
+                'configuration' => ['read'],
+            ],
         ];
 
         $this->fromRequest($request)->shouldBeCommandWithPayload($payload);

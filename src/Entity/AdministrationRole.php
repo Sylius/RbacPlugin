@@ -13,7 +13,7 @@ class AdministrationRole implements AdministrationRoleInterface
     /** @var int */
     private $id;
 
-    /** @var string */
+    /** @var string|null */
     private $name;
 
     /** @var array|string[] */
@@ -24,7 +24,7 @@ class AdministrationRole implements AdministrationRoleInterface
         return $this->id;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }

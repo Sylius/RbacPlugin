@@ -9,10 +9,10 @@
 
 {% set readOperationType = constant('Sylius\\RbacPlugin\\Access\\Model\\OperationType::READ') %}
 {% set writeOperationType = constant('Sylius\\RbacPlugin\\Access\\Model\\OperationType::WRITE') %}
-{% set operationTypeDelimiter = constant('Sylius\\RbacPlugin\\Access\\Model\\OperationType::OPERATION_TYPE_DELIMITER') %}
 
 <div class="ui segment">
-    <form name="sylius_rbac_administration_role" method="PUT" class="ui loadable form" novalidate="novalidate" action={{ path('sylius_rbac_administration_role_create') }}>
+    <form name="sylius_rbac_administration_role" method="POST" class="ui loadable form" novalidate="novalidate" action={{ path('sylius_rbac_administration_role_create') }}>
+        <input type="hidden" name="_method" value="PUT" />
         <div id="sylius_rbac_administration_role">
                 <div class="required field">
                     <label for="sylius_rbac_administration_role_name" class="required">{{ 'sylius.ui.name'|trans }}</label>
@@ -32,13 +32,13 @@
                         <td data-label={{ 'sylius_rbac.ui.permissions'|trans }}>{{ ('sylius_rbac.ui.permission.' ~ permission)|trans }}</td>
                         <td data-label={{ 'sylius_rbac.ui.permission.operation_type.read'|trans }}>
                             <div class="ui toggle checkbox">
-                                {% set permissionReadOperationType = readOperationType ~ operationTypeDelimiter ~ permission %}
+                                {% set permissionReadOperationType = "permissions[" ~ permission ~ "][" ~ readOperationType ~ "]" %}
                                 <input type="checkbox" id={{ permissionReadOperationType }} name={{ permissionReadOperationType }}>
                             </div>
                         </td>
                         <td data-label={{ 'sylius_rbac.ui.permission.operation_type.write'|trans }}>
                             <div class="ui toggle checkbox">
-                                {% set permissionWriteOperationType = writeOperationType ~ operationTypeDelimiter ~ permission %}
+                                {% set permissionWriteOperationType = "permissions[" ~ permission ~ "][" ~ writeOperationType ~ "]" %}
                                 <input type="checkbox" id={{ permissionWriteOperationType }} name={{ permissionWriteOperationType }}>
                             </div>
                         </td>

@@ -5,19 +5,36 @@ declare(strict_types=1);
 namespace Sylius\RbacPlugin\Normalizer;
 
 use Sylius\RbacPlugin\Access\Model\OperationType;
-use Sylius\RbacPlugin\Model\PermissionInterface;
 
 final class AdministrationRolePermissionNormalizer implements AdministrationRolePermissionNormalizerInterface
 {
-    public function normalize(PermissionInterface $permission): PermissionInterface
+    public function normalize(array $administrationRolePermissions = []): array
     {
-        if (
-            in_array(OperationType::WRITE, $permission->operationTypes()) &&
-            !in_array(OperationType::READ, $permission->operationTypes())
-        ) {
-            $permission->addOperationType(OperationType::READ);
+        $normalizedPermissions = [];
+
+        foreach (array_keys($administrationRolePermissions) as $administrationRolePermission) {
+            $hasReadOperationType = in_array(
+                OperationType::READ,
+                array_keys($administrationRolePermissions[$administrationRolePermission])
+            );
+
+            $hasWriteOperationType = in_array(
+                OperationType::WRITE,
+                array_keys($administrationRolePermissions[$administrationRolePermission])
+            );
+
+            if ($hasWriteOperationType) {
+                $normalizedPermissions[$administrationRolePermission][] = OperationType::read();
+                $normalizedPermissions[$administrationRolePermission][] = OperationType::write();
+
+                continue;
+            }
+
+            if ($hasReadOperationType) {
+                $normalizedPermissions[$administrationRolePermission][] = OperationType::read();
+            }
         }
 
-        return $permission;
+        return $normalizedPermissions;
     }
 }

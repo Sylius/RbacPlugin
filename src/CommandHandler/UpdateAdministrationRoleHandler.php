@@ -10,7 +10,6 @@ use Sylius\RbacPlugin\Command\UpdateAdministrationRole;
 use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
 use Sylius\RbacPlugin\Factory\AdministrationRoleFactoryInterface;
 use Sylius\RbacPlugin\Model\PermissionInterface;
-use Sylius\RbacPlugin\Normalizer\AdministrationRolePermissionNormalizerInterface;
 use Sylius\RbacPlugin\Validator\AdministrationRoleValidatorInterface;
 
 final class UpdateAdministrationRoleHandler
@@ -27,9 +26,6 @@ final class UpdateAdministrationRoleHandler
     /** @var AdministrationRoleValidatorInterface */
     private $validator;
 
-    /** @var AdministrationRolePermissionNormalizerInterface */
-    private $administrationRolePermissionNormalizer;
-
     /** @var string */
     private $validationGroup;
 
@@ -37,7 +33,6 @@ final class UpdateAdministrationRoleHandler
         ObjectManager $administrationRoleManager,
         AdministrationRoleFactoryInterface $administrationRoleFactory,
         RepositoryInterface $administrationRoleRepository,
-        AdministrationRolePermissionNormalizerInterface $administrationRolePermissionNormalizer,
         AdministrationRoleValidatorInterface $validator,
         string $validationGroup
     ) {
@@ -45,7 +40,6 @@ final class UpdateAdministrationRoleHandler
         $this->administrationRoleFactory = $administrationRoleFactory;
         $this->administrationRoleRepository = $administrationRoleRepository;
         $this->validator = $validator;
-        $this->administrationRolePermissionNormalizer = $administrationRolePermissionNormalizer;
         $this->validationGroup = $validationGroup;
     }
 
@@ -67,12 +61,6 @@ final class UpdateAdministrationRoleHandler
         );
 
         $this->validator->validate($administrationRoleUpdates, $this->validationGroup);
-
-        foreach ($administrationRoleUpdates->getPermissions() as $permission) {
-            $normalizedPermission = $this->administrationRolePermissionNormalizer->normalize($permission);
-
-            $administrationRoleUpdates->addPermission($normalizedPermission);
-        }
 
         $administrationRole->setName($administrationRoleUpdates->getName());
         $administrationRole->clearPermissions();

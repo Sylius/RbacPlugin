@@ -8,15 +8,15 @@ use Sylius\Behat\Page\Admin\Crud\UpdatePageInterface;
 
 interface AdministrationRoleUpdatePageInterface extends UpdatePageInterface
 {
-    public function addPermission(string $permissionName, array $accesses): void;
+    public function addPermission(string $permissionName, array $operationTypes): void;
 
     public function removePermission(string $permissionName): void;
 
-    public function removePermissionAccess($permissionName, $access): void;
+    public function removePermissionAccess($permissionName, $operationType): void;
 
     public function isPermissionManageable(string $permissionName): bool;
 
-    public function hasActivePermission(string $permissionName, string $access): bool;
+    public function hasActiveOperationType(string $permissionName, string $operationType): bool;
 
-    public function hasPermissionWithAccessSelected(string $permissionName, string $access): bool;
+    public function hasPermissionWithAccessSelected(string $permissionName, string $operationType): bool;
 }

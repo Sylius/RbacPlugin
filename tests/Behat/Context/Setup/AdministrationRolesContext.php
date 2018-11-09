@@ -63,7 +63,7 @@ final class AdministrationRolesContext implements Context
         foreach ($permissions as $permission) {
             $administrationRole
                 ->addPermission(Permission::ofType(strtolower(str_replace(' ', '_', $permission)),
-                    [OperationType::READ, OperationType::WRITE]
+                    [OperationType::read(), OperationType::write()]
                 )
             );
         }

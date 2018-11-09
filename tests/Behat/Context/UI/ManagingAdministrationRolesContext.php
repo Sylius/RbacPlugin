@@ -143,9 +143,9 @@ final class ManagingAdministrationRolesContext implements Context
     }
 
     /**
-     * @Then this Administration role should have :permissionName permission
-     * @Then this Administration role should have :permissionName permission with :access access
-     * @Then this Administration role should have :permissionName permission with :firstAccess and :secondAccess access
+     * @Then this administration role should have :permissionName permission
+     * @Then this administration role should have :permissionName permission with :access access
+     * @Then this administration role should have :permissionName permission with :firstAccess and :secondAccess access
      */
     public function thisAdministrationRoleShouldHavePermission(string $permissionName, string ... $accesses): void
     {
@@ -155,12 +155,12 @@ final class ManagingAdministrationRolesContext implements Context
     }
 
     /**
-     * @Then this Administration role should not have :permissionName permission
+     * @Then this administration role should not have :permissionName permission
      */
     public function thisAdministrationRoleShouldNotHavePermission(string $permissionName): void
     {
-        Assert::false($this->updatePage->hasActivePermission($permissionName, OperationType::READ));
-        Assert::false($this->updatePage->hasActivePermission($permissionName, OperationType::WRITE));
+        Assert::false($this->updatePage->hasActiveOperationType($permissionName, OperationType::READ));
+        Assert::false($this->updatePage->hasActiveOperationType($permissionName, OperationType::WRITE));
     }
 
     /**

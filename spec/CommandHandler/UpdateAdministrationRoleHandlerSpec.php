@@ -13,7 +13,6 @@ use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
 use Sylius\RbacPlugin\Factory\AdministrationRoleFactoryInterface;
 use Sylius\RbacPlugin\Model\Permission;
 use Sylius\RbacPlugin\Model\PermissionInterface;
-use Sylius\RbacPlugin\Normalizer\AdministrationRolePermissionNormalizerInterface;
 use Sylius\RbacPlugin\Validator\AdministrationRoleValidatorInterface;
 
 final class UpdateAdministrationRoleHandlerSpec extends ObjectBehavior
@@ -22,14 +21,12 @@ final class UpdateAdministrationRoleHandlerSpec extends ObjectBehavior
         ObjectManager $administrationRoleManager,
         AdministrationRoleFactoryInterface $administrationRoleFactory,
         RepositoryInterface $administrationRoleRepository,
-        AdministrationRoleValidatorInterface $administrationRoleValidator,
-        AdministrationRolePermissionNormalizerInterface $administrationRolePermissionNormalizer
+        AdministrationRoleValidatorInterface $administrationRoleValidator
     ): void {
         $this->beConstructedWith(
             $administrationRoleManager,
             $administrationRoleFactory,
             $administrationRoleRepository,
-            $administrationRolePermissionNormalizer,
             $administrationRoleValidator,
             'sylius_rbac_administration_role_update'
         );
@@ -42,20 +39,9 @@ final class UpdateAdministrationRoleHandlerSpec extends ObjectBehavior
         AdministrationRoleInterface $updatedAdministrationRole,
         AdministrationRoleInterface $administrationRoleUpdates,
         AdministrationRoleValidatorInterface $administrationRoleValidator,
-        AdministrationRolePermissionNormalizerInterface $administrationRolePermissionNormalizer,
-        PermissionInterface $catalogManagementPermission,
-        PermissionInterface $configurationPermission,
         PermissionInterface $salesManagementPermission,
-        PermissionInterface $customersManagementPermission,
-        PermissionInterface $normalizedSalesManagementPermission,
-        PermissionInterface $normalizedCustomersManagementPermission
+        PermissionInterface $customersManagementPermission
     ): void {
-        $catalogManagementPermission->type()->willReturn(Permission::CATALOG_MANAGEMENT_PERMISSION);
-        $catalogManagementPermission->operationTypes()->willReturn([OperationType::READ, OperationType::WRITE]);
-
-        $configurationPermission->type()->willReturn(Permission::CONFIGURATION_PERMISSION);
-        $configurationPermission->operationTypes()->willReturn([OperationType::READ]);
-
         $salesManagementPermission->type()->willReturn(Permission::SALES_MANAGEMENT_PERMISSION);
         $salesManagementPermission->operationTypes()->willReturn([OperationType::READ, OperationType::WRITE]);
 
@@ -84,10 +70,7 @@ final class UpdateAdministrationRoleHandlerSpec extends ObjectBehavior
 
         $administrationRoleUpdates
             ->getPermissions()
-            ->willReturn(
-                [$salesManagementPermission, $customersManagementPermission],
-                [$normalizedSalesManagementPermission, $normalizedCustomersManagementPermission]
-            )
+            ->willReturn([$salesManagementPermission, $customersManagementPermission])
         ;
 
         $administrationRoleValidator
@@ -95,24 +78,8 @@ final class UpdateAdministrationRoleHandlerSpec extends ObjectBehavior
             ->shouldBeCalled()
         ;
 
-        $administrationRolePermissionNormalizer
-            ->normalize($salesManagementPermission)
-            ->willReturn($normalizedSalesManagementPermission)
-        ;
-
-        $administrationRolePermissionNormalizer
-            ->normalize($customersManagementPermission)
-            ->willReturn($normalizedCustomersManagementPermission)
-        ;
-
-        $administrationRoleUpdates->addPermission($normalizedSalesManagementPermission)->shouldBeCalled();
-        $administrationRoleUpdates->addPermission($normalizedCustomersManagementPermission)->shouldBeCalled();
-
         $updatedAdministrationRole->getName()->willReturn('Product Manager');
-        $updatedAdministrationRole
-            ->getPermissions()
-            ->willReturn([$catalogManagementPermission, $configurationPermission])
-        ;
+        $updatedAdministrationRole->clearPermissions()->shouldBeCalled();
 
         $administrationRoleRepository->find(1)->willReturn($updatedAdministrationRole);
 
@@ -120,8 +87,8 @@ final class UpdateAdministrationRoleHandlerSpec extends ObjectBehavior
 
         $updatedAdministrationRole->clearPermissions()->shouldBeCalled();
 
-        $updatedAdministrationRole->addPermission($normalizedSalesManagementPermission)->shouldBeCalled();
-        $updatedAdministrationRole->addPermission($normalizedCustomersManagementPermission)->shouldBeCalled();
+        $updatedAdministrationRole->addPermission($salesManagementPermission)->shouldBeCalled();
+        $updatedAdministrationRole->addPermission($customersManagementPermission)->shouldBeCalled();
 
         $administrationRoleManager->flush()->shouldBeCalled();
 

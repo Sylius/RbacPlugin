@@ -24,12 +24,12 @@ final class AdministrationRoleSpec extends ObjectBehavior
 
     function it_has_permissions(): void
     {
-        $this->addPermission(Permission::catalogManagement([OperationType::READ]));
-        $this->addPermission(Permission::customerManagement([OperationType::READ, OperationType::WRITE]));
+        $this->addPermission(Permission::catalogManagement([OperationType::read()]));
+        $this->addPermission(Permission::customerManagement([OperationType::read(), OperationType::write()]));
 
-        $this->hasPermission(Permission::catalogManagement([OperationType::READ]))->shouldReturn(true);
+        $this->hasPermission(Permission::catalogManagement([OperationType::read()]))->shouldReturn(true);
         $this
-            ->hasPermission(Permission::customerManagement([OperationType::READ, OperationType::WRITE]))
+            ->hasPermission(Permission::customerManagement([OperationType::read(), OperationType::write()]))
             ->shouldReturn(true)
         ;
 

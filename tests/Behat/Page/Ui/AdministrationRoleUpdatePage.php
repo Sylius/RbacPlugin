@@ -10,11 +10,11 @@ use Sylius\RbacPlugin\Access\Model\OperationType;
 
 final class AdministrationRoleUpdatePage extends UpdatePage implements AdministrationRoleUpdatePageInterface
 {
-    public function addPermission(string $permissionName, array $accesses): void
+    public function addPermission(string $permissionName, array $operationTypes): void
     {
-        foreach ($accesses as $access) {
+        foreach ($operationTypes as $access) {
             /** @var NodeElement $administrationRolePermissionAccess */
-            $administrationRolePermissionAccess = $this->findPermissionRoleAccessSwitch($permissionName, $access);
+            $administrationRolePermissionAccess = $this->findPermissionRoleOperationTypeSwitch($permissionName, $access);
 
             $administrationRolePermissionAccess->check();
         }
@@ -26,49 +26,66 @@ final class AdministrationRoleUpdatePage extends UpdatePage implements Administr
 
         foreach ($accesses as $access) {
             /** @var NodeElement $administrationRolePermissionAccess */
-            $administrationRolePermissionAccess = $this->findPermissionRoleAccessSwitch($permissionName, $access);
+            $administrationRolePermissionAccess = $this->findPermissionRoleOperationTypeSwitch($permissionName, $access);
 
             $administrationRolePermissionAccess->uncheck();
         }
     }
 
-    public function removePermissionAccess($permissionName, $access): void
+    public function removePermissionAccess($permissionName, $operationType): void
     {
-        $administrationRolePermissionAccess = $this->findPermissionRoleAccessSwitch($permissionName, $access);
+        $administrationRolePermissionAccess =
+            $this->findPermissionRoleOperationTypeSwitch($permissionName, $operationType)
+        ;
 
         $administrationRolePermissionAccess->uncheck();
     }
 
     public function isPermissionManageable(string $permissionName): bool
     {
-        $isReadAccessGrantable = $this->findPermissionRoleAccessSwitch($permissionName, OperationType::READ) !== null;
-        $isWriteAccessGrantable = $this->findPermissionRoleAccessSwitch($permissionName, OperationType::READ) !== null;
+        $isReadAccessGrantable =
+            $this->findPermissionRoleOperationTypeSwitch($permissionName, OperationType::READ) !== null
+        ;
+
+        $isWriteAccessGrantable =
+            $this->findPermissionRoleOperationTypeSwitch($permissionName, OperationType::READ) !== null
+        ;
 
         return $isReadAccessGrantable && $isWriteAccessGrantable;
     }
 
-    public function hasActivePermission(string $permissionName, string $access): bool
+    public function hasActiveOperationType(string $permissionName, string $operationType): bool
     {
-        $hasReadAccess = $this->findPermissionRoleAccessSwitch($permissionName, OperationType::READ)->isChecked();
-        $hasWriteAccess = $this->findPermissionRoleAccessSwitch($permissionName, OperationType::WRITE)->isChecked();
+        $hasReadAccess = $this
+            ->findPermissionRoleOperationTypeSwitch($permissionName, OperationType::READ)
+            ->isChecked()
+        ;
+
+        $hasWriteAccess = $this
+            ->findPermissionRoleOperationTypeSwitch($permissionName, OperationType::WRITE)
+            ->isChecked()
+        ;
 
         return $hasReadAccess && $hasWriteAccess;
     }
 
-    public function hasPermissionWithAccessSelected(string $permissionName, string $access): bool
+    public function hasPermissionWithAccessSelected(string $permissionName, string $operationType): bool
     {
         /** @var NodeElement $administrationRolePermissionAccess */
-        $administrationRolePermissionAccess = $this->findPermissionRoleAccessSwitch($permissionName, $access);
+        $administrationRolePermissionAccess =
+            $this->findPermissionRoleOperationTypeSwitch($permissionName, $operationType)
+        ;
 
         return $administrationRolePermissionAccess->isChecked();
     }
 
-    private function findPermissionRoleAccessSwitch(string $permissionName, string $access): NodeElement
+    private function findPermissionRoleOperationTypeSwitch(string $permissionName, string $access): NodeElement
     {
         return $this
             ->getDocument()
-            ->findById(strtolower($access) . OperationType::OPERATION_TYPE_DELIMITER .
-                strtolower(str_replace(' ', '_', $permissionName))
+            ->findById(
+                'permissions[' . strtolower(str_replace(' ', '_', $permissionName)) .
+                '][' . strtolower($access) . ']'
             )
         ;
     }

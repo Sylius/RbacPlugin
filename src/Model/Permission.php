@@ -56,7 +56,9 @@ final class Permission implements PermissionInterface
         /** @var string $serializedPermission */
         $serializedPermission = json_encode([
             'type' => $this->type(),
-            'operation-types' => $this->operationTypes,
+            'operation_types' => array_map(function (OperationType $operationType): string {
+                return $operationType->__toString();
+            }, $this->operationTypes()),
         ]);
 
         return $serializedPermission;
@@ -66,7 +68,9 @@ final class Permission implements PermissionInterface
     {
         $data = json_decode($serialized, true);
 
-        return new self($data['type'], $data['operation-types']);
+        return new self($data['type'], array_map(function (string $operationType): OperationType {
+            return new OperationType($operationType);
+        }, $data['operation_types']));
     }
 
     private function __construct(string $type, array $operationTypes = [])
@@ -81,14 +85,14 @@ final class Permission implements PermissionInterface
             ]
         );
 
-        if (!empty($operationTypes)) {
-            Assert::allOneOf(
-                $operationTypes, [
-                    OperationType::READ,
-                    OperationType::WRITE,
-                ]
-            );
-        }
+        Assert::allOneOf(
+            array_map(function (OperationType $operationType): string {
+                return $operationType->__toString();
+            }, $operationTypes), [
+                OperationType::read()->__toString(),
+                OperationType::write()->__toString(),
+            ]
+        );
 
         $this->type = $type;
         $this->operationTypes = $operationTypes;
@@ -99,15 +103,8 @@ final class Permission implements PermissionInterface
         return $this->operationTypes;
     }
 
-    public function addOperationType(string $operationType): void
+    public function addOperationType(OperationType $operationType): void
     {
-        Assert::oneOf(
-            $operationType, [
-                OperationType::READ,
-                OperationType::WRITE,
-            ]
-        );
-
         if (in_array($operationType, $this->operationTypes)) {
             return;
         }
@@ -122,6 +119,18 @@ final class Permission implements PermissionInterface
 
     public function equals(self $permission): bool
     {
-        return $permission->type() === $this->type();
+        /** @var bool $isOfTheSameType */
+        $isOfTheSameType = $permission->type() === $this->type();
+
+        /** @var bool $hasTheSameOperationsAllowed */
+        $hasTheSameOperationsAllowed = true;
+
+        foreach ($permission->operationTypes() as $operationType) {
+            if (!in_array($operationType, $this->operationTypes())) {
+                $hasTheSameOperationsAllowed = false;
+            }
+        }
+
+        return $isOfTheSameType && $hasTheSameOperationsAllowed;
     }
 }

@@ -5,17 +5,16 @@
         <defaults autowire="false" autoconfigure="false" public="true" />
 
         <service id="Sylius\RbacPlugin\Creator\CreateAdministrationRoleCommandCreator">
-            <argument type="service" id="Sylius\RbacPlugin\Extractor\RequestAdministrationRolePermissionsExtractor" />
+            <argument type="service" id="Sylius\RbacPlugin\Normalizer\AdministrationRolePermissionNormalizer" />
         </service>
 
         <service id="Sylius\RbacPlugin\Creator\UpdateAdministrationRoleCommandCreator">
-            <argument type="service" id="Sylius\RbacPlugin\Extractor\RequestAdministrationRolePermissionsExtractor" />
+            <argument type="service" id="Sylius\RbacPlugin\Normalizer\AdministrationRolePermissionNormalizer" />
         </service>
 
         <service id="Sylius\RbacPlugin\CommandHandler\CreateAdministrationRoleHandler">
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="sylius_rbac.custom_factory.administration_role"/>
-            <argument type="service" id="Sylius\RbacPlugin\Normalizer\AdministrationRolePermissionNormalizer" />
             <argument type="service" id="Sylius\RbacPlugin\Validator\AdministrationRoleValidator" />
             <argument type="string">sylius_rbac_administration_role_create</argument>
             <tag name="prooph_service_bus.sylius_rbac_command_bus.route_target" message-detection="true" />
@@ -25,7 +24,6 @@
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="sylius_rbac.custom_factory.administration_role"/>
             <argument type="service" id="sylius_rbac.repository.administration_role"/>
-            <argument type="service" id="Sylius\RbacPlugin\Normalizer\AdministrationRolePermissionNormalizer" />
             <argument type="service" id="Sylius\RbacPlugin\Validator\AdministrationRoleValidator"/>
             <argument type="string">sylius_rbac_administration_role_update</argument>
             <tag name="prooph_service_bus.sylius_rbac_command_bus.route_target" message-detection="true" />
