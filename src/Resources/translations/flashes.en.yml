@@ -2,4 +2,4 @@ sylius_rbac:
     administration_role_successfully_created: 'Administration role has been successfully created'
     administration_role_successfully_updated: 'Administration role has been successfully updated'
     administration_role_does_not_exist: 'Administration role does not exist'
-    you_have_no_access_to_this_section: "You have no access to this section"
+    you_have_no_access_to_this_section: 'You have no access to this section'

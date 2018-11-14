@@ -20,14 +20,19 @@ final class CreateAdministrationRoleHandler
     /** @var AdministrationRoleValidatorInterface */
     private $validator;
 
+    /** @var string */
+    private $validationGroup;
+
     public function __construct(
         ObjectManager $objectManager,
-        AdministrationRoleFactoryInterface $administrationRoleCreator,
-        AdministrationRoleValidatorInterface $validator
+        AdministrationRoleFactoryInterface $administrationRoleFactory,
+        AdministrationRoleValidatorInterface $validator,
+        string $validationGroup
     ) {
         $this->administrationRoleManager = $objectManager;
-        $this->administrationRoleFactory = $administrationRoleCreator;
+        $this->administrationRoleFactory = $administrationRoleFactory;
         $this->validator = $validator;
+        $this->validationGroup = $validationGroup;
     }
 
     public function __invoke(CreateAdministrationRole $command): void
@@ -37,7 +42,7 @@ final class CreateAdministrationRoleHandler
             $command->permissions()
         );
 
-        $this->validator->validate($administrationRole);
+        $this->validator->validate($administrationRole, $this->validationGroup);
 
         $this->administrationRoleManager->persist($administrationRole);
         $this->administrationRoleManager->flush();

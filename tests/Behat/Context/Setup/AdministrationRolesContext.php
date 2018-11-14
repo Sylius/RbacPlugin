@@ -9,6 +9,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Sylius\RbacPlugin\Access\Model\OperationType;
 use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
 use Sylius\RbacPlugin\Model\Permission;
 
@@ -43,6 +44,7 @@ final class AdministrationRolesContext implements Context
      */
     public function thereIsAlreadyAdministrationRoleInTheSystem(string $name): void
     {
+        /** @var AdministrationRoleInterface $administrationRole */
         $administrationRole = $this->administrationRoleFactory->createNew();
         $administrationRole->setName($name);
 
@@ -56,10 +58,14 @@ final class AdministrationRolesContext implements Context
      */
     public function thisAdministrationRoleHasAndPermissions(
         AdministrationRoleInterface $administrationRole,
-        string ...$permissions
+        string ... $permissions
     ): void {
         foreach ($permissions as $permission) {
-            $administrationRole->addPermission(new Permission(strtolower(str_replace(' ', '_', $permission))));
+            $administrationRole
+                ->addPermission(Permission::ofType(strtolower(str_replace(' ', '_', $permission)),
+                    [OperationType::read(), OperationType::write()]
+                )
+            );
         }
 
         $this->administrationRoleManager->flush();

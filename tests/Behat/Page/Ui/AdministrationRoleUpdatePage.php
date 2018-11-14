@@ -6,43 +6,87 @@ namespace Tests\Sylius\RbacPlugin\Behat\Page\Ui;
 
 use Behat\Mink\Element\NodeElement;
 use Sylius\Behat\Page\Admin\Crud\UpdatePage;
+use Sylius\RbacPlugin\Access\Model\OperationType;
 
 final class AdministrationRoleUpdatePage extends UpdatePage implements AdministrationRoleUpdatePageInterface
 {
-    public function addPermission(string $permissionName): void
+    public function addPermission(string $permissionName, array $operationTypes): void
     {
-        $this->getDocument()->selectFieldOption('Permissions', $permissionName, true);
+        foreach ($operationTypes as $access) {
+            /** @var NodeElement $administrationRolePermissionAccess */
+            $administrationRolePermissionAccess = $this->findPermissionRoleOperationTypeSwitch($permissionName, $access);
+
+            $administrationRolePermissionAccess->check();
+        }
     }
 
     public function removePermission(string $permissionName): void
     {
-        $options = $this->getDocument()->findAll('css', 'select option');
+        $accesses = [OperationType::READ, OperationType::WRITE];
 
-        $values = [];
-        /** @var NodeElement $option */
-        foreach ($options as $option) {
-            if ($option->isSelected() && $option->getText() !== $permissionName) {
-                $values[] = $option->getValue();
-            }
+        foreach ($accesses as $access) {
+            /** @var NodeElement $administrationRolePermissionAccess */
+            $administrationRolePermissionAccess = $this->findPermissionRoleOperationTypeSwitch($permissionName, $access);
+
+            $administrationRolePermissionAccess->uncheck();
         }
-
-        $this->getDocument()->find('css', 'select')->setValue($values);
     }
 
-    public function hasPermissionToSelect(string $permissionName): bool
+    public function removePermissionAccess($permissionName, $operationType): void
     {
-        return
-            $this->getDocument()->find('css', sprintf('select option:contains("%s")', $permissionName)) !== null
+        $administrationRolePermissionAccess =
+            $this->findPermissionRoleOperationTypeSwitch($permissionName, $operationType)
         ;
+
+        $administrationRolePermissionAccess->uncheck();
     }
 
-    public function hasPermissionSelected(string $permissionName): bool
+    public function isPermissionManageable(string $permissionName): bool
     {
-        $selectedPermissions = [];
-        foreach ($this->getDocument()->find('css', 'select')->getValue() as $value) {
-            $selectedPermissions[] = $this->getDocument()->find('css', sprintf('option[value="%s"]', $value))->getText();
-        }
+        $isReadAccessGrantable =
+            $this->findPermissionRoleOperationTypeSwitch($permissionName, OperationType::READ) !== null
+        ;
 
-        return in_array($permissionName, $selectedPermissions);
+        $isWriteAccessGrantable =
+            $this->findPermissionRoleOperationTypeSwitch($permissionName, OperationType::READ) !== null
+        ;
+
+        return $isReadAccessGrantable && $isWriteAccessGrantable;
+    }
+
+    public function hasActiveOperationType(string $permissionName, string $operationType): bool
+    {
+        $hasReadAccess = $this
+            ->findPermissionRoleOperationTypeSwitch($permissionName, OperationType::READ)
+            ->isChecked()
+        ;
+
+        $hasWriteAccess = $this
+            ->findPermissionRoleOperationTypeSwitch($permissionName, OperationType::WRITE)
+            ->isChecked()
+        ;
+
+        return $hasReadAccess && $hasWriteAccess;
+    }
+
+    public function hasPermissionWithAccessSelected(string $permissionName, string $operationType): bool
+    {
+        /** @var NodeElement $administrationRolePermissionAccess */
+        $administrationRolePermissionAccess =
+            $this->findPermissionRoleOperationTypeSwitch($permissionName, $operationType)
+        ;
+
+        return $administrationRolePermissionAccess->isChecked();
+    }
+
+    private function findPermissionRoleOperationTypeSwitch(string $permissionName, string $access): NodeElement
+    {
+        return $this
+            ->getDocument()
+            ->findById(
+                'permissions[' . strtolower(str_replace(' ', '_', $permissionName)) .
+                '][' . strtolower($access) . ']'
+            )
+        ;
     }
 }

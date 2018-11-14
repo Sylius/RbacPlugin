@@ -7,10 +7,12 @@ namespace spec\Sylius\RbacPlugin\CommandHandler;
 use Doctrine\Common\Persistence\ObjectManager;
 use PhpSpec\ObjectBehavior;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Sylius\RbacPlugin\Access\Model\OperationType;
 use Sylius\RbacPlugin\Command\UpdateAdministrationRole;
 use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
 use Sylius\RbacPlugin\Factory\AdministrationRoleFactoryInterface;
 use Sylius\RbacPlugin\Model\Permission;
+use Sylius\RbacPlugin\Model\PermissionInterface;
 use Sylius\RbacPlugin\Validator\AdministrationRoleValidatorInterface;
 
 final class UpdateAdministrationRoleHandlerSpec extends ObjectBehavior
@@ -25,7 +27,8 @@ final class UpdateAdministrationRoleHandlerSpec extends ObjectBehavior
             $administrationRoleManager,
             $administrationRoleFactory,
             $administrationRoleRepository,
-            $administrationRoleValidator
+            $administrationRoleValidator,
+            'sylius_rbac_administration_role_update'
         );
     }
 
@@ -35,35 +38,52 @@ final class UpdateAdministrationRoleHandlerSpec extends ObjectBehavior
         RepositoryInterface $administrationRoleRepository,
         AdministrationRoleInterface $updatedAdministrationRole,
         AdministrationRoleInterface $administrationRoleUpdates,
-        AdministrationRoleValidatorInterface $administrationRoleValidator
+        AdministrationRoleValidatorInterface $administrationRoleValidator,
+        PermissionInterface $salesManagementPermission,
+        PermissionInterface $customersManagementPermission
     ): void {
-        $catalogManagementPermission = new Permission('catalog_management');
-        $configurationPermission = new Permission('configuration');
-        $salesManagementPermission = new Permission('sales_management');
-        $customersManagementPermission = new Permission('customers_management');
+        $salesManagementPermission->type()->willReturn(Permission::SALES_MANAGEMENT_PERMISSION);
+        $salesManagementPermission->operationTypes()->willReturn([OperationType::READ, OperationType::WRITE]);
 
-        $updatedAdministrationRole->getName()->willReturn('rick_sanchez');
-        $updatedAdministrationRole
-            ->getPermissions()
-            ->willReturn([$catalogManagementPermission, $configurationPermission])
+        $customersManagementPermission->type()->willReturn(Permission::CONFIGURATION_PERMISSION);
+        $customersManagementPermission->operationTypes()->willReturn([OperationType::READ]);
+
+        $command = new UpdateAdministrationRole(
+            1,
+            'Sales Manager',
+            [
+                'sales_management' => [OperationType::READ, OperationType::WRITE],
+                'customers_management' => [OperationType::READ],
+            ]
+        );
+
+        $administrationRoleFactory
+            ->createWithNameAndPermissions('Sales Manager',
+                [
+                    'sales_management' => [OperationType::READ, OperationType::WRITE],
+                    'customers_management' => [OperationType::READ],
+                ]
+            )->willReturn($administrationRoleUpdates)
         ;
 
-        $administrationRoleRepository->find(1)->willReturn($updatedAdministrationRole);
+        $administrationRoleUpdates->getName()->willReturn('Sales Manager');
 
-        $administrationRoleUpdates->getName()->willReturn('morty_smith');
         $administrationRoleUpdates
             ->getPermissions()
             ->willReturn([$salesManagementPermission, $customersManagementPermission])
         ;
 
-        $administrationRoleFactory
-            ->createWithNameAndPermissions('morty_smith', ['sales_management', 'customers_management'])
-            ->willReturn($administrationRoleUpdates)
+        $administrationRoleValidator
+            ->validate($administrationRoleUpdates, 'sylius_rbac_administration_role_update')
+            ->shouldBeCalled()
         ;
 
-        $administrationRoleValidator->validate($administrationRoleUpdates)->shouldBeCalled();
+        $updatedAdministrationRole->getName()->willReturn('Product Manager');
+        $updatedAdministrationRole->clearPermissions()->shouldBeCalled();
 
-        $updatedAdministrationRole->setName('morty_smith')->shouldBeCalled();
+        $administrationRoleRepository->find(1)->willReturn($updatedAdministrationRole);
+
+        $updatedAdministrationRole->setName('Sales Manager')->shouldBeCalled();
 
         $updatedAdministrationRole->clearPermissions()->shouldBeCalled();
 
@@ -71,12 +91,6 @@ final class UpdateAdministrationRoleHandlerSpec extends ObjectBehavior
         $updatedAdministrationRole->addPermission($customersManagementPermission)->shouldBeCalled();
 
         $administrationRoleManager->flush()->shouldBeCalled();
-
-        $command = new UpdateAdministrationRole(
-            1,
-            'morty_smith',
-            ['sales_management', 'customers_management']
-        );
 
         $this->__invoke($command);
     }
@@ -88,33 +102,33 @@ final class UpdateAdministrationRoleHandlerSpec extends ObjectBehavior
     ): void {
         $command = new UpdateAdministrationRole(
             1,
-            '',
-            ['catalog_management', 'configuration']
+            'Product Manager',
+            [
+                'catalog_management' => [OperationType::READ, OperationType::WRITE],
+                'configuration' => [OperationType::READ],
+            ]
         );
 
         $administrationRoleFactory
-            ->createWithNameAndPermissions('', ['catalog_management', 'configuration'])
-            ->willReturn($administrationRole)
-        ;
+            ->createWithNameAndPermissions(
+                'Product Manager',
+                [
+                    'catalog_management' => [OperationType::READ, OperationType::WRITE],
+                    'configuration' => [OperationType::READ],
+                ]
+            )->willReturn($administrationRole);
 
-        $administrationRoleValidator->validate($administrationRole)->willThrow(new \InvalidArgumentException());
+        $administrationRoleValidator
+            ->validate($administrationRole, 'sylius_rbac_administration_role_update')
+            ->willThrow(new \InvalidArgumentException())
+        ;
 
         $this->shouldThrow(\InvalidArgumentException::class)->during('__invoke', [$command]);
     }
 
     function it_propagates_an_exception_when_administration_role_does_not_exist(
-        AdministrationRoleFactoryInterface $administrationRoleFactory,
-        AdministrationRoleInterface $administrationRole,
-        AdministrationRoleValidatorInterface $administrationRoleValidator,
         RepositoryInterface $administrationRoleRepository
     ): void {
-        $administrationRoleFactory->createWithNameAndPermissions(
-            'Product Manager',
-            [Permission::CONFIGURATION_PERMISSION, Permission::CATALOG_MANAGEMENT_PERMISSION]
-        )->willReturn($administrationRole);
-
-        $administrationRoleValidator->validate($administrationRole)->shouldBeCalled();
-
         $administrationRoleRepository->find(1)->willReturn(null);
 
         $this->shouldThrow(\InvalidArgumentException::class)->during(
