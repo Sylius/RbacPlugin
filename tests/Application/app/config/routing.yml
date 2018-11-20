@@ -1,5 +1,0 @@
-sylius:
-    resource: "../../../../vendor/sylius/sylius/app/config/routing.yml"
-
-sylius_rbac:
-    resource: "@SyliusRbacPlugin/Resources/config/routing.yml"
