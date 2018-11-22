@@ -43,14 +43,17 @@ Write permission access means also updating and deleting.
     - { resource: "@SyliusRbacPlugin/Resources/config/config.yml" }
     ```
 
-5. Generate and apply migrations
+5. Copy plugin migrations to your migrations directory (e.g. `src/Migrations`) and apply them to your database:
 
     ```bash
-    bin/console doctrine:migrations:diff
+    cp -R vendor/sylius/rbac-plugin/migrations/* src/Migrations
     bin/console doctrine:migrations:migrate
     ```
-
-6. Copy migrations from `vendor/sylius/rbac-plugin/migrations/` to your migrations directory and run `bin/console doctrine:migrations:migrate`.
-
-7. Copy templates from `vendor/sylius/rbac-plugin/src/Resources/views/SyliusAdminBundle/`
+    
+6. Copy templates from `vendor/sylius/rbac-plugin/src/Resources/views/SyliusAdminBundle/`
 to `app/Resources/SyliusAdminBundle/views/`
+
+## Security issues
+
+If you think that you have found a security issue, please do not use the issue tracker and do not post it publicly. 
+Instead, all security issues must be sent to `security@sylius.com`.
