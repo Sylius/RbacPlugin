@@ -29,35 +29,44 @@ Write permission access means also updating and deleting.
        new \Sylius\RbacPlugin\SyliusRbacPlugin(),
     ];
     ```
-2.1 Make sure to have Proohp
+    
+    
 
-3. Import routing:
+3. Make sure to have ProophServiceBusBundle inyour `AppKernel` as well:
+
+    ```php
+    $bundles = [
+        new \Prooph\Bundle\ServiceBus\ProophServiceBusBundle(),
+    ];
+    ```
+
+4. Import routing:
 
     ```yaml
     sylius_rbac:
         resource: "@SyliusRbacPlugin/Resources/config/routing.yml"
     ```
 
-4. Import configuration:
+5. Import configuration:
 
     ```yaml
     - { resource: "@SyliusRbacPlugin/Resources/config/config.yml" }
     ```
 
-5. Copy plugin migrations to your migrations directory (e.g. `src/Migrations`) and apply them to your database:
+6. Copy plugin migrations to your migrations directory (e.g. `src/Migrations`) and apply them to your database:
 
     ```bash
-    cp -R vendor/sylius/rbac-plugin/migrations/* <path/to/your/migrations>
+    cp -R vendor/sylius/rbac-plugin/migrations/* "<path/to/your/migrations>"
     bin/console doctrine:migrations:migrate
     ```
-    
-5.1 Add your local admin user to permissoins
-    
+
+7. Add your local administrator account to the permission system
+
     ```bash
-    bin/console sylius-rbac:grant-configuration-access <email> configuration
+   bin/console sylius-rbac:grant-configuration-access <email> configuration
     ```
     
-6. Copy templates from `vendor/sylius/rbac-plugin/src/Resources/views/SyliusAdminBundle/`
+7. Copy templates from `vendor/sylius/rbac-plugin/src/Resources/views/SyliusAdminBundle/`
 to `app/Resources/SyliusAdminBundle/views/`
 
 ## Security issues
