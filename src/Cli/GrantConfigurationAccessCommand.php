@@ -11,6 +11,7 @@ use Sylius\RbacPlugin\Entity\AdministrationRole;
 use Sylius\RbacPlugin\Entity\AdminUserInterface;
 use Sylius\RbacPlugin\Model\Permission;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -41,7 +42,7 @@ final class GrantConfigurationAccessCommand extends Command
             ->setName('sylius-rbac:grant-configuration-access')
             ->setDescription('Grants access to specific section for administrator')
             ->addArgument('email', InputOption::VALUE_REQUIRED)
-            ->addArgument('section', InputOption::VALUE_REQUIRED)
+            ->addArgument('sections', InputArgument::IS_ARRAY)
         ;
     }
 
