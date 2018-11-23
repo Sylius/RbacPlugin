@@ -52,7 +52,6 @@ final class GrantConfigurationAccessCommand extends Command
     {
         /** @var AdminUserInterface $admin */
         $admin = $this->administratorRepository->findOneBy(['email' => $input->getArgument('email')]);
-        $sections = $input->getArgument('sections');
         $roleName = $input->getArgument('roleName');
 
         Assert::string($roleName);
@@ -60,8 +59,7 @@ final class GrantConfigurationAccessCommand extends Command
         $configuratorRole = new AdministrationRole();
         $configuratorRole->setName($roleName);
 
-        foreach ($sections as $section) {
-            $configuratorRole->addPermission(Permission::$section([OperationType::write()]));
+        foreach ($input->getArgument('sections') as $section) {
             $configuratorRole->addPermission(Permission::$section([OperationType::read(), OperationType::write()]));
         }
 
