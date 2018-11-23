@@ -11,9 +11,11 @@ use Sylius\RbacPlugin\Entity\AdministrationRole;
 use Sylius\RbacPlugin\Entity\AdminUserInterface;
 use Sylius\RbacPlugin\Model\Permission;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Webmozart\Assert\Assert;
 
 final class GrantConfigurationAccessCommand extends Command
 {
@@ -41,7 +43,8 @@ final class GrantConfigurationAccessCommand extends Command
             ->setName('sylius-rbac:grant-configuration-access')
             ->setDescription('Grants access to specific section for administrator')
             ->addArgument('email', InputOption::VALUE_REQUIRED)
-            ->addArgument('section', InputOption::VALUE_REQUIRED)
+            ->addArgument('roleName', InputOption::VALUE_REQUIRED)
+            ->addArgument('sections', InputArgument::IS_ARRAY | InputArgument::REQUIRED)
         ;
     }
 
@@ -49,10 +52,18 @@ final class GrantConfigurationAccessCommand extends Command
     {
         /** @var AdminUserInterface $admin */
         $admin = $this->administratorRepository->findOneBy(['email' => $input->getArgument('email')]);
+        $sections = $input->getArgument('sections');
+        $roleName = $input->getArgument('roleName');
+
+        Assert::string($roleName);
 
         $configuratorRole = new AdministrationRole();
-        $configuratorRole->setName('Configurator2');
-        $configuratorRole->addPermission(Permission::configuration([OperationType::write()]));
+        $configuratorRole->setName($roleName);
+
+        foreach ($sections as $section) {
+            $configuratorRole->addPermission(Permission::$section([OperationType::write()]));
+            $configuratorRole->addPermission(Permission::$section([OperationType::read(), OperationType::write()]));
+        }
 
         $this->administratorRoleRepository->add($configuratorRole);
 
