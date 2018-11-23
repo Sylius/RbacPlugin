@@ -29,6 +29,7 @@ Write permission access means also updating and deleting.
        new \Sylius\RbacPlugin\SyliusRbacPlugin(),
     ];
     ```
+2.1 Make sure to have Proohp
 
 3. Import routing:
 
@@ -46,8 +47,14 @@ Write permission access means also updating and deleting.
 5. Copy plugin migrations to your migrations directory (e.g. `src/Migrations`) and apply them to your database:
 
     ```bash
-    cp -R vendor/sylius/rbac-plugin/migrations/* src/Migrations
+    cp -R vendor/sylius/rbac-plugin/migrations/* <path/to/your/migrations>
     bin/console doctrine:migrations:migrate
+    ```
+    
+5.1 Add your local admin user to permissoins
+    
+    ```bash
+    bin/console sylius-rbac:grant-configuration-access <email> configuration
     ```
     
 6. Copy templates from `vendor/sylius/rbac-plugin/src/Resources/views/SyliusAdminBundle/`
