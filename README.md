@@ -63,8 +63,16 @@ Write permission access means also updating and deleting.
 7. Add your local administrator account to the permission system
 
     ```bash
-   bin/console sylius-rbac:grant-configuration-access <email> configuration
+   bin/console sylius-rbac:grant-configuration-access <email> <roleName> <adminSections>
     ```
+    Where `adminSections` can be a space-separated list of any of these:
+    * catalogManagement
+    * configuration
+    * customerManagement
+    * marketingManagement
+    * salesManagement
+    
+    e.g. `bin/console sylius-rbac:grant-configuration-access admin@localhost administrator configuration catalogManagement`
     
 7. Copy templates from `vendor/sylius/rbac-plugin/src/Resources/views/SyliusAdminBundle/`
 to `app/Resources/SyliusAdminBundle/views/`
