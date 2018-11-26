@@ -38,7 +38,6 @@ final class GrantConfigurationAccessCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('sylius-rbac:grant-configuration-access')
             ->setDescription('Grants access to specific section for administrator')
             ->addArgument('email', InputOption::VALUE_REQUIRED)
         ;

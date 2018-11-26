@@ -76,7 +76,7 @@ Write permission access means also updating and deleting.
 8. OR: Grant only configuration access to a user
 
     ```bash
-    bin/console sylius-rbac:grant-access <email> <roleName> <adminSections>
+    bin/console sylius-rbac:grant-configuration-access <email>
     ```
 
 9. Copy templates from `vendor/sylius/rbac-plugin/src/Resources/views/SyliusAdminBundle/`
