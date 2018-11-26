@@ -63,7 +63,10 @@ final class GrantAccessCommand extends Command
             $configuratorRole->setName($roleName);
         }
 
-        foreach ($input->getArgument('sections') as $section) {
+        /** @var array $sections */
+        $sections = $input->getArgument('sections');
+
+        foreach ($sections as $section) {
             $configuratorRole->addPermission(Permission::$section([OperationType::read(), OperationType::write()]));
         }
 
