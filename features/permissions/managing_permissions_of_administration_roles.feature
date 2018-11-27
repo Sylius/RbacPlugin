@@ -6,7 +6,7 @@ Feature: Managing permissions of Administration roles
 
     Background:
         Given the store operates on a single channel in "United States"
-        Given there is already an Administration role "Product manager" in the system
+        And there is already an Administration role "Product manager" in the system
         And there is already an Administration role "Configurator" in the system
         And this administration role has "Configuration" permission
         And this administration role has "RBAC" permission
