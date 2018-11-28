@@ -14,28 +14,14 @@ final class OperationType
     /** @var string */
     private $type;
 
-    /** @var OperationType */
-    private static $readOperationType;
-
-    /** @var OperationType */
-    private static $writeOperationType;
-
     public static function read(): self
     {
-        if (null === self::$readOperationType) {
-            self::$readOperationType = new self(self::READ);
-        }
-
-        return self::$readOperationType;
+        return new self(self::READ);
     }
 
     public static function write(): self
     {
-        if (null === self::$writeOperationType) {
-            self::$writeOperationType = new self(self::WRITE);
-        }
-
-        return self::$writeOperationType;
+        return new self(self::WRITE);
     }
 
     public function __construct(string $type)
