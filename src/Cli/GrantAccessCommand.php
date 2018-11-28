@@ -44,10 +44,10 @@ final class GrantAccessCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Grants access to chooseable sections for administrator')
+            ->setDescription('Grants access to chosen sections for administrator')
             ->addArgument('email', InputOption::VALUE_REQUIRED)
             ->addArgument('roleName', InputOption::VALUE_REQUIRED)
-            ->addArgument('sections', InputArgument::IS_ARRAY | InputArgument::REQUIRED)
+            ->addArgument('sections', InputArgument::IS_ARRAY | InputOption::VALUE_REQUIRED)
         ;
     }
 
@@ -55,36 +55,40 @@ final class GrantAccessCommand extends Command
     {
         /** @var AdminUserInterface $admin */
         $admin = $this->administratorRepository->findOneBy(['email' => $input->getArgument('email')]);
+
+        /** @var string $roleName */
         $roleName = $input->getArgument('roleName');
 
-        Assert::string($roleName);
-
-        $configuratorRole = $this->getOrCreateConfiguratorRole($roleName);
+        $administrationRole = $this->getOrCreateAdministrationRole($roleName);
 
         /** @var array $sections */
         $sections = $input->getArgument('sections');
 
         foreach ($sections as $section) {
-            $configuratorRole->addPermission(Permission::$section([OperationType::read(), OperationType::write()]));
+            $administrationRole->addPermission(
+                Permission::ofType(
+                    $section,
+                    [OperationType::read(), OperationType::write()])
+            );
         }
 
-        $this->administratorRoleRepository->add($configuratorRole);
-        $admin->setAdministrationRole($configuratorRole);
+        $this->administratorRoleRepository->add($administrationRole);
+        $admin->setAdministrationRole($administrationRole);
 
         $this->objectManager->flush();
     }
 
-    private function getOrCreateConfiguratorRole(string $roleName): AdministrationRoleInterface
+    private function getOrCreateAdministrationRole(string $roleName): AdministrationRoleInterface
     {
         // This behaviour is debatable - either just override the selected role or throw an exception.
-        /** @var AdministrationRoleInterface|null $configuratorRole */
-        $configuratorRole = $this->administratorRoleRepository->findOneBy(['name' => $roleName]);
+        /** @var AdministrationRoleInterface|null $administrationRole */
+        $administrationRole = $this->administratorRoleRepository->findOneBy(['name' => $roleName]);
 
-        if (null === $configuratorRole) {
-            $configuratorRole = new AdministrationRole();
-            $configuratorRole->setName($roleName);
+        if (null === $administrationRole) {
+            $administrationRole = new AdministrationRole();
+            $administrationRole->setName($roleName);
         }
 
-        return $configuratorRole;
+        return $administrationRole;
     }
 }
