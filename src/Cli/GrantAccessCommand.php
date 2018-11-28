@@ -40,7 +40,7 @@ final class GrantAccessCommand extends Command
         $this->objectManager = $objectManager;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Grants access to chosen sections for administrator')
@@ -50,7 +50,7 @@ final class GrantAccessCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         /** @var AdminUserInterface $admin */
         $admin = $this->administratorRepository->findOneBy(['email' => $input->getArgument('email')]);
