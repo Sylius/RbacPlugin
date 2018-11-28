@@ -43,14 +43,14 @@ final class AdministrationRoleFactorySpec extends ObjectBehavior
         $administrationRole->addPermission(Argument::that(function (PermissionInterface $permission): bool {
             return
                 $permission->type() === Permission::CONFIGURATION_PERMISSION &&
-                $permission->operationTypes()[0] === OperationType::read()
+                $permission->operationTypes()[0] == OperationType::read()
             ;
         }))->shouldBeCalled();
 
         $administrationRole->addPermission(Argument::that(function (PermissionInterface $permission): bool {
             return
                 $permission->type() === Permission::CATALOG_MANAGEMENT_PERMISSION &&
-                $permission->operationTypes()[0] === OperationType::read()
+                $permission->operationTypes()[0] == OperationType::read()
             ;
         }))->shouldBeCalled();
 
