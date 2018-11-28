@@ -7,7 +7,7 @@ Feature: Having an access only to products catalog management
     Background:
         Given the store operates on a single channel in "United States"
         And there is already an Administration role "Product manager" in the system
-        And this administration role has "Catalog management" permission
+        And this administration role has read permission for "Catalog management"
         And there is an administrator "scary.terry@nightmare.com" identified by "youCanRunButYouCannotHide"
         And this administrator has administration role "Product manager"
         And I am logged in as "scary.terry@nightmare.com" administrator

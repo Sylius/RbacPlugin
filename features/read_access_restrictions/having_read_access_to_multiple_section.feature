@@ -7,10 +7,7 @@ Feature: Having an access to multiple sections
     Background:
         Given the store operates on a single channel in "United States"
         And there is already an Administration role "Configurator" in the system
-        And this administration role has "Configuration" permission
-        And this administration role has "Catalog management" permission
-        And this administration role has "Marketing management" permission
-        And this administration role has "RBAC" permission
+        And this administration role has read permissions for "Configuration", "Catalog management", "Marketing management" and "RBAC"
         And there is an administrator "scary.terry@nightmare.com" identified by "youCanRunButYouCannotHide"
         And this administrator has administration role "Configurator"
         And I am logged in as "scary.terry@nightmare.com" administrator

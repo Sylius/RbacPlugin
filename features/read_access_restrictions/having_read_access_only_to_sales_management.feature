@@ -7,7 +7,7 @@ Feature: Having an access only to sales management
     Background:
         Given the store operates on a single channel in "United States"
         And there is already an Administration role "Sales manager" in the system
-        And this administration role has "Sales management" permission
+        And this administration role has read permission for "Sales management"
         And there is an administrator "scary.terry@nightmare.com" identified by "youCanRunButYouCannotHide"
         And this administrator has administration role "Sales manager"
         And I am logged in as "scary.terry@nightmare.com" administrator

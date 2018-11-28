@@ -53,18 +53,24 @@ final class AdministrationRolesContext implements Context
     }
 
     /**
-     * @Given /^(this administration role) has "([^"]+)" permission$/
-     * @Given /^(this administration role) has "([^"]+)" and "([^"]+)" permissions$/
+     * @Given /^(this administration role) has (read|write) permission for "([^"]+)"$/
+     * @Given /^(this administration role) has (read|write) permissions for "([^"]+)" and "([^"]+)"$/
+     * @Given /^(this administration role) has (read|write) permissions for "([^"]+)", "([^"]+)" and "([^"]+)"$/
+     * @Given /^(this administration role) has (read|write) permissions for "([^"]+)", "([^"]+)", "([^"]+)" and "([^"]+)"$/
      */
     public function thisAdministrationRoleHasAndPermissions(
         AdministrationRoleInterface $administrationRole,
+        string $operationType,
         string ... $permissions
     ): void {
+        $operationsType = [OperationType::read()];
+        if ('write' === $operationType) {
+            $operationsType[] = OperationType::write();
+        }
+
         foreach ($permissions as $permission) {
-            $administrationRole
-                ->addPermission(Permission::ofType(strtolower(str_replace(' ', '_', $permission)),
-                    [OperationType::read(), OperationType::write()]
-                )
+            $administrationRole->addPermission(
+                Permission::ofType(strtolower(str_replace(' ', '_', $permission)), $operationsType)
             );
         }
 
