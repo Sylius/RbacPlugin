@@ -12,7 +12,7 @@
 
 Adding Write access to a permission automatically means adding Read access.
 
-Write permission access means also updating and deleting. 
+Write permission access means also updating and deleting.
 
 ## Installation
 
@@ -29,10 +29,8 @@ Write permission access means also updating and deleting.
        new \Sylius\RbacPlugin\SyliusRbacPlugin(),
     ];
     ```
-    
-    
 
-3. Make sure to have ProophServiceBusBundle inyour `AppKernel` as well:
+3. Make sure to have ProophServiceBusBundle in your `AppKernel` as well:
 
     ```php
     $bundles = [
@@ -63,22 +61,26 @@ Write permission access means also updating and deleting.
 7. Add your local administrator account to the permission system
 
     ```bash
-    bin/console sylius-rbac:grant-access <email> <roleName> <adminSections>
+    bin/console sylius-rbac:grant-access <roleName> <adminSections>
     ```
-    
+
     Where `adminSections` can be a space-separated list of any of these:
     * catalogManagement
     * configuration
     * customerManagement
     * marketingManagement
     * salesManagement
-    
-    e.g. `bin/console sylius-rbac:grant-access admin@localhost administrator configuration catalogManagement`
-    
+
+    Then you will be asked to provide an email address of the administrator.
+
+    e.g. `bin/console sylius-rbac:grant-access administrator configuration catalogManagement`
+
+    `In order to permit access to admin panel sections, please provide administrator's email address: sylius@example.com`
+
 7. Copy templates from `vendor/sylius/rbac-plugin/src/Resources/views/SyliusAdminBundle/`
 to `app/Resources/SyliusAdminBundle/views/`
 
 ## Security issues
 
-If you think that you have found a security issue, please do not use the issue tracker and do not post it publicly. 
+If you think that you have found a security issue, please do not use the issue tracker and do not post it publicly.
 Instead, all security issues must be sent to `security@sylius.com`.
