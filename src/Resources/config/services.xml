@@ -72,5 +72,15 @@
         <service id="Sylius\RbacPlugin\Cli\InstallPluginCommand">
             <tag name="console.command" command="sylius-rbac:install-plugin" />
         </service>
+
+        <service
+                id="sylius.rbac_plugin.fixture.administration_role_fixture"
+                class="Sylius\RbacPlugin\Fixture\AdministrationRoleFixture"
+                public="true"
+        >
+            <argument type="service" id="sylius_rbac.custom_factory.administration_role" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <tag name="sylius_fixtures.fixture"/>
+        </service>
     </services>
 </container>

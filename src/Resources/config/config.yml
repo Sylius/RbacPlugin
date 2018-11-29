@@ -2,6 +2,16 @@ prooph_service_bus:
     command_buses:
         sylius_rbac_command_bus: ~
 
+sylius_fixtures:
+    suites:
+        default_administration_role:
+            fixtures:
+                administration_role:
+                    options:
+                        administration_role_name: 'No sections access'
+            listeners:
+                logger: ~
+
 sylius_resource:
     resources:
         sylius_rbac.administration_role:
