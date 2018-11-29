@@ -21,8 +21,8 @@ final class SyliusRbacExtension extends Extension
 
         $loader->load('services.xml');
 
-        $configuration = $config['sylius_section_routes_prefixes'];
-        $configuration['custom'] = $config['custom_section_routes_prefixes'];
+        $configuration = $config['sylius_sections'];
+        $configuration['custom'] = $config['custom_sections'];
 
         $container->setParameter('sylius_rbac.configuration', $configuration);
     }

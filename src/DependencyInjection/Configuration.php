@@ -20,7 +20,7 @@ final class Configuration implements ConfigurationInterface
         $rootNode
             ->addDefaultsIfNotSet()
             ->children()
-                ->arrayNode('sylius_section_routes_prefixes')
+                ->arrayNode('sylius_sections')
                     ->children()
                         ->variableNode('catalog')->end()
                         ->variableNode('configuration')->end()
@@ -31,7 +31,10 @@ final class Configuration implements ConfigurationInterface
                 ->end()
                 /* it's a very MVP approach, as now we can pass almost everything there
                    TODO: create some more strict custom sections structure */
-                ->variableNode('custom_section_routes_prefixes')->end()
+                ->arrayNode('custom_sections')
+                    ->useAttributeAsKey('name')
+                    ->variablePrototype()
+                ->end()
             ->end()
         ;
 
