@@ -141,8 +141,16 @@ final class AccessRestrictionsContext implements Context
     /**
      * @Then I should have access to RBAC
      */
-    public function shouldHaveNoAccessToRbacManagement(): void
+    public function shouldHaveAccessToRbac(): void
     {
         Assert::true($this->rbacPagesAvailabilityChecker->areAllPagesAvailable());
+    }
+
+    /**
+     * @Then I should have no access to RBAC
+     */
+    public function shouldHaveNoAccessToRbac(): void
+    {
+        Assert::true($this->rbacPagesAvailabilityChecker->areAllPagesUnavailable());
     }
 }

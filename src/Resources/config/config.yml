@@ -52,7 +52,7 @@ sylius_grid:
                         template: '@SyliusRbacPlugin/AdministrationRole/Grid/Field/administrationRole.html.twig'
 
 sylius_rbac:
-    section_routes_prefixes:
+    sylius_section_routes_prefixes:
         catalog:
             - sylius_admin_inventory
             - sylius_admin_product
@@ -74,8 +74,6 @@ sylius_rbac:
             - sylius_admin_tax_category
             - sylius_admin_tax_rate
             - sylius_admin_zone
-            - sylius_rbac_administration_role
-            - sylius_rbac_admin_administration_role
         customers:
             - sylius_admin_customer
             - sylius_admin_customer_group
@@ -85,3 +83,6 @@ sylius_rbac:
             - sylius_admin_promotion
         sales:
             - sylius_admin_order
+    custom_section_routes_prefixes:
+        rbac:
+            - sylius_rbac

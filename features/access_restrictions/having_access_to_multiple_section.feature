@@ -10,6 +10,7 @@ Feature: Having an access to multiple sections
         And this administration role has "Configuration" permission
         And this administration role has "Catalog management" permission
         And this administration role has "Marketing management" permission
+        And this administration role has "RBAC" permission
         And there is an administrator "scary.terry@nightmare.com" identified by "youCanRunButYouCannotHide"
         And this administrator has administration role "Configurator"
         And I am logged in as "scary.terry@nightmare.com" administrator
@@ -27,3 +28,4 @@ Feature: Having an access to multiple sections
         And I should have no access to customers management
         And I should have access to marketing management
         And I should have no access to sales management
+        And I should have access to RBAC

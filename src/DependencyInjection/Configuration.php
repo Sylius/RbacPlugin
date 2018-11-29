@@ -20,7 +20,7 @@ final class Configuration implements ConfigurationInterface
         $rootNode
             ->addDefaultsIfNotSet()
             ->children()
-                ->arrayNode('section_routes_prefixes')
+                ->arrayNode('sylius_section_routes_prefixes')
                     ->children()
                         ->variableNode('catalog')->end()
                         ->variableNode('configuration')->end()
@@ -29,6 +29,7 @@ final class Configuration implements ConfigurationInterface
                         ->variableNode('sales')->end()
                     ->end()
                 ->end()
+                ->variableNode('custom_section_routes_prefixes')->end()
             ->end()
         ;
 
