@@ -25,7 +25,7 @@ final class CreateAdministrationRoleHandlerSpec extends ObjectBehavior
             $administrationRoleManager,
             $administrationRoleFactory,
             $administrationRoleValidator,
-            'sylius_rbac_administration_role_create'
+            'sylius_rbac_admin_administration_role_create'
         );
     }
 
@@ -56,7 +56,7 @@ final class CreateAdministrationRoleHandlerSpec extends ObjectBehavior
         ;
 
         $administrationRoleValidator
-            ->validate($administrationRole, 'sylius_rbac_administration_role_create')
+            ->validate($administrationRole, 'sylius_rbac_admin_administration_role_create')
             ->shouldBeCalled()
         ;
 
@@ -95,7 +95,7 @@ final class CreateAdministrationRoleHandlerSpec extends ObjectBehavior
         )->willReturn($administrationRole);
 
         $administrationRoleValidator
-            ->validate($administrationRole, 'sylius_rbac_administration_role_create')
+            ->validate($administrationRole, 'sylius_rbac_admin_administration_role_create')
             ->willThrow(new \InvalidArgumentException())
         ;
 

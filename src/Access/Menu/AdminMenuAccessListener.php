@@ -57,6 +57,10 @@ final class AdminMenuAccessListener
         if ($this->hasAdminAccessToSection($adminUser, Section::sales())) {
             $menu->removeChild('sales');
         }
+
+        if ($this->hasAdminAccessToSection($adminUser, Section::ofType('rbac'))) {
+            $menu->removeChild('rbac');
+        }
     }
 
     private function hasAdminAccessToSection(AdminUserInterface $adminUser, Section $section): bool

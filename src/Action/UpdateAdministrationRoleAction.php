@@ -58,7 +58,7 @@ final class UpdateAdministrationRoleAction
 
         return new RedirectResponse(
             $this->router->generate(
-                'sylius_rbac_administration_role_update_view', ['id' => $request->attributes->get('id')]
+                'sylius_rbac_admin_administration_role_update_view', ['id' => $request->attributes->get('id')]
             )
         );
     }

@@ -56,11 +56,16 @@ final class AdminMenuAccessListenerSpec extends ObjectBehavior
             return $accessRequest->section() == Section::sales();
         }))->willReturn(false);
 
+        $accessChecker->canAccessSection($adminUser, Argument::that(function (AccessRequest $accessRequest): bool {
+            return $accessRequest->section() == Section::ofType('rbac');
+        }))->willReturn(false);
+
         $menu->removeChild('catalog')->shouldBeCalled();
         $menu->removeChild('configuration')->shouldNotBeCalled();
         $menu->removeChild('customers')->shouldNotBeCalled();
         $menu->removeChild('marketing')->shouldBeCalled();
         $menu->removeChild('sales')->shouldBeCalled();
+        $menu->removeChild('rbac')->shouldBeCalled();
 
         $this->removeInaccessibleAdminMenuParts($event);
     }

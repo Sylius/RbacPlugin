@@ -31,6 +31,7 @@ final class AdminMainMenuContext implements Context
 
     /**
      * @Then :firstSection, :secondSection and :thirdSection sections should be available in the main menu
+     * @Then :firstSection, :secondSection, :thirdSection and :fourthSection sections should be available in the main menu
      */
     public function someSectionsShouldBeAvailableInTheMainMenu(string ...$sections): void
     {

@@ -9,7 +9,9 @@
     </imports>
 
     <services>
-        <service id="Sylius\RbacPlugin\Provider\AdminPermissionsProvider" />
+        <service id="Sylius\RbacPlugin\Provider\AdminPermissionsProvider">
+            <argument>%sylius_rbac.configuration%</argument>
+        </service>
 
         <service id="Sylius\RbacPlugin\Menu\AdminMenuListener">
             <tag name="kernel.event_listener" event="sylius.menu.admin.main" method="addRbacMenu" />

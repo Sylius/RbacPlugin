@@ -11,7 +11,7 @@
 {% set writeOperationType = constant('Sylius\\RbacPlugin\\Access\\Model\\OperationType::WRITE') %}
 
 <div class="ui segment">
-    <form name="sylius_rbac_administration_role" method="POST" class="ui loadable form" novalidate="novalidate" action={{ path('sylius_rbac_administration_role_create') }}>
+    <form name="sylius_rbac_administration_role" method="POST" class="ui loadable form" novalidate="novalidate" action={{ path('sylius_rbac_admin_administration_role_create') }}>
         <input type="hidden" name="_method" value="PUT" />
         <div id="sylius_rbac_administration_role">
                 <div class="required field">

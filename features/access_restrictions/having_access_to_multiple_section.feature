@@ -18,7 +18,7 @@ Feature: Having an access to multiple sections
     @ui
     Scenario: Seeing only configuration section in Admin panel main menu
         When I open administration dashboard
-        Then "Configuration", "Catalog" and "Marketing" sections should be available in the main menu
+        Then "Configuration", "Catalog", "Marketing" and "RBAC" sections should be available in the main menu
 
     @ui
     Scenario: Having access to specific sections in Admin panel

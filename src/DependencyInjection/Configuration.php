@@ -29,6 +29,8 @@ final class Configuration implements ConfigurationInterface
                         ->variableNode('sales')->end()
                     ->end()
                 ->end()
+                /* it's a very MVP approach, as now we can pass almost everything there
+                   TODO: create some more strict custom sections structure */
                 ->variableNode('custom_section_routes_prefixes')->end()
             ->end()
         ;
