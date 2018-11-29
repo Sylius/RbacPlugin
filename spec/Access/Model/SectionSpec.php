@@ -44,12 +44,11 @@ final class SectionSpec extends ObjectBehavior
         $this->__toString()->shouldReturn(Section::SALES);
     }
 
-    function it_cannot_be_other_section_than_allowed(): void
+    function it_can_be_custom(): void
     {
-        $this
-            ->shouldThrow(\InvalidArgumentException::class)
-            ->during('__construct', ['other_section'])
-        ;
+        $this->beConstructedThrough('ofType', ['custom_section']);
+
+        $this->__toString()->shouldReturn('custom_section');
     }
 
     function it_can_be_compared_with_other_section(): void

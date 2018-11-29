@@ -75,7 +75,6 @@
         <service id="sylius_rbac.behat.pages_availability_checker.rbac" class="Tests\Sylius\RbacPlugin\Behat\Service\PagesAvailabilityChecker">
             <argument type="collection">
                 <argument type="service" id="Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdministrationRoleCreatePage" />
-                <argument type="service" id="Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdministrationRoleUpdatePage" />
                 <argument type="service" id="sylius_rbac.behat.page.administration_role.index" />
             </argument>
         </service>

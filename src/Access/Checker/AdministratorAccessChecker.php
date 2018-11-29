@@ -41,6 +41,6 @@ final class AdministratorAccessChecker implements AdministratorAccessCheckerInte
                 return Section::sales();
         }
 
-        throw new \Exception('Unrecognized permission');
+        return Section::ofType($permission->type());
     }
 }

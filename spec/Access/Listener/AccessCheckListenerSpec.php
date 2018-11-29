@@ -7,6 +7,7 @@ namespace spec\Sylius\RbacPlugin\Access\Listener;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Sylius\RbacPlugin\Access\Checker\AdministratorAccessCheckerInterface;
+use Sylius\RbacPlugin\Access\Checker\AdminRouteCheckerInterface;
 use Sylius\RbacPlugin\Access\Creator\AccessRequestCreatorInterface;
 use Sylius\RbacPlugin\Access\Exception\UnresolvedRouteNameException;
 use Sylius\RbacPlugin\Access\Model\AccessRequest;
@@ -30,14 +31,23 @@ final class AccessCheckListenerSpec extends ObjectBehavior
         AdministratorAccessCheckerInterface $administratorAccessChecker,
         TokenStorageInterface $tokenStorage,
         UrlGeneratorInterface $router,
-        Session $session
+        Session $session,
+        AdminRouteCheckerInterface $adminRouteChecker
     ): void {
-        $this->beConstructedWith($accessRequestCreator, $administratorAccessChecker, $tokenStorage, $router, $session);
+        $this->beConstructedWith(
+            $accessRequestCreator,
+            $administratorAccessChecker,
+            $tokenStorage,
+            $router,
+            $session,
+            $adminRouteChecker
+        );
     }
 
     function it_redirects_to_admin_dashboard_if_admin_does_not_have_access_to_target_route(
         AccessRequestCreatorInterface $accessRequestCreator,
         AdministratorAccessCheckerInterface $administratorAccessChecker,
+        AdminRouteCheckerInterface $adminRouteChecker,
         TokenStorageInterface $tokenStorage,
         UrlGeneratorInterface $router,
         Session $session,
@@ -50,6 +60,8 @@ final class AccessCheckListenerSpec extends ObjectBehavior
         $event->isMasterRequest()->willReturn(true);
         $event->getRequest()->willReturn($request);
         $request->attributes = new ParameterBag(['_route' => 'sylius_admin_some_route']);
+
+        $adminRouteChecker->__invoke('sylius_admin_some_route')->willReturn(true);
 
         $accessRequest = new AccessRequest(Section::catalog(), OperationType::write());
         $accessRequestCreator->createFromRouteName('sylius_admin_some_route')->willReturn($accessRequest);
@@ -73,6 +85,7 @@ final class AccessCheckListenerSpec extends ObjectBehavior
     function it_does_nothing_if_administrator_has_access_to_given_route(
         AccessRequestCreatorInterface $accessRequestCreator,
         AdministratorAccessCheckerInterface $administratorAccessChecker,
+        AdminRouteCheckerInterface $adminRouteChecker,
         TokenStorageInterface $tokenStorage,
         GetResponseEvent $event,
         Request $request,
@@ -82,6 +95,8 @@ final class AccessCheckListenerSpec extends ObjectBehavior
         $event->isMasterRequest()->willReturn(true);
         $event->getRequest()->willReturn($request);
         $request->attributes = new ParameterBag(['_route' => 'sylius_admin_some_route']);
+
+        $adminRouteChecker->__invoke('sylius_admin_some_route')->willReturn(true);
 
         $accessRequest = new AccessRequest(Section::catalog(), OperationType::write());
         $accessRequestCreator->createFromRouteName('sylius_admin_some_route')->willReturn($accessRequest);
@@ -98,12 +113,15 @@ final class AccessCheckListenerSpec extends ObjectBehavior
 
     function it_does_nothing_if_route_is_not_secured_with_rbac_system(
         AccessRequestCreatorInterface $accessRequestCreator,
+        AdminRouteCheckerInterface $adminRouteChecker,
         GetResponseEvent $event,
         Request $request
     ): void {
         $event->isMasterRequest()->willReturn(true);
         $event->getRequest()->willReturn($request);
         $request->attributes = new ParameterBag(['_route' => 'sylius_admin_some_route']);
+
+        $adminRouteChecker->__invoke('sylius_admin_some_route')->willReturn(true);
 
         $accessRequestCreator
             ->createFromRouteName('sylius_admin_some_route')
@@ -117,12 +135,15 @@ final class AccessCheckListenerSpec extends ObjectBehavior
 
     function it_does_nothing_if_route_is_not_from_admin_panel(
         AccessRequestCreatorInterface $accessRequestCreator,
+        AdminRouteCheckerInterface $adminRouteChecker,
         GetResponseEvent $event,
         Request $request
     ): void {
         $event->isMasterRequest()->willReturn(true);
         $event->getRequest()->willReturn($request);
         $request->attributes = new ParameterBag(['_route' => 'sylius_shop_some_route']);
+
+        $adminRouteChecker->__invoke('sylius_shop_some_route')->willReturn(false);
 
         $accessRequestCreator->createFromRouteName('sylius_admin_some_route')->shouldNotBeCalled();
 

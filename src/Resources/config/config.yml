@@ -74,6 +74,8 @@ sylius_rbac:
             - sylius_admin_tax_category
             - sylius_admin_tax_rate
             - sylius_admin_zone
+            - sylius_rbac_administration_role
+            - sylius_rbac_admin_administration_role
         customers:
             - sylius_admin_customer
             - sylius_admin_customer_group

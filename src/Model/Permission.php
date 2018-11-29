@@ -75,16 +75,6 @@ final class Permission implements PermissionInterface
 
     private function __construct(string $type, array $operationTypes = [])
     {
-        Assert::oneOf(
-            $type, [
-                self::CATALOG_MANAGEMENT_PERMISSION,
-                self::CONFIGURATION_PERMISSION,
-                self::CUSTOMERS_MANAGEMENT_PERMISSION,
-                self::MARKETING_MANAGEMENT_PERMISSION,
-                self::SALES_MANAGEMENT_PERMISSION,
-            ]
-        );
-
         Assert::allOneOf(
             array_map(function (OperationType $operationType): string {
                 return $operationType->__toString();

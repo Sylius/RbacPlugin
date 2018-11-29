@@ -8,25 +8,25 @@ sylius_rbac_administration_role:
         redirect: update
     type: sylius.resource
 
-sylius_rbac_administration_role_create_view:
+sylius_rbac_admin_administration_role_create_view:
     path: /administration-roles/new
     methods: [GET]
     defaults:
         _controller: Sylius\RbacPlugin\Action\CreateAdministrationRoleViewAction
 
-sylius_rbac_administration_role_create:
+sylius_rbac_admin_administration_role_create:
     path: /administration-roles/new
     methods: [PUT, PATCH]
     defaults:
         _controller: Sylius\RbacPlugin\Action\CreateAdministrationRoleAction
 
-sylius_rbac_administration_role_update_view:
+sylius_rbac_admin_administration_role_update_view:
     path: /administration-roles/{id}/update
     methods: [GET]
     defaults:
         _controller: Sylius\RbacPlugin\Action\UpdateAdministrationRoleViewAction
 
-sylius_rbac_administration_role_update:
+sylius_rbac_admin_administration_role_update:
     path: /administration-roles/{id}/update
     methods: [POST]
     defaults:
