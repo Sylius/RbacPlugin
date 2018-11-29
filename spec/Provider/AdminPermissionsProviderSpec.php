@@ -45,10 +45,10 @@ final class AdminPermissionsProviderSpec extends ObjectBehavior
         $this->getPossiblePermissions()->shouldReturn([
             'catalog_management',
             'configuration',
+            'custom_section',
             'customers_management',
             'marketing_management',
             'sales_management',
-            'custom_section',
         ]);
     }
 }

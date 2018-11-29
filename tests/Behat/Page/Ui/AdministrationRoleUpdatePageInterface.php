@@ -12,7 +12,7 @@ interface AdministrationRoleUpdatePageInterface extends UpdatePageInterface
 
     public function removePermission(string $permissionName): void;
 
-    public function removePermissionAccess($permissionName, $operationType): void;
+    public function removePermissionAccess(string $permissionName, string $operationType): void;
 
     public function isPermissionManageable(string $permissionName): bool;
 

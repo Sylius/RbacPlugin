@@ -9,6 +9,7 @@ Feature: Managing permissions of Administration roles
         Given there is already an Administration role "Product manager" in the system
         And there is already an Administration role "Configurator" in the system
         And this administration role has "Configuration" permission
+        And this administration role has "RBAC" permission
         And there is an administrator "scary.terry@nightmare.com" identified by "youCanRunButYouCannotHide"
         And this administrator has administration role "Configurator"
         And I am logged in as "scary.terry@nightmare.com" administrator
@@ -21,6 +22,7 @@ Feature: Managing permissions of Administration roles
         And I should be able to manage "Customers management" permission
         And I should be able to manage "Marketing management" permission
         And I should be able to manage "Configuration" permission
+        And I should be able to manage "RBAC" permission
 
     @ui
     Scenario: Adding permissions to existing Administration role

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Sylius\RbacPlugin\Provider;
 
+use Sylius\RbacPlugin\Model\Permission;
+
 final class AdminPermissionsProvider implements AdminPermissionsProviderInterface
 {
     /** @var array */
@@ -11,13 +13,25 @@ final class AdminPermissionsProvider implements AdminPermissionsProviderInterfac
 
     public function __construct(array $rbacConfiguration)
     {
+        $configuration = [];
         foreach ($rbacConfiguration['custom'] as $customSection => $customRoutes) {
-            $rbacConfiguration[$customSection] = $customRoutes;
+            $configuration[$customSection] = $configuration;
         }
 
-        unset($rbacConfiguration['custom']);
+        $rbacConfiguration = array_merge(
+            array_keys($configuration),
+            [
+                Permission::CATALOG_MANAGEMENT_PERMISSION,
+                Permission::CONFIGURATION_PERMISSION,
+                Permission::CUSTOMERS_MANAGEMENT_PERMISSION,
+                Permission::MARKETING_MANAGEMENT_PERMISSION,
+                Permission::SALES_MANAGEMENT_PERMISSION,
+            ]
+        );
 
-        $this->rbacConfiguration = array_keys($rbacConfiguration);
+        sort($rbacConfiguration);
+
+        $this->rbacConfiguration = $rbacConfiguration;
     }
 
     /** @return array|string[] */
