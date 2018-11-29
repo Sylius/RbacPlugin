@@ -10,5 +10,5 @@ use Sylius\RbacPlugin\Access\Model\AccessRequest;
 interface AccessRequestCreatorInterface
 {
     /** @throws UnresolvedRouteNameException */
-    public function createFromRouteName(string $routeName): AccessRequest;
+    public function createFromRouteName(string $routeName, string $requestMethod): AccessRequest;
 }

@@ -220,7 +220,6 @@ final class AccessRestrictionsContext implements Context
      */
     public function shouldNotBeAbleToModifySettingsInCatalogManagementSection(): void
     {
-        $this->createPage->open();
         Assert::false($this->catalogModifyingAvailabilityChecker->isModifyingAvailable());
     }
 

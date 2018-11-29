@@ -19,35 +19,37 @@ final class AccessRequestCreator implements AccessRequestCreatorInterface
         $this->configuration = $configuration;
     }
 
-    public function createFromRouteName(string $routeName): AccessRequest
+    public function createFromRouteName(string $routeName, string $requestMethod): AccessRequest
     {
+        $operationType = $this->resolveOperationType($requestMethod);
+
         foreach ($this->configuration['configuration'] as $configurationRoutePrefix) {
             if (strpos($routeName, $configurationRoutePrefix) === 0) {
-                return new AccessRequest(Section::configuration(), OperationType::write());
+                return new AccessRequest(Section::configuration(), $operationType);
             }
         }
 
         foreach ($this->configuration['customers'] as $customersRoutePrefix) {
             if (strpos($routeName, $customersRoutePrefix) === 0) {
-                return new AccessRequest(Section::customers(), OperationType::write());
+                return new AccessRequest(Section::customers(), $operationType);
             }
         }
 
         foreach ($this->configuration['marketing'] as $marketingRoutePrefix) {
             if (strpos($routeName, $marketingRoutePrefix) === 0) {
-                return new AccessRequest(Section::marketing(), OperationType::write());
+                return new AccessRequest(Section::marketing(), $operationType);
             }
         }
 
         foreach ($this->configuration['sales'] as $salesRoutePrefix) {
             if (strpos($routeName, $salesRoutePrefix) === 0) {
-                return new AccessRequest(Section::sales(), OperationType::write());
+                return new AccessRequest(Section::sales(), $operationType);
             }
         }
 
         foreach ($this->configuration['catalog'] as $catalogRoutePrefix) {
             if (strpos($routeName, $catalogRoutePrefix) === 0) {
-                return new AccessRequest(Section::catalog(), OperationType::write());
+                return new AccessRequest(Section::catalog(), $operationType);
             }
         }
 
@@ -60,5 +62,14 @@ final class AccessRequestCreator implements AccessRequestCreatorInterface
         }
 
         throw UnresolvedRouteNameException::withRouteName($routeName);
+    }
+
+    public function resolveOperationType(string $requestMethod): OperationType
+    {
+        if ('GET' === $requestMethod || 'HEAD' === $requestMethod) {
+            return OperationType::read();
+        }
+
+        return OperationType::write();
     }
 }

@@ -9,11 +9,13 @@ use Prophecy\Argument;
 use Sylius\RbacPlugin\Access\Checker\AdministratorAccessCheckerInterface;
 use Sylius\RbacPlugin\Access\Checker\RouteNameCheckerInterface;
 use Sylius\RbacPlugin\Access\Creator\AccessRequestCreatorInterface;
+use Sylius\RbacPlugin\Access\Exception\InsecureRequestException;
 use Sylius\RbacPlugin\Access\Exception\UnresolvedRouteNameException;
 use Sylius\RbacPlugin\Access\Model\AccessRequest;
 use Sylius\RbacPlugin\Access\Model\OperationType;
 use Sylius\RbacPlugin\Access\Model\Section;
 use Sylius\RbacPlugin\Entity\AdminUserInterface;
+use Symfony\Component\HttpFoundation\HeaderBag;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -59,12 +61,17 @@ final class AccessCheckListenerSpec extends ObjectBehavior
     ): void {
         $event->isMasterRequest()->willReturn(true);
         $event->getRequest()->willReturn($request);
+        $request->getMethod()->willReturn('GET');
         $request->attributes = new ParameterBag(['_route' => 'sylius_admin_some_route']);
+        $request->headers = new HeaderBag(['referer' => null]);
 
         $adminRouteChecker->isAdminRoute('sylius_admin_some_route')->willReturn(true);
 
-        $accessRequest = new AccessRequest(Section::catalog(), OperationType::write());
-        $accessRequestCreator->createFromRouteName('sylius_admin_some_route')->willReturn($accessRequest);
+        $accessRequest = new AccessRequest(Section::catalog(), OperationType::read());
+        $accessRequestCreator
+            ->createFromRouteName('sylius_admin_some_route', 'GET')
+            ->willReturn($accessRequest)
+        ;
 
         $tokenStorage->getToken()->willReturn($token);
         $token->getUser()->willReturn($adminUser);
@@ -94,12 +101,17 @@ final class AccessCheckListenerSpec extends ObjectBehavior
     ): void {
         $event->isMasterRequest()->willReturn(true);
         $event->getRequest()->willReturn($request);
+        $request->getMethod()->willReturn('GET');
         $request->attributes = new ParameterBag(['_route' => 'sylius_admin_some_route']);
+        $request->headers = new HeaderBag(['referer' => null]);
 
         $adminRouteChecker->isAdminRoute('sylius_admin_some_route')->willReturn(true);
 
         $accessRequest = new AccessRequest(Section::catalog(), OperationType::write());
-        $accessRequestCreator->createFromRouteName('sylius_admin_some_route')->willReturn($accessRequest);
+        $accessRequestCreator
+            ->createFromRouteName('sylius_admin_some_route', 'GET')
+            ->willReturn($accessRequest)
+        ;
 
         $tokenStorage->getToken()->willReturn($token);
         $token->getUser()->willReturn($adminUser);
@@ -119,12 +131,14 @@ final class AccessCheckListenerSpec extends ObjectBehavior
     ): void {
         $event->isMasterRequest()->willReturn(true);
         $event->getRequest()->willReturn($request);
+        $request->getMethod()->willReturn('GET');
         $request->attributes = new ParameterBag(['_route' => 'sylius_admin_some_route']);
+        $request->headers = new HeaderBag(['referer' => null]);
 
         $adminRouteChecker->isAdminRoute('sylius_admin_some_route')->willReturn(true);
 
         $accessRequestCreator
-            ->createFromRouteName('sylius_admin_some_route')
+            ->createFromRouteName('sylius_admin_some_route', 'GET')
             ->willThrow(UnresolvedRouteNameException::withRouteName('sylius_admin_some_route'))
         ;
 
@@ -141,7 +155,9 @@ final class AccessCheckListenerSpec extends ObjectBehavior
     ): void {
         $event->isMasterRequest()->willReturn(true);
         $event->getRequest()->willReturn($request);
-        $request->attributes = new ParameterBag(['_route' => 'sylius_shop_some_route']);
+        $request->getMethod()->willReturn('GET');
+        $request->attributes = new ParameterBag(['_route' => 'sylius_admin_some_route']);
+        $request->headers = new HeaderBag(['referer' => null]);
 
         $adminRouteChecker->isAdminRoute('sylius_shop_some_route')->willReturn(false);
 
