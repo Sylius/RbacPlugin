@@ -52,16 +52,18 @@ final class GrantAccessCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        $helper = $this->getHelper('question');
-        $question = new Question(
-            'In order to permit access to admin panel sections for given administrator, please provide administrator\'s email address: '
-        );
+        $administratorEmail = $this->getAdministratorEmail($input, $output);
 
-        /** @var string $administratorEmail */
-        $administratorEmail = $helper->ask($input, $output, $question);
-
-        /** @var AdminUserInterface $admin */
+        /** @var AdminUserInterface|null $admin */
         $admin = $this->administratorRepository->findOneBy(['email' => $administratorEmail]);
+
+        if (null === $admin) {
+            $output->writeln(sprintf(
+                'Administrator with email address %s does not exist. Aborting.', $administratorEmail
+            ));
+
+            return;
+        }
 
         /** @var string $roleName */
         $roleName = $input->getArgument('roleName');
@@ -97,5 +99,16 @@ final class GrantAccessCommand extends Command
         }
 
         return $administrationRole;
+    }
+
+    private function getAdministratorEmail(InputInterface $input, OutputInterface $output): string
+    {
+        $helper = $this->getHelper('question');
+        $question = new Question(
+            'In order to permit access to admin panel sections for given administrator, please provide administrator\'s email address: '
+        );
+
+        /** @var string $administratorEmail */
+        return $helper->ask($input, $output, $question);
     }
 }
