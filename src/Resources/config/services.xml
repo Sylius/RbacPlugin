@@ -57,11 +57,11 @@
 
         <service id="Sylius\RbacPlugin\Normalizer\AdministrationRolePermissionNormalizer" />
 
-        <service id="Sylius\RbacPlugin\Cli\GrantConfigurationAccessCommand">
+        <service id="Sylius\RbacPlugin\Cli\GrantAccessCommand">
             <argument type="service" id="sylius.repository.admin_user" />
             <argument type="service" id="sylius_rbac.repository.administration_role" />
             <argument type="service" id="doctrine.orm.entity_manager" />
-            <tag name="console.command" command="sylius-rbac:grant-configuration-access" />
+            <tag name="console.command" command="sylius-rbac:grant-access" />
         </service>
     </services>
 </container>
