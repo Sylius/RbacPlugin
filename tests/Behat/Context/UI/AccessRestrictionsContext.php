@@ -6,6 +6,7 @@ namespace Tests\Sylius\RbacPlugin\Behat\Context\UI;
 
 use Behat\Behat\Context\Context;
 use Sylius\Behat\Page\Admin\DashboardPageInterface;
+use Tests\Sylius\RbacPlugin\Behat\Service\ModifyingAvailabilityChecker;
 use Tests\Sylius\RbacPlugin\Behat\Service\PagesAvailabilityChecker;
 use Webmozart\Assert\Assert;
 
@@ -32,6 +33,18 @@ final class AccessRestrictionsContext implements Context
     /** @var PagesAvailabilityChecker */
     private $rbacPagesAvailabilityChecker;
 
+    /** @var ModifyingAvailabilityChecker */
+    private $catalogModifyingAvailabilityChecker;
+
+    /** @var ModifyingAvailabilityChecker */
+    private $configurationModifyingAvailabilityChecker;
+
+    /** @var ModifyingAvailabilityChecker */
+    private $customersModifyingAvailabilityChecker;
+
+    /** @var ModifyingAvailabilityChecker */
+    private $marketingModifyingAvailabilityChecker;
+
     public function __construct(
         DashboardPageInterface $dashboardPage,
         PagesAvailabilityChecker $catalogPagesAvailabilityChecker,
@@ -39,7 +52,11 @@ final class AccessRestrictionsContext implements Context
         PagesAvailabilityChecker $customersPagesAvailabilityChecker,
         PagesAvailabilityChecker $marketingPagesAvailabilityChecker,
         PagesAvailabilityChecker $salesPagesAvailabilityChecker,
-        PagesAvailabilityChecker $rbacPagesAvailabilityChecker
+        PagesAvailabilityChecker $rbacPagesAvailabilityChecker,
+        ModifyingAvailabilityChecker $catalogModifyingAvailabilityChecker,
+        ModifyingAvailabilityChecker $configurationModifyingAvailabilityChecker,
+        ModifyingAvailabilityChecker $customersModifyingAvailabilityChecker,
+        ModifyingAvailabilityChecker $marketingModifyingAvailabilityChecker
     ) {
         $this->dashboardPage = $dashboardPage;
         $this->catalogPagesAvailabilityChecker = $catalogPagesAvailabilityChecker;
@@ -48,6 +65,10 @@ final class AccessRestrictionsContext implements Context
         $this->marketingPagesAvailabilityChecker = $marketingPagesAvailabilityChecker;
         $this->salesPagesAvailabilityChecker = $salesPagesAvailabilityChecker;
         $this->rbacPagesAvailabilityChecker = $rbacPagesAvailabilityChecker;
+        $this->catalogModifyingAvailabilityChecker = $catalogModifyingAvailabilityChecker;
+        $this->configurationModifyingAvailabilityChecker = $configurationModifyingAvailabilityChecker;
+        $this->customersModifyingAvailabilityChecker = $customersModifyingAvailabilityChecker;
+        $this->marketingModifyingAvailabilityChecker = $marketingModifyingAvailabilityChecker;
     }
 
     /**
@@ -152,5 +173,70 @@ final class AccessRestrictionsContext implements Context
     public function shouldHaveNoAccessToRbac(): void
     {
         Assert::true($this->rbacPagesAvailabilityChecker->areAllPagesUnavailable());
+    }
+
+    /**
+     * @Then I should be able to modify settings in configuration section
+     */
+    public function shouldBeAbleToModifySettingsInConfigurationSection(): void
+    {
+        Assert::true($this->configurationModifyingAvailabilityChecker->isModifyingAvailable());
+    }
+
+    /**
+     * @Then I should be able to modify settings in catalog management section
+     */
+    public function shouldBeAbleToModifySettingsInCatalogManagementSection(): void
+    {
+        Assert::true($this->catalogModifyingAvailabilityChecker->isModifyingAvailable());
+    }
+
+    /**
+     * @Then I should be able to modify settings in customers management section
+     */
+    public function shouldBeAbleToModifySettingsInCustomersManagementSection(): void
+    {
+        Assert::true($this->customersModifyingAvailabilityChecker->isModifyingAvailable());
+    }
+
+    /**
+     * @Then I should be able to modify settings in marketing management section
+     */
+    public function shouldBeAbleToModifySettingsInMarketingManagementSection(): void
+    {
+        Assert::true($this->marketingModifyingAvailabilityChecker->isModifyingAvailable());
+    }
+
+    /**
+     * @Then I should not be able to modify settings in configuration section
+     */
+    public function shouldNotBeAbleToModifySettingsInConfigurationSection(): void
+    {
+        Assert::false($this->configurationModifyingAvailabilityChecker->isModifyingAvailable());
+    }
+
+    /**
+     * @Then I should not be able to modify settings in catalog management section
+     */
+    public function shouldNotBeAbleToModifySettingsInCatalogManagementSection(): void
+    {
+        $this->createPage->open();
+        Assert::false($this->catalogModifyingAvailabilityChecker->isModifyingAvailable());
+    }
+
+    /**
+     * @Then I should not be able to modify settings in customers management section
+     */
+    public function shouldNotBeAbleToModifySettingsInCustomersManagementSection(): void
+    {
+        Assert::false($this->customersModifyingAvailabilityChecker->isModifyingAvailable());
+    }
+
+    /**
+     * @Then I should not be able to modify settings in marketing management section
+     */
+    public function shouldNotBeAbleToModifySettingsInMarketingManagementSection(): void
+    {
+        Assert::false($this->marketingModifyingAvailabilityChecker->isModifyingAvailable());
     }
 }

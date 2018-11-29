@@ -49,6 +49,10 @@
             <argument type="service" id="sylius_rbac.behat.pages_availability_checker.marketing" />
             <argument type="service" id="sylius_rbac.behat.pages_availability_checker.sales" />
             <argument type="service" id="sylius_rbac.behat.pages_availability_checker.rbac" />
+            <argument type="service" id="sylius_rbac.behat.modifying_availability_checker.catalog" />
+            <argument type="service" id="sylius_rbac.behat.modifying_availability_checker.configuration" />
+            <argument type="service" id="sylius_rbac.behat.modifying_availability_checker.customers" />
+            <argument type="service" id="sylius_rbac.behat.modifying_availability_checker.marketing" />
             <tag name="fob.context_service" />
         </service>
     </services>
