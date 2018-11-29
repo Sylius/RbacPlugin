@@ -8,6 +8,7 @@ Feature: Having a write access only to marketing management
         Given the store operates on a single channel in "United States"
         And there is already an Administration role "Marketing manager" in the system
         And this administration role has write permission for "Marketing management"
+        And this administration role has read permissions for "Configuration", "Customers management" and "Catalog management"
         And there is an administrator "scary.terry@nightmare.com" identified by "youCanRunButYouCannotHide"
         And this administrator has administration role "Marketing manager"
         And I am logged in as "scary.terry@nightmare.com" administrator

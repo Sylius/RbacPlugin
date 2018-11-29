@@ -8,7 +8,7 @@ Feature: Having a write access only to configuration management
         Given the store operates on a single channel in "United States"
         And there is already an Administration role "Configurator" in the system
         And this administration role has write permission for "Configuration"
-        And this administration role has read permission for "Customers management"
+        And this administration role has read permissions for "Catalog management", "Customers management" and "Marketing management"
         And there is an administrator "scary.terry@nightmare.com" identified by "youCanRunButYouCannotHide"
         And this administrator has administration role "Configurator"
         And I am logged in as "scary.terry@nightmare.com" administrator

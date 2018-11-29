@@ -8,6 +8,7 @@ Feature: Having a write access to multiple sections
         Given the store operates on a single channel in "United States"
         And there is already an Administration role "Configurator" in the system
         And this administration role has write permissions for "Configuration", "Catalog management" and "Marketing management"
+        And this administration role has read permission for "Customers management"
         And there is an administrator "scary.terry@nightmare.com" identified by "youCanRunButYouCannotHide"
         And this administrator has administration role "Configurator"
         And I am logged in as "scary.terry@nightmare.com" administrator
