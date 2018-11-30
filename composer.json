@@ -39,6 +39,7 @@
         "phpstan/phpstan-symfony": "^0.10",
         "phpstan/phpstan-webmozart-assert": "^0.10",
         "phpunit/phpunit": "^6.5",
+        "sensiolabs/security-checker": "^5.0",
         "sylius-labs/coding-standard": "^2.0",
         "symfony/debug-bundle": "^3.4|^4.1",
         "symfony/web-profiler-bundle": "^3.4|^4.1",
@@ -56,9 +57,6 @@
         "analyse": [
             "vendor/bin/phpstan.phar analyse -c phpstan.neon -l max src/",
             "vendor/bin/ecs check src/ spec/"
-        ],
-        "post-install-cmd": [
-            "bin/console sylius-rbac:grant-access Configurator configuration rbac"
         ]
     },
     "extra": {

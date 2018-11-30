@@ -58,8 +58,17 @@ Write permission access means also updating and deleting.
     bin/console doctrine:migrations:migrate
     ```
 
-7. Add your local administrator account to the permission system
+7. Copy templates from `vendor/sylius/rbac-plugin/src/Resources/views/SyliusAdminBundle/`
+to `app/Resources/SyliusAdminBundle/views/`
 
+8. Run installation command
+
+    ```bash
+    bin/console sylius-rbac:install-plugin
+    ```
+    
+    Where sylius-rbac:install-plugin consists of:
+    
     ```bash
     bin/console sylius-rbac:grant-access <roleName> <adminSections>
     ```
@@ -71,14 +80,12 @@ Write permission access means also updating and deleting.
     * marketingManagement
     * salesManagement
 
-    Then you will be asked to provide an email address of the administrator.
+    Administrator's email is provided by plugin user via CLI.
 
     e.g. `bin/console sylius-rbac:grant-access administrator configuration catalogManagement`
 
     `In order to permit access to admin panel sections, please provide administrator's email address: sylius@example.com`
 
-7. Copy templates from `vendor/sylius/rbac-plugin/src/Resources/views/SyliusAdminBundle/`
-to `app/Resources/SyliusAdminBundle/views/`
 
 ## Sections configuration
 
