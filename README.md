@@ -69,7 +69,6 @@ to `app/Resources/SyliusAdminBundle/views/`
     
     Where sylius-rbac:install-plugin consists of:
     
-    1)
     ```bash
     bin/console sylius-rbac:grant-access <roleName> <adminSections>
     ```

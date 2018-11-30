@@ -32,46 +32,38 @@ final class InstallPluginCommand extends Command
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $outputStyle = new SymfonyStyle($input, $output);
         $outputStyle->writeln('<info>Installing RBAC plugin...</info>');
 
-        /** @var bool $errored */
-        $errored = false;
-
         foreach ($this->commands as $step => $command) {
             try {
                 $outputStyle->newLine();
-                $outputStyle->section(sprintf(
-                    'Step %d of %d. <info>%s</info>',
-                    $step + 1,
-                    count($this->commands),
-                    $command['message']
-                ));
+                $outputStyle->section($this->getCommandMessage($step, $command['message']));
 
                 $this->getApplication()
                     ->find('sylius-rbac:' . $command['command'])
                     ->run(new ArrayInput($command['parameters']), $output)
                 ;
-            } catch (\Exception $e) {
-                $errored = true;
+            } catch (\Exception $exception) {
+                $outputStyle->newLine(2);
+                $outputStyle->warning('RBAC has been installed, but some error occurred.');
+
+                return;
             }
         }
 
         $outputStyle->newLine(2);
-        $outputStyle->success($this->getProperFinalMessage($errored));
+        $outputStyle->success('RBAC has been successfully installed.');
     }
 
-    private function getProperFinalMessage(bool $errored): string
+    private function getCommandMessage(int $step, string $commandMessage): string
     {
-        if ($errored) {
-            return 'RBAC has been installed, but some error occurred.';
-        }
-
-        return 'RBAC has been successfully installed.';
+        return sprintf('Step %d of %d. <info>%s</info>',
+            $step + 1,
+            count($this->commands),
+            $commandMessage
+        );
     }
 }
