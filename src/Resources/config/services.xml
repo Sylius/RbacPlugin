@@ -68,5 +68,9 @@
             <argument type="service" id="doctrine.orm.entity_manager" />
             <tag name="console.command" command="sylius-rbac:grant-access" />
         </service>
+
+        <service id="Sylius\RbacPlugin\Cli\InstallPluginCommand">
+            <tag name="console.command" command="sylius-rbac:install-plugin" />
+        </service>
     </services>
 </container>
