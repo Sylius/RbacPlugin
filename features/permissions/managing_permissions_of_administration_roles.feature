@@ -8,7 +8,7 @@ Feature: Managing permissions of Administration roles
         Given the store operates on a single channel in "United States"
         And there is already an Administration role "Product manager" in the system
         And there is already an Administration role "Configurator" in the system
-        And this administration role has write permission for "Configuration" and "RBAC"
+        And this administration role has write permissions for "Configuration" and "RBAC"
         And there is an administrator "scary.terry@nightmare.com" identified by "youCanRunButYouCannotHide"
         And this administrator has administration role "Configurator"
         And I am logged in as "scary.terry@nightmare.com" administrator

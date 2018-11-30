@@ -93,7 +93,7 @@ final class AdministratorAccessCheckerSpec extends ObjectBehavior
     ): void {
         $admin->getAdministrationRole()->willReturn($administrationRole);
 
-        $administrationRole->getPermissions()->willReturn([Permission::ofType('custom_section')]);
+        $administrationRole->getPermissions()->willReturn([Permission::ofType('custom_section', [OperationType::read(), OperationType::write()])]);
 
         $this->canAccessSection($admin, new AccessRequest(Section::ofType('custom_section'), OperationType::write()))->shouldReturn(true);
     }

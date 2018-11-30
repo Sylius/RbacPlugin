@@ -9,7 +9,6 @@ use Prophecy\Argument;
 use Sylius\RbacPlugin\Access\Checker\AdministratorAccessCheckerInterface;
 use Sylius\RbacPlugin\Access\Checker\RouteNameCheckerInterface;
 use Sylius\RbacPlugin\Access\Creator\AccessRequestCreatorInterface;
-use Sylius\RbacPlugin\Access\Exception\InsecureRequestException;
 use Sylius\RbacPlugin\Access\Exception\UnresolvedRouteNameException;
 use Sylius\RbacPlugin\Access\Model\AccessRequest;
 use Sylius\RbacPlugin\Access\Model\OperationType;
@@ -156,12 +155,12 @@ final class AccessCheckListenerSpec extends ObjectBehavior
         $event->isMasterRequest()->willReturn(true);
         $event->getRequest()->willReturn($request);
         $request->getMethod()->willReturn('GET');
-        $request->attributes = new ParameterBag(['_route' => 'sylius_admin_some_route']);
+        $request->attributes = new ParameterBag(['_route' => 'sylius_shop_some_route']);
         $request->headers = new HeaderBag(['referer' => null]);
 
         $adminRouteChecker->isAdminRoute('sylius_shop_some_route')->willReturn(false);
 
-        $accessRequestCreator->createFromRouteName('sylius_admin_some_route')->shouldNotBeCalled();
+        $accessRequestCreator->createFromRouteName('sylius_shop_some_route')->shouldNotBeCalled();
 
         $this->onKernelRequest($event);
     }
