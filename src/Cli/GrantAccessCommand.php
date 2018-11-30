@@ -16,6 +16,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 
 final class GrantAccessCommand extends Command
 {
@@ -44,7 +45,6 @@ final class GrantAccessCommand extends Command
     {
         $this
             ->setDescription('Grants access to chosen sections for administrator')
-            ->addArgument('email', InputOption::VALUE_REQUIRED)
             ->addArgument('roleName', InputOption::VALUE_REQUIRED)
             ->addArgument('sections', InputArgument::IS_ARRAY | InputOption::VALUE_REQUIRED)
         ;
@@ -52,8 +52,18 @@ final class GrantAccessCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        /** @var AdminUserInterface $admin */
-        $admin = $this->administratorRepository->findOneBy(['email' => $input->getArgument('email')]);
+        $administratorEmail = $this->getAdministratorEmail($input, $output);
+
+        /** @var AdminUserInterface|null $admin */
+        $admin = $this->administratorRepository->findOneBy(['email' => $administratorEmail]);
+
+        if (null === $admin) {
+            $output->writeln(sprintf(
+                'Administrator with email address %s does not exist. Aborting.', $administratorEmail
+            ));
+
+            return;
+        }
 
         /** @var string $roleName */
         $roleName = $input->getArgument('roleName');
@@ -89,5 +99,16 @@ final class GrantAccessCommand extends Command
         }
 
         return $administrationRole;
+    }
+
+    private function getAdministratorEmail(InputInterface $input, OutputInterface $output): string
+    {
+        $helper = $this->getHelper('question');
+        $question = new Question(
+            'In order to permit access to admin panel sections for given administrator, please provide administrator\'s email address: '
+        );
+
+        /** @var string $administratorEmail */
+        return $helper->ask($input, $output, $question);
     }
 }
