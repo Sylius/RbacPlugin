@@ -55,3 +55,10 @@ sylius_grid:
                     sortable: true
                     options:
                         template: '@SyliusRbacPlugin/AdministrationRole/Grid/Field/administrationRole.html.twig'
+
+sylius_user:
+    resources:
+        admin:
+            user:
+                classes:
+                    model: Tests\Sylius\RbacPlugin\Application\src\Entity\AdminUser

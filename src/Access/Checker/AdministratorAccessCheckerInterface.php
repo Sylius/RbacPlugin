@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Sylius\RbacPlugin\Access\Checker;
 
+use Sylius\Component\Core\Model\AdminUserInterface;
 use Sylius\RbacPlugin\Access\Model\AccessRequest;
-use Sylius\RbacPlugin\Entity\AdminUserInterface;
 
 interface AdministratorAccessCheckerInterface
 {

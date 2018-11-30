@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace spec\Sylius\RbacPlugin\Access\Checker;
 
 use PhpSpec\ObjectBehavior;
+use Sylius\Component\Core\Model\AdminUserInterface;
 use Sylius\RbacPlugin\Access\Checker\AdministratorAccessCheckerInterface;
 use Sylius\RbacPlugin\Access\Model\AccessRequest;
 use Sylius\RbacPlugin\Access\Model\OperationType;
 use Sylius\RbacPlugin\Access\Model\Section;
 use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
-use Sylius\RbacPlugin\Entity\AdminUserInterface;
 use Sylius\RbacPlugin\Model\Permission;
 
 final class AdministratorAccessCheckerSpec extends ObjectBehavior

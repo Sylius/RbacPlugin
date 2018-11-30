@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Sylius\RbacPlugin\Entity;
 
-use Sylius\Component\Core\Model\AdminUser as BaseAdminUser;
+use Doctrine\ORM\Mapping as ORM;
 
-/** @final */
-class AdminUser extends BaseAdminUser implements AdminUserInterface
+trait AdministrationRoleTrait
 {
-    /** @var AdministrationRoleInterface|null */
+    /**
+     * @ORM\ManyToOne(targetEntity="Sylius\RbacPlugin\Entity\AdministrationRole")
+     * @ORM\JoinColumn(name="administration_role_id", referencedColumnName="id")
+     * @var AdministrationRoleInterface|null
+     */
     private $administrationRole;
 
     public function setAdministrationRole(?AdministrationRoleInterface $administrationRole): void
