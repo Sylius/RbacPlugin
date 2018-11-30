@@ -45,35 +45,35 @@ final class AdminMenuAccessListener
 
         $menu = $event->getMenu();
 
-        if ($this->hasAdminAccessToSection($adminUser, Section::catalog())) {
+        if ($this->hasAdminNoAccessToSection($adminUser, Section::catalog())) {
             $menu->removeChild('catalog');
         }
 
-        if ($this->hasAdminAccessToSection($adminUser, Section::configuration())) {
+        if ($this->hasAdminNoAccessToSection($adminUser, Section::configuration())) {
             $menu->removeChild('configuration');
         }
 
-        if ($this->hasAdminAccessToSection($adminUser, Section::customers())) {
+        if ($this->hasAdminNoAccessToSection($adminUser, Section::customers())) {
             $menu->removeChild('customers');
         }
 
-        if ($this->hasAdminAccessToSection($adminUser, Section::marketing())) {
+        if ($this->hasAdminNoAccessToSection($adminUser, Section::marketing())) {
             $menu->removeChild('marketing');
         }
 
-        if ($this->hasAdminAccessToSection($adminUser, Section::sales())) {
+        if ($this->hasAdminNoAccessToSection($adminUser, Section::sales())) {
             $menu->removeChild('sales');
         }
 
         /** @var string $customSection */
         foreach (array_keys($this->configuration['custom']) as $customSection) {
-            if ($this->hasAdminAccessToSection($adminUser, Section::ofType($customSection))) {
+            if ($this->hasAdminNoAccessToSection($adminUser, Section::ofType($customSection))) {
                 $menu->removeChild($customSection);
             }
         }
     }
 
-    private function hasAdminAccessToSection(AdminUserInterface $adminUser, Section $section): bool
+    private function hasAdminNoAccessToSection(AdminUserInterface $adminUser, Section $section): bool
     {
         return !$this->accessChecker->canAccessSection(
             $adminUser,

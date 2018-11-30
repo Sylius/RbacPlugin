@@ -37,7 +37,7 @@
         </service>
 
         <service id="Sylius\RbacPlugin\Access\Checker\AdministratorAccessCheckerInterface" class="Sylius\RbacPlugin\Access\Checker\AdministratorAccessChecker" />
-        <service id="Sylius\RbacPlugin\Access\Checker\AdminRouteCheckerInterface" class="Sylius\RbacPlugin\Access\Checker\HardcodedAdminRouteChecker" />
+        <service id="Sylius\RbacPlugin\Access\Checker\RouteNameCheckerInterface" class="Sylius\RbacPlugin\Access\Checker\HardcodedRouteNameChecker" />
 
         <service id="Sylius\RbacPlugin\Access\Creator\AccessRequestCreatorInterface" class="Sylius\RbacPlugin\Access\Creator\AccessRequestCreator">
             <argument>%sylius_rbac.configuration%</argument>
@@ -49,7 +49,7 @@
             <argument type="service" id="security.token_storage" />
             <argument type="service" id="router" />
             <argument type="service" id="session" />
-            <argument type="service" id="Sylius\RbacPlugin\Access\Checker\AdminRouteCheckerInterface" />
+            <argument type="service" id="Sylius\RbacPlugin\Access\Checker\RouteNameCheckerInterface" />
             <tag name="kernel.event_listener" event="kernel.request" />
         </service>
 

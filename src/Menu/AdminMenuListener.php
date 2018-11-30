@@ -12,10 +12,7 @@ final class AdminMenuListener
     {
         $menu = $event->getMenu();
 
-        $rbacSection = $menu
-            ->addChild('rbac')
-            ->setLabel('sylius_rbac.ui.rbac')
-        ;
+        $rbacSection = $menu->addChild('rbac')->setLabel('sylius_rbac.ui.rbac');
 
         $rbacSection
             ->addChild('administration_roles', ['route' => 'sylius_rbac_admin_administration_role_index'])

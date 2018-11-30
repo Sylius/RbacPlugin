@@ -85,7 +85,7 @@ to `app/Resources/SyliusAdminBundle/views/`
 By default, **RbacPlugin** is provided with access configuration for basic Sylius sections (catalog, configuration, customers, marketing and sales) as well as for RBAC section, added by the plugin itself.
 Each section has a bunch of route prefixes associated with them, that describes which section gives permissions to which resources management.
 
-However, usually, a Sylius application has plenty of custom functions within existing or entirely new sections. This plugin allows you to extend its configuration, to restrict access to these custom routes.
+However, usually, a Sylius application has a plenty of custom functions within existing or entirely new sections. This plugin allows you to extend its configuration, in order to restrict access to these custom routes.
 
 For the matter of example let's assume we have a simple `Supplier` resource (containing only `string $name` property). It also has already generated routes, that we would like to restrict access to:
 

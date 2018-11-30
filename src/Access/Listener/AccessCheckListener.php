@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Sylius\RbacPlugin\Access\Listener;
 
 use Sylius\RbacPlugin\Access\Checker\AdministratorAccessCheckerInterface;
-use Sylius\RbacPlugin\Access\Checker\AdminRouteCheckerInterface;
+use Sylius\RbacPlugin\Access\Checker\RouteNameCheckerInterface;
 use Sylius\RbacPlugin\Access\Creator\AccessRequestCreatorInterface;
 use Sylius\RbacPlugin\Access\Exception\InsecureRequestException;
 use Sylius\RbacPlugin\Access\Exception\UnresolvedRouteNameException;
@@ -36,7 +36,7 @@ final class AccessCheckListener
     /** @var Session */
     private $session;
 
-    /** @var AdminRouteCheckerInterface */
+    /** @var RouteNameCheckerInterface */
     private $adminRouteChecker;
 
     public function __construct(
@@ -45,7 +45,7 @@ final class AccessCheckListener
         TokenStorageInterface $tokenStorage,
         UrlGeneratorInterface $router,
         Session $session,
-        AdminRouteCheckerInterface $adminRouteChecker
+        RouteNameCheckerInterface $adminRouteChecker
     ) {
         $this->accessRequestCreator = $accessRequestCreator;
         $this->administratorAccessChecker = $administratorAccessChecker;
@@ -85,7 +85,7 @@ final class AccessCheckListener
             throw new InsecureRequestException();
         }
 
-        if (!$this->adminRouteChecker->__invoke($routeName)) {
+        if (!$this->adminRouteChecker->isAdminRoute($routeName)) {
             throw new InsecureRequestException();
         }
 
