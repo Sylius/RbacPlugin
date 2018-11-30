@@ -3,13 +3,11 @@
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <service id="Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdministrationRoleCreatePage" parent="sylius.behat.page.admin.crud.create" public="false">
-            <argument>sylius_rbac_admin_administration_role_create</argument>
+            <argument>sylius_rbac_admin_administration_role_create_view</argument>
         </service>
-
         <service id="Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdministrationRoleUpdatePage" parent="sylius.behat.page.admin.crud.update" public="false">
-            <argument>sylius_rbac_admin_administration_role_update</argument>
+            <argument>sylius_rbac_admin_administration_role_update_view</argument>
         </service>
-
         <service id="sylius_rbac.behat.page.administration_role.index" class="Sylius\Behat\Page\Admin\Crud\IndexPage" parent="sylius.behat.symfony_page" public="false">
             <argument type="service" id="sylius.behat.table_accessor" />
             <argument>sylius_rbac_admin_administration_role_index</argument>

@@ -58,7 +58,7 @@
             "vendor/bin/ecs check src/ spec/"
         ],
         "post-install-cmd": [
-            "bin/console sylius-rbac:grant-access Configurator configuration"
+            "bin/console sylius-rbac:grant-access Configurator configuration rbac"
         ]
     },
     "extra": {

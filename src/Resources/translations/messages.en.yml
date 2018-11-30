@@ -13,6 +13,7 @@ sylius_rbac:
             operation_type:
                 read: 'Read'
                 write: 'Write'
+            rbac: 'RBAC'
             sales_management: 'Sales management'
         permissions: 'Permissions'
         rbac: 'RBAC'

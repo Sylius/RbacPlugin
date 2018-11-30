@@ -25,3 +25,4 @@ Feature: Having an access only to customers management
         And I should have no access to configuration
         And I should have no access to marketing management
         And I should have no access to sales management
+        And I should have no access to RBAC

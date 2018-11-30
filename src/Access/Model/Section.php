@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Sylius\RbacPlugin\Access\Model;
 
-use Webmozart\Assert\Assert;
-
 final class Section
 {
     public const CATALOG = 'catalog';
@@ -42,13 +40,13 @@ final class Section
         return new self(self::SALES);
     }
 
+    public static function ofType(string $type): self
+    {
+        return new self($type);
+    }
+
     public function __construct(string $type)
     {
-        Assert::oneOf(
-            $type,
-            [self::CATALOG, self::CONFIGURATION, self::CUSTOMERS, self::MARKETING, self::SALES]
-        );
-
         $this->type = $type;
     }
 

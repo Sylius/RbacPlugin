@@ -25,6 +25,11 @@ final class AccessRequestCreatorSpec extends ObjectBehavior
             ],
             'marketing' => [],
             'sales' => [],
+            'custom' => [
+                'custom_section' => [
+                    'sylius_custom_section_route',
+                ],
+            ],
         ]);
     }
 
@@ -43,6 +48,11 @@ final class AccessRequestCreatorSpec extends ObjectBehavior
         $this
             ->createFromRouteName('sylius_admin_customers_update')
             ->shouldBeLike(new AccessRequest(Section::customers(), OperationType::write()))
+        ;
+
+        $this
+            ->createFromRouteName('sylius_custom_section_route_index')
+            ->shouldBeLike(new AccessRequest(Section::ofType('custom_section'), OperationType::write()))
         ;
     }
 

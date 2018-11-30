@@ -51,6 +51,14 @@ final class AccessRequestCreator implements AccessRequestCreatorInterface
             }
         }
 
+        foreach ($this->configuration['custom'] as $sectionName => $sectionPrefixes) {
+            foreach ($sectionPrefixes as $prefix) {
+                if (strpos($routeName, $prefix) === 0) {
+                    return new AccessRequest(Section::ofType($sectionName), OperationType::write());
+                }
+            }
+        }
+
         throw UnresolvedRouteNameException::withRouteName($routeName);
     }
 }

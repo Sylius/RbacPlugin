@@ -29,13 +29,17 @@ final class AccessRestrictionsContext implements Context
     /** @var PagesAvailabilityChecker */
     private $salesPagesAvailabilityChecker;
 
+    /** @var PagesAvailabilityChecker */
+    private $rbacPagesAvailabilityChecker;
+
     public function __construct(
         DashboardPageInterface $dashboardPage,
         PagesAvailabilityChecker $catalogPagesAvailabilityChecker,
         PagesAvailabilityChecker $configurationPagesAvailabilityChecker,
         PagesAvailabilityChecker $customersPagesAvailabilityChecker,
         PagesAvailabilityChecker $marketingPagesAvailabilityChecker,
-        PagesAvailabilityChecker $salesPagesAvailabilityChecker
+        PagesAvailabilityChecker $salesPagesAvailabilityChecker,
+        PagesAvailabilityChecker $rbacPagesAvailabilityChecker
     ) {
         $this->dashboardPage = $dashboardPage;
         $this->catalogPagesAvailabilityChecker = $catalogPagesAvailabilityChecker;
@@ -43,6 +47,7 @@ final class AccessRestrictionsContext implements Context
         $this->customersPagesAvailabilityChecker = $customersPagesAvailabilityChecker;
         $this->marketingPagesAvailabilityChecker = $marketingPagesAvailabilityChecker;
         $this->salesPagesAvailabilityChecker = $salesPagesAvailabilityChecker;
+        $this->rbacPagesAvailabilityChecker = $rbacPagesAvailabilityChecker;
     }
 
     /**
@@ -131,5 +136,21 @@ final class AccessRestrictionsContext implements Context
     public function shouldHaveNoAccessToSalesManagement(): void
     {
         Assert::true($this->salesPagesAvailabilityChecker->areAllPagesUnavailable());
+    }
+
+    /**
+     * @Then I should have access to RBAC
+     */
+    public function shouldHaveAccessToRbac(): void
+    {
+        Assert::true($this->rbacPagesAvailabilityChecker->areAllPagesAvailable());
+    }
+
+    /**
+     * @Then I should have no access to RBAC
+     */
+    public function shouldHaveNoAccessToRbac(): void
+    {
+        Assert::true($this->rbacPagesAvailabilityChecker->areAllPagesUnavailable());
     }
 }

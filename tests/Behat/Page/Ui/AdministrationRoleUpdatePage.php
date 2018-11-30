@@ -32,7 +32,7 @@ final class AdministrationRoleUpdatePage extends UpdatePage implements Administr
         }
     }
 
-    public function removePermissionAccess($permissionName, $operationType): void
+    public function removePermissionAccess(string $permissionName, string $operationType): void
     {
         $administrationRolePermissionAccess =
             $this->findPermissionRoleOperationTypeSwitch($permissionName, $operationType)
@@ -83,10 +83,10 @@ final class AdministrationRoleUpdatePage extends UpdatePage implements Administr
     {
         return $this
             ->getDocument()
-            ->findById(
-                'permissions[' . strtolower(str_replace(' ', '_', $permissionName)) .
-                '][' . strtolower($access) . ']'
-            )
+            ->find('css', sprintf(
+                '#permission_table tr:contains("%s") td[data-label="%s"] input',
+                $permissionName, ucfirst($access)
+            ))
         ;
     }
 }

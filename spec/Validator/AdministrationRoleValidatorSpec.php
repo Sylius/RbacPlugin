@@ -29,13 +29,13 @@ final class AdministrationRoleValidatorSpec extends ObjectBehavior
         ConstraintViolationListInterface $constraintViolationList
     ): void {
         $validator
-            ->validate($administrationRole, null, 'sylius_rbac_administration_role_create')
+            ->validate($administrationRole, null, 'sylius_rbac_admin_administration_role_create')
             ->willReturn($constraintViolationList)
         ;
 
         $constraintViolationList->count()->willReturn(0);
 
-        $this->validate($administrationRole, 'sylius_rbac_administration_role_create');
+        $this->validate($administrationRole, 'sylius_rbac_admin_administration_role_create');
     }
 
     function it_throws_exception_when_constraint_violation_occurs(
@@ -45,7 +45,7 @@ final class AdministrationRoleValidatorSpec extends ObjectBehavior
         ConstraintViolationInterface $constraintViolation
     ): void {
         $validator
-            ->validate($administrationRole, null, 'sylius_rbac_administration_role_create')
+            ->validate($administrationRole, null, 'sylius_rbac_admin_administration_role_create')
             ->willReturn($constraintViolationList)
         ;
 
@@ -56,7 +56,7 @@ final class AdministrationRoleValidatorSpec extends ObjectBehavior
 
         $this
             ->shouldThrow(\InvalidArgumentException::class)
-            ->during('validate', [$administrationRole, 'sylius_rbac_administration_role_create'])
+            ->during('validate', [$administrationRole, 'sylius_rbac_admin_administration_role_create'])
         ;
     }
 }
