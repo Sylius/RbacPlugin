@@ -40,7 +40,7 @@ final class AdminMenuAccessListenerSpec extends ObjectBehavior
                 'custom_section' => [
                     'custom_section_route_prefix',
                 ],
-            ]
+            ],
         ]);
     }
 

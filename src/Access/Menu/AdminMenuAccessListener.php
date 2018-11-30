@@ -65,6 +65,7 @@ final class AdminMenuAccessListener
             $menu->removeChild('sales');
         }
 
+        /** @var string $customSection */
         foreach (array_keys($this->configuration['custom']) as $customSection) {
             if ($this->hasAdminAccessToSection($adminUser, Section::ofType($customSection))) {
                 $menu->removeChild($customSection);
