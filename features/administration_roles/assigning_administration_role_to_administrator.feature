@@ -7,7 +7,7 @@ Feature: Assigning Administration role to Administrator
     Background:
         Given the store operates on a single channel in "United States"
         And there is already an Administration role "Configurator" in the system
-        And this administration role has "Configuration" permission
+        And this administration role has write permission for "Configuration"
         And there is already an Administration role "Root" in the system
         And there is an administrator "scary.terry@nightmare.com" identified by "youCanRunButYouCannotHide"
         And this administrator has administration role "Configurator"

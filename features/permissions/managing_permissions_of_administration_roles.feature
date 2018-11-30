@@ -6,10 +6,9 @@ Feature: Managing permissions of Administration roles
 
     Background:
         Given the store operates on a single channel in "United States"
-        Given there is already an Administration role "Product manager" in the system
+        And there is already an Administration role "Product manager" in the system
         And there is already an Administration role "Configurator" in the system
-        And this administration role has "Configuration" permission
-        And this administration role has "RBAC" permission
+        And this administration role has write permissions for "Configuration" and "RBAC"
         And there is an administrator "scary.terry@nightmare.com" identified by "youCanRunButYouCannotHide"
         And this administrator has administration role "Configurator"
         And I am logged in as "scary.terry@nightmare.com" administrator
@@ -51,7 +50,7 @@ Feature: Managing permissions of Administration roles
     @ui
     Scenario: Removing permissions from Administration role
         Given there is already an Administration role "Customer manager" in the system
-        And this administration role has "Catalog management" and "Customers management" permissions
+        And this administration role has write permissions for "Catalog management" and "Customers management"
         When I want to manage permissions of "Customer manager" Administration role
         And I remove "Catalog management" permission
         And I save my changes
@@ -62,7 +61,7 @@ Feature: Managing permissions of Administration roles
     @ui
     Scenario: Removing permissions' accesses
         Given there is already an Administration role "Customer manager" in the system
-        And this administration role has "Catalog management" and "Customers management" permissions
+        And this administration role has write permissions for "Catalog management" and "Customers management"
         When I want to manage permissions of "Customer manager" Administration role
         And I remove all accesses from "Catalog management" permission
         And I save my changes

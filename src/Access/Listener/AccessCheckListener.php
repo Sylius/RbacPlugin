@@ -67,9 +67,8 @@ final class AccessCheckListener
             return;
         }
 
-        $event->setResponse(new RedirectResponse($this->router->generate('sylius_admin_dashboard')));
-
-        $this->session->getFlashBag()->add('error', 'sylius_rbac.you_have_no_access_to_this_section');
+        $this->addAccessErrorFlash($event->getRequest()->getMethod());
+        $event->setResponse($this->getRedirectResponse($event->getRequest()->headers->get('referer')));
     }
 
     /** @throws InsecureRequestException */
@@ -80,6 +79,7 @@ final class AccessCheckListener
         }
 
         $routeName = $event->getRequest()->attributes->get('_route');
+        $requestMethod = $event->getRequest()->getMethod();
 
         if ($routeName === null) {
             throw new InsecureRequestException();
@@ -90,7 +90,7 @@ final class AccessCheckListener
         }
 
         try {
-            $accessRequest = $this->accessRequestCreator->createFromRouteName($routeName);
+            $accessRequest = $this->accessRequestCreator->createFromRouteName($routeName, $requestMethod);
         } catch (UnresolvedRouteNameException $exception) {
             throw new InsecureRequestException();
         }
@@ -108,5 +108,25 @@ final class AccessCheckListener
         Assert::isInstanceOf($currentAdmin, UserInterface::class);
 
         return $currentAdmin;
+    }
+
+    private function addAccessErrorFlash(string $requestMethod): void
+    {
+        if ('GET' === $requestMethod || 'HEAD' === $requestMethod) {
+            $this->session->getFlashBag()->add('error', 'sylius_rbac.you_have_no_access_to_this_section');
+
+            return;
+        }
+
+        $this->session->getFlashBag()->add('error', 'sylius_rbac.you_are_not_allowed_to_do_that');
+    }
+
+    private function getRedirectResponse(?string $referer): RedirectResponse
+    {
+        if (null !== $referer) {
+            return new RedirectResponse($referer);
+        }
+
+        return new RedirectResponse($this->router->generate('sylius_admin_dashboard'));
     }
 }

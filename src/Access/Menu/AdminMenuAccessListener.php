@@ -77,7 +77,7 @@ final class AdminMenuAccessListener
     {
         return !$this->accessChecker->canAccessSection(
             $adminUser,
-            new AccessRequest($section, OperationType::write())
+            new AccessRequest($section, OperationType::read())
         );
     }
 }

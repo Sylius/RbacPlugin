@@ -9,7 +9,7 @@ use Sylius\Behat\Page\Admin\DashboardPageInterface;
 use Tests\Sylius\RbacPlugin\Behat\Service\PagesAvailabilityChecker;
 use Webmozart\Assert\Assert;
 
-final class AccessRestrictionsContext implements Context
+final class ReadAccessRestrictionsContext implements Context
 {
     /** @var DashboardPageInterface */
     private $dashboardPage;

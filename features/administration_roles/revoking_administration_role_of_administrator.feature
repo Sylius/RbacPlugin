@@ -7,7 +7,7 @@ Feature: Revoking Administration role of the Administrator
     Background:
         Given the store operates on a single channel in "United States"
         And there is already an Administration role "Configurator" in the system
-        And this administration role has "Configuration" permission
+        And this administration role has write permission for "Configuration"
         And there is already an Administration role "Sales manager" in the system
         And there is already an Administration role "Customers manager" in the system
         And there is an administrator "scary.terry@nightmare.com" identified by "youCanRunButYouCannotHide"
