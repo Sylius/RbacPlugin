@@ -16,7 +16,7 @@ Feature: Having a write access only to configuration management
     @ui
     Scenario: Having write access only to configuration management section
         When I view the administrator panel
-        Then I should be able to modify settings in configuration section
-        But I should not be able to modify settings in catalog management section
-        And I should not be able to modify settings in customers management section
-        And I should not be able to modify settings in marketing management section
+        Then I should be able to introduce modifications in configuration section
+        But I should not be able to introduce modifications in catalog management section
+        And I should not be able to introduce modifications in customers management section
+        And I should not be able to introduce modifications in marketing management section

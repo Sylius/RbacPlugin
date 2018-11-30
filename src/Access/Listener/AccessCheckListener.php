@@ -67,8 +67,8 @@ final class AccessCheckListener
             return;
         }
 
-        $this->addProperFlash($event->getRequest()->getMethod());
-        $event->setResponse($this->getProperResponse($event->getRequest()->headers->get('referer')));
+        $this->addAccessErrorFlash($event->getRequest()->getMethod());
+        $event->setResponse($this->getRedirectResponse($event->getRequest()->headers->get('referer')));
     }
 
     /** @throws InsecureRequestException */
@@ -110,7 +110,7 @@ final class AccessCheckListener
         return $currentAdmin;
     }
 
-    private function addProperFlash(string $requestMethod): void
+    private function addAccessErrorFlash(string $requestMethod): void
     {
         if ('GET' === $requestMethod || 'HEAD' === $requestMethod) {
             $this->session->getFlashBag()->add('error', 'sylius_rbac.you_have_no_access_to_this_section');
@@ -121,7 +121,7 @@ final class AccessCheckListener
         $this->session->getFlashBag()->add('error', 'sylius_rbac.you_are_not_allowed_to_do_that');
     }
 
-    private function getProperResponse(?string $referer): RedirectResponse
+    private function getRedirectResponse(?string $referer): RedirectResponse
     {
         if (null !== $referer) {
             return new RedirectResponse($referer);

@@ -64,7 +64,7 @@ final class AdministrationRolesContext implements Context
         string ... $permissions
     ): void {
         $operationsType = [OperationType::read()];
-        if ('write' === $operationType) {
+        if (OperationType::WRITE === $operationType) {
             $operationsType[] = OperationType::write();
         }
 

@@ -16,7 +16,8 @@ default:
 
                 - sylius.behat.context.ui.admin.dashboard
                 - Tests\Sylius\RbacPlugin\Behat\Context\UI\AdminMainMenuContext
-                - Tests\Sylius\RbacPlugin\Behat\Context\UI\AccessRestrictionsContext
+                - Tests\Sylius\RbacPlugin\Behat\Context\UI\ReadAccessRestrictionsContext
+                - Tests\Sylius\RbacPlugin\Behat\Context\UI\WriteAccessRestrictionsContext
             filters:
                 tags: "@access_restrictions && @ui"
         ui_managing_administration_roles:

@@ -16,7 +16,7 @@ Feature: Having a write access to multiple sections
     @ui
     Scenario: Having write access to specific sections in Admin panel
         When I view the administrator panel
-        Then I should be able to modify settings in configuration section
-        And I should be able to modify settings in catalog management section
-        And I should be able to modify settings in marketing management section
-        But I should not be able to modify settings in customers management section
+        Then I should be able to introduce modifications in configuration section
+        And I should be able to introduce modifications in catalog management section
+        And I should be able to introduce modifications in marketing management section
+        But I should not be able to introduce modifications in customers management section
