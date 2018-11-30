@@ -20,7 +20,7 @@ final class InstallPluginCommand extends Command
             'parameters' => [
                 'roleName' => 'Configurator',
                 'sections' => ['configuration', 'rbac'],
-            ]
+            ],
         ],
     ];
 
@@ -40,7 +40,7 @@ final class InstallPluginCommand extends Command
         $outputStyle = new SymfonyStyle($input, $output);
         $outputStyle->writeln('<info>Installing RBAC plugin...</info>');
 
-        /** @var boolean $errored */
+        /** @var bool $errored */
         $errored = false;
 
         foreach ($this->commands as $step => $command) {
@@ -71,6 +71,7 @@ final class InstallPluginCommand extends Command
         if ($errored) {
             return 'RBAC has been installed, but some error occurred.';
         }
+
         return 'RBAC has been successfully installed.';
     }
 }
