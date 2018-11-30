@@ -20,10 +20,31 @@ final class AdminMenuAccessListenerSpec extends ObjectBehavior
 {
     function let(TokenStorageInterface $tokenStorage, AdministratorAccessCheckerInterface $accessChecker): void
     {
-        $this->beConstructedWith($tokenStorage, $accessChecker);
+        $this->beConstructedWith($tokenStorage, $accessChecker, [
+            'catalog_management' => [
+                'catalog_route_prefix',
+            ],
+            'configuration' => [
+                'configuration_route_prefix',
+            ],
+            'customers_management' => [
+                'customers_route_prefix',
+            ],
+            'marketing_management' => [
+                'marketing_route_prefix',
+            ],
+            'sales_management' => [
+                'sales_route_prefix',
+            ],
+            'custom' => [
+                'custom_section' => [
+                    'custom_section_route_prefix',
+                ],
+            ]
+        ]);
     }
 
-    function it_removes_sections_to_which_current_admin_does_not_have_access(
+    function it_removes_sections_both_basic_and_custom_to_which_current_admin_does_not_have_access(
         TokenStorageInterface $tokenStorage,
         AdministratorAccessCheckerInterface $accessChecker,
         TokenInterface $token,
@@ -57,7 +78,7 @@ final class AdminMenuAccessListenerSpec extends ObjectBehavior
         }))->willReturn(false);
 
         $accessChecker->canAccessSection($adminUser, Argument::that(function (AccessRequest $accessRequest): bool {
-            return $accessRequest->section() == Section::ofType('rbac');
+            return $accessRequest->section() == Section::ofType('custom_section');
         }))->willReturn(false);
 
         $menu->removeChild('catalog')->shouldBeCalled();
@@ -65,7 +86,7 @@ final class AdminMenuAccessListenerSpec extends ObjectBehavior
         $menu->removeChild('customers')->shouldNotBeCalled();
         $menu->removeChild('marketing')->shouldBeCalled();
         $menu->removeChild('sales')->shouldBeCalled();
-        $menu->removeChild('rbac')->shouldBeCalled();
+        $menu->removeChild('custom_section')->shouldBeCalled();
 
         $this->removeInaccessibleAdminMenuParts($event);
     }

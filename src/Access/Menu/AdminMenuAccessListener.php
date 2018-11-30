@@ -21,10 +21,17 @@ final class AdminMenuAccessListener
     /** @var AdministratorAccessCheckerInterface */
     private $accessChecker;
 
-    public function __construct(TokenStorageInterface $tokenStorage, AdministratorAccessCheckerInterface $accessChecker)
-    {
+    /** @var array */
+    private $configuration;
+
+    public function __construct(
+        TokenStorageInterface $tokenStorage,
+        AdministratorAccessCheckerInterface $accessChecker,
+        array $configuration
+    ) {
         $this->tokenStorage = $tokenStorage;
         $this->accessChecker = $accessChecker;
+        $this->configuration = $configuration;
     }
 
     public function removeInaccessibleAdminMenuParts(MenuBuilderEvent $event): void
@@ -58,8 +65,10 @@ final class AdminMenuAccessListener
             $menu->removeChild('sales');
         }
 
-        if ($this->hasAdminAccessToSection($adminUser, Section::ofType('rbac'))) {
-            $menu->removeChild('rbac');
+        foreach (array_keys($this->configuration['custom']) as $customSection) {
+            if ($this->hasAdminAccessToSection($adminUser, Section::ofType($customSection))) {
+                $menu->removeChild($customSection);
+            }
         }
     }
 
