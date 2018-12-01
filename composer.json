@@ -58,10 +58,6 @@
         "analyse": [
             "vendor/bin/phpstan.phar analyse -c phpstan.neon -l max src/",
             "vendor/bin/ecs check src/ spec/"
-        ],
-        "post-install-cmd": [
-            "bin/console sylius:fixtures:load default_administration_role -n",
-            "bin/console sylius-rbac:normalize-administrators"
         ]
     },
     "extra": {

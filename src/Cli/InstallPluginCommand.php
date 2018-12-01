@@ -7,6 +7,7 @@ namespace Sylius\RbacPlugin\Cli;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -15,7 +16,18 @@ final class InstallPluginCommand extends Command
     /** @var array */
     private $commands = [
         [
-            'command' => 'grant-access',
+            'command' => 'sylius:fixtures:load',
+            'message' => 'Loads default no sections access role',
+            'parameters' => [
+                'suite' => 'default_administration_role'
+            ],
+        ],
+        [
+            'command' => 'sylius-rbac:normalize-administrators',
+            'message' => 'Assigns new, default role to all administrators in the system',
+        ],
+        [
+            'command' => 'sylius-rbac:grant-access',
             'message' => 'Grants access to given sections to specified administrator',
             'parameters' => [
                 'roleName' => 'Configurator',
@@ -42,13 +54,21 @@ final class InstallPluginCommand extends Command
                 $outputStyle->newLine();
                 $outputStyle->section($this->getCommandMessage($step, $command['message']));
 
+                if (array_key_exists('parameters', $command)){
+                    $input = new ArrayInput($command['parameters']);
+                } else {
+                    $input = new ArrayInput([]);
+                }
+
+                $input->setInteractive(false);
+
                 $this->getApplication()
-                    ->find('sylius-rbac:' . $command['command'])
-                    ->run(new ArrayInput($command['parameters']), $output)
+                    ->find($command['command'])
+                    ->run($input, $output)
                 ;
             } catch (\Exception $exception) {
                 $outputStyle->newLine(2);
-                $outputStyle->warning('RBAC has been installed, but some error occurred.');
+                $outputStyle->warning($exception->getMessage());
 
                 return;
             }

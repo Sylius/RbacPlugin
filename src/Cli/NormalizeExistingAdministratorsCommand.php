@@ -43,7 +43,7 @@ final class NormalizeExistingAdministratorsCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
         /** @var AdministrationRoleInterface|null $noSectionsAccessRole */
-        $noSectionsAccessRole = $this->administratorRoleRepository->findOneBy(['permissions' => json_encode([])]);
+        $noSectionsAccessRole = $this->administratorRoleRepository->findOneBy(['name' => 'No sections access']);
 
         if (null === $noSectionsAccessRole) {
             $output->writeln('There is no role with no access to any section. Aborting.');

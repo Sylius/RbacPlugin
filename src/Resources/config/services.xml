@@ -73,6 +73,13 @@
             <tag name="console.command" command="sylius-rbac:install-plugin" />
         </service>
 
+        <service id="Sylius\RbacPlugin\Cli\NormalizeExistingAdministratorsCommand">
+            <argument type="service" id="sylius.repository.admin_user" />
+            <argument type="service" id="sylius_rbac.repository.administration_role" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <tag name="console.command" command="sylius-rbac:normalize-administrators" />
+        </service>
+
         <service
                 id="sylius.rbac_plugin.fixture.administration_role_fixture"
                 class="Sylius\RbacPlugin\Fixture\AdministrationRoleFixture"
