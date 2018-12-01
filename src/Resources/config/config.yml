@@ -9,13 +9,6 @@ sylius_resource:
                 model: Sylius\RbacPlugin\Entity\AdministrationRole
                 form: Sylius\RbacPlugin\Form\Type\AdministrationRoleType
 
-sylius_user:
-    resources:
-        admin:
-            user:
-                classes:
-                    model: Sylius\RbacPlugin\Entity\AdminUser
-
 sylius_grid:
     grids:
         sylius_rbac_administration_role:

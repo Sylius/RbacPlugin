@@ -6,7 +6,7 @@ imports:
 
     - { resource: "@SyliusShopBundle/Resources/config/app/config.yml" }
 
-    - { resource: "@SyliusRbacPlugin/Resources/config/config.yml" }
+    - { resource: "@SyliusRbacPlugin/Resources/config/config_dev.yml" }
 
 parameters:
     sylius_core.public_dir: '%kernel.project_dir%/public'
@@ -55,10 +55,3 @@ sylius_grid:
                     sortable: true
                     options:
                         template: '@SyliusRbacPlugin/AdministrationRole/Grid/Field/administrationRole.html.twig'
-
-sylius_user:
-    resources:
-        admin:
-            user:
-                classes:
-                    model: Tests\Sylius\RbacPlugin\Application\src\Entity\AdminUser

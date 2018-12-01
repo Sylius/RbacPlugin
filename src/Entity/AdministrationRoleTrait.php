@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Sylius\RbacPlugin\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 
 trait AdministrationRoleTrait
 {
     /**
-     * @ORM\ManyToOne(targetEntity="Sylius\RbacPlugin\Entity\AdministrationRole")
-     * @ORM\JoinColumn(name="administration_role_id", referencedColumnName="id")
+     * @ManyToOne(targetEntity="Sylius\RbacPlugin\Entity\AdministrationRole")
+     * @JoinColumn(name="administration_role_id", referencedColumnName="id")
+     *
      * @var AdministrationRoleInterface|null
      */
     private $administrationRole;

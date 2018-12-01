@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace spec\Sylius\RbacPlugin\Access\Checker;
 
 use PhpSpec\ObjectBehavior;
-use Sylius\Component\Core\Model\AdminUserInterface;
 use Sylius\RbacPlugin\Access\Checker\AdministratorAccessCheckerInterface;
 use Sylius\RbacPlugin\Access\Model\AccessRequest;
 use Sylius\RbacPlugin\Access\Model\OperationType;
 use Sylius\RbacPlugin\Access\Model\Section;
 use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
+use Sylius\RbacPlugin\Entity\AdminUser;
 use Sylius\RbacPlugin\Model\Permission;
 
 final class AdministratorAccessCheckerSpec extends ObjectBehavior
@@ -21,7 +21,7 @@ final class AdministratorAccessCheckerSpec extends ObjectBehavior
     }
 
     function it_returns_false_if_admin_is_not_allowed_to_read_access_requested_section(
-        AdminUserInterface $admin,
+        AdminUser $admin,
         AdministrationRoleInterface $administrationRole
     ): void {
         $admin->getAdministrationRole()->willReturn($administrationRole);
@@ -37,7 +37,7 @@ final class AdministratorAccessCheckerSpec extends ObjectBehavior
     }
 
     function it_returns_false_if_admin_is_not_allowed_to_write_access_requested_section(
-        AdminUserInterface $admin,
+        AdminUser $admin,
         AdministrationRoleInterface $administrationRole
     ): void {
         $admin->getAdministrationRole()->willReturn($administrationRole);
@@ -54,7 +54,7 @@ final class AdministratorAccessCheckerSpec extends ObjectBehavior
     }
 
     function it_returns_true_if_admin_is_allowed_to_read_access_requested_section(
-        AdminUserInterface $admin,
+        AdminUser $admin,
         AdministrationRoleInterface $administrationRole
     ): void {
         $admin->getAdministrationRole()->willReturn($administrationRole);
@@ -71,7 +71,7 @@ final class AdministratorAccessCheckerSpec extends ObjectBehavior
     }
 
     function it_returns_true_if_admin_is_allowed_to_write_access_requested_section(
-        AdminUserInterface $admin,
+        AdminUser $admin,
         AdministrationRoleInterface $administrationRole
     ): void {
         $admin->getAdministrationRole()->willReturn($administrationRole);
@@ -88,7 +88,7 @@ final class AdministratorAccessCheckerSpec extends ObjectBehavior
     }
 
     function it_returns_true_if_admin_is_allowed_to_access_requested_custom_section(
-        AdminUserInterface $admin,
+        AdminUser $admin,
         AdministrationRoleInterface $administrationRole
     ): void {
         $admin->getAdministrationRole()->willReturn($administrationRole);
