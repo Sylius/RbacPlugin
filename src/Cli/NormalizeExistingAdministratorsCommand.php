@@ -47,6 +47,7 @@ final class NormalizeExistingAdministratorsCommand extends Command
 
         if (null === $noSectionsAccessRole) {
             $output->writeln('There is no role with no access to any section. Aborting.');
+
             return;
         }
 

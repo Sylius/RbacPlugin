@@ -7,7 +7,6 @@ namespace Sylius\RbacPlugin\Cli;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -19,12 +18,15 @@ final class InstallPluginCommand extends Command
             'command' => 'sylius:fixtures:load',
             'message' => 'Loads default no sections access role',
             'parameters' => [
-                'suite' => 'default_administration_role'
+                'suite' => 'default_administration_role',
             ],
+            'interactive' => false,
         ],
         [
             'command' => 'sylius-rbac:normalize-administrators',
             'message' => 'Assigns new, default role to all administrators in the system',
+            'parameters' => [],
+            'interactive' => false,
         ],
         [
             'command' => 'sylius-rbac:grant-access',
@@ -33,6 +35,7 @@ final class InstallPluginCommand extends Command
                 'roleName' => 'Configurator',
                 'sections' => ['configuration', 'rbac'],
             ],
+            'interactive' => true,
         ],
     ];
 
@@ -54,13 +57,8 @@ final class InstallPluginCommand extends Command
                 $outputStyle->newLine();
                 $outputStyle->section($this->getCommandMessage($step, $command['message']));
 
-                if (array_key_exists('parameters', $command)){
-                    $input = new ArrayInput($command['parameters']);
-                } else {
-                    $input = new ArrayInput([]);
-                }
-
-                $input->setInteractive(false);
+                $input = new ArrayInput($command['parameters']);
+                $input->setInteractive($command['interactive']);
 
                 $this->getApplication()
                     ->find($command['command'])
