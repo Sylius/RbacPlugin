@@ -57,11 +57,11 @@ final class ManagingAdministratorsContext implements Context
     }
 
     /**
-     * @Given I remove their role
+     * @Then I should not be able to remove their role
      */
     public function removeAdministratorRole(): void
     {
-        $this->administrationRolesElement->removeAdministrationRole();
+        Assert::false($this->administrationRolesElement->canRemoveAdministrationRole());
     }
 
     /**

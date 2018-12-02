@@ -8,5 +8,5 @@ interface AdministrationRolesElementInterface
 {
     public function selectAdministrationRole(string $administrationRoleName): void;
 
-    public function removeAdministrationRole(): void;
+    public function canRemoveAdministrationRole(): bool;
 }
