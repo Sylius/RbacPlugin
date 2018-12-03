@@ -71,6 +71,6 @@ sylius_fixtures:
             fixtures:
                 administration_role:
                     options:
-                        administration_role_name: 'No sections access'
+                        name: 'No sections access'
             listeners:
                 logger: ~

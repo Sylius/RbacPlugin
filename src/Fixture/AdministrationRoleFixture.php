@@ -37,7 +37,7 @@ final class AdministrationRoleFixture extends AbstractFixture implements Fixture
         /** @var AdministrationRoleInterface $administrationRole */
         $administrationRole = $this->administrationRoleFactory->createNew();
 
-        $administrationRole->setName($options['administration_role_name']);
+        $administrationRole->setName($options['name']);
 
         foreach ($options['permissions'] as $permissionName) {
             $administrationRole
@@ -53,7 +53,7 @@ final class AdministrationRoleFixture extends AbstractFixture implements Fixture
     {
         $optionsNode
             ->children()
-                ->scalarNode('administration_role_name')
+                ->scalarNode('name')
                     ->cannotBeEmpty()
                 ->end()
                 ->arrayNode('permissions')

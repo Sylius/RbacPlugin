@@ -18,7 +18,7 @@ final class NormalizeExistingAdministratorsCommand extends Command
     private $administratorRepository;
 
     /** @var RepositoryInterface */
-    private $administratorRoleRepository;
+    private $administrationRoleRepository;
 
     /** @var ObjectManager */
     private $objectManager;
@@ -31,7 +31,7 @@ final class NormalizeExistingAdministratorsCommand extends Command
         parent::__construct('sylius-rbac:normalize-administrators');
 
         $this->administratorRepository = $administratorRepository;
-        $this->administratorRoleRepository = $administratorRoleRepository;
+        $this->administrationRoleRepository = $administratorRoleRepository;
         $this->objectManager = $objectManager;
     }
 
@@ -43,7 +43,14 @@ final class NormalizeExistingAdministratorsCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
         /** @var AdministrationRoleInterface|null $noSectionsAccessRole */
-        $noSectionsAccessRole = $this->administratorRoleRepository->findOneBy(['name' => 'No sections access']);
+        $noSectionsAccessRole = null;
+
+        /** @var AdministrationRoleInterface $administrationRole */
+        foreach ($this->administrationRoleRepository->findAll() as $administrationRole) {
+            if (empty($administrationRole->getPermissions())) {
+                $noSectionsAccessRole = $administrationRole;
+            }
+        }
 
         if (null === $noSectionsAccessRole) {
             $output->writeln('There is no role with no access to any section. Aborting.');
@@ -51,7 +58,6 @@ final class NormalizeExistingAdministratorsCommand extends Command
             return;
         }
 
-        /** @var array $administrators */
         $administrators = $this->administratorRepository->findAll();
 
         /** @var AdminUserInterface $administrator */
