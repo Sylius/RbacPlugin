@@ -1,6 +1,0 @@
-sylius_user:
-    resources:
-        admin:
-            user:
-                classes:
-                    model: Sylius\RbacPlugin\Entity\AdminUser

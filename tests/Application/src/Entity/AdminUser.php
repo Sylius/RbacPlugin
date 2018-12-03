@@ -2,18 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Tests\Sylius\RbacPlugin\Application\src\Entity;
+namespace Tests\Application\RbacPlugin\Entity;
 
 use Doctrine\ORM\Mapping\MappedSuperclass;
 use Doctrine\ORM\Mapping\Table;
+use Sylius\Component\Core\Model\AdminUser as BaseAdminUser;
+use Sylius\Component\Core\Model\AdminUserInterface;
 use Sylius\RbacPlugin\Entity\AdministrationRoleAwareInterface;
 use Sylius\RbacPlugin\Entity\AdministrationRoleTrait;
 
 /**
- * @MappedSuperclass
+ * @MappedSuperclass()
  * @Table(name="sylius_admin_user")
+ * @final
  */
-final class AdminUser implements AdministrationRoleAwareInterface
+class AdminUser extends BaseAdminUser implements AdminUserInterface, AdministrationRoleAwareInterface
 {
     use AdministrationRoleTrait;
 }

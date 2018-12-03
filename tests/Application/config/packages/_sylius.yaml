@@ -6,7 +6,7 @@ imports:
 
     - { resource: "@SyliusShopBundle/Resources/config/app/config.yml" }
 
-    - { resource: "@SyliusRbacPlugin/Resources/config/config_dev.yml" }
+    - { resource: "@SyliusRbacPlugin/Resources/config/config.yml" }
 
 parameters:
     sylius_core.public_dir: '%kernel.project_dir%/public'
@@ -27,7 +27,16 @@ sylius_user:
         admin:
             user:
                 classes:
-                    model: Sylius\RbacPlugin\Entity\AdminUser
+                    model: Tests\Application\RbacPlugin\Entity\AdminUser
+
+doctrine:
+    orm:
+        mappings:
+            sylius_user:
+                type: annotation
+                dir: '%kernel.project_dir%/src/Entity'
+                is_bundle: false
+                prefix: Tests\Application\RbacPlugin\Entity
 
 sylius_grid:
     grids:

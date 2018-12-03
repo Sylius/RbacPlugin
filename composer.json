@@ -50,7 +50,8 @@
     "autoload": {
         "psr-4": {
             "Sylius\\RbacPlugin\\": "src/",
-            "Tests\\Sylius\\RbacPlugin\\": "tests/"
+            "Tests\\Sylius\\RbacPlugin\\": "tests/",
+            "Tests\\Application\\RbacPlugin\\": "tests/Application/src/"
         }
     },
     "scripts": {

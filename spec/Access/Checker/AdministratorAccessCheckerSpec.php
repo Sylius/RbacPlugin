@@ -10,8 +10,8 @@ use Sylius\RbacPlugin\Access\Model\AccessRequest;
 use Sylius\RbacPlugin\Access\Model\OperationType;
 use Sylius\RbacPlugin\Access\Model\Section;
 use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
-use Sylius\RbacPlugin\Entity\AdminUser;
 use Sylius\RbacPlugin\Model\Permission;
+use Tests\Application\RbacPlugin\Entity\AdminUser;
 
 final class AdministratorAccessCheckerSpec extends ObjectBehavior
 {
