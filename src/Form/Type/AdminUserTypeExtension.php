@@ -13,7 +13,7 @@ final class AdminUserTypeExtension extends AbstractTypeExtension
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('administrationRole', AdministrationRoleChoiceType::class, [
-            'required' => false,
+            'required' => true,
         ]);
     }
 

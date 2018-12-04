@@ -24,8 +24,6 @@ Feature: Revoking Administration role of the Administrator
         Then administrator "birdperson@eagle.com" should have role "Customers manager"
 
     @ui
-    Scenario: Removing role from Administrator
+    Scenario: Being unable to remove role from Administrator
         When I want to edit administrator "birdperson@eagle.com"
-        And I remove their role
-        And I save my changes
-        Then administrator "birdperson@eagle.com" should have no role assigned
+        Then I should not be able to remove their role

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Sylius\RbacPlugin\Behat\Element;
 
+use Behat\Mink\Element\NodeElement;
 use FriendsOfBehat\PageObjectExtension\Element\Element;
 
 final class AdministrationRolesElement extends Element implements AdministrationRolesElementInterface
@@ -13,8 +14,19 @@ final class AdministrationRolesElement extends Element implements Administration
         $this->getDocument()->selectFieldOption('sylius_admin_user_administrationRole', $administrationRoleName);
     }
 
-    public function removeAdministrationRole(): void
+    public function canRemoveAdministrationRole(): bool
     {
-        $this->getDocument()->selectFieldOption('sylius_admin_user_administrationRole', '');
+        /** @var NodeElement $administrationRole */
+        $administrationRole = $this
+            ->getDocument()
+            ->findById('sylius_admin_user_administrationRole')
+            ->find('named', ['option', ''])
+        ;
+
+        if ('' === $administrationRole->getText()) {
+            return true;
+        }
+
+        return false;
     }
 }
