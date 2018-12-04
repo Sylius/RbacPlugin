@@ -6,6 +6,7 @@ namespace spec\Sylius\RbacPlugin\Access\Listener;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Sylius\Component\Core\Model\AdminUserInterface;
 use Sylius\RbacPlugin\Access\Checker\AdministratorAccessCheckerInterface;
 use Sylius\RbacPlugin\Access\Checker\RouteNameCheckerInterface;
 use Sylius\RbacPlugin\Access\Creator\AccessRequestCreatorInterface;
@@ -13,7 +14,6 @@ use Sylius\RbacPlugin\Access\Exception\UnresolvedRouteNameException;
 use Sylius\RbacPlugin\Access\Model\AccessRequest;
 use Sylius\RbacPlugin\Access\Model\OperationType;
 use Sylius\RbacPlugin\Access\Model\Section;
-use Sylius\RbacPlugin\Entity\AdminUserInterface;
 use Symfony\Component\HttpFoundation\HeaderBag;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\RedirectResponse;

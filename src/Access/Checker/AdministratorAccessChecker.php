@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Sylius\RbacPlugin\Access\Checker;
 
+use Sylius\Component\Core\Model\AdminUserInterface;
 use Sylius\RbacPlugin\Access\Model\AccessRequest;
 use Sylius\RbacPlugin\Access\Model\OperationType;
 use Sylius\RbacPlugin\Access\Model\Section;
-use Sylius\RbacPlugin\Entity\AdminUserInterface;
 use Sylius\RbacPlugin\Model\Permission;
 use Webmozart\Assert\Assert;
 

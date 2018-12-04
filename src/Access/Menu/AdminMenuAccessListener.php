@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Sylius\RbacPlugin\Access\Menu;
 
 use Sylius\Bundle\UiBundle\Menu\Event\MenuBuilderEvent;
+use Sylius\Component\Core\Model\AdminUserInterface;
 use Sylius\RbacPlugin\Access\Checker\AdministratorAccessCheckerInterface;
 use Sylius\RbacPlugin\Access\Model\AccessRequest;
 use Sylius\RbacPlugin\Access\Model\OperationType;
 use Sylius\RbacPlugin\Access\Model\Section;
-use Sylius\RbacPlugin\Entity\AdminUserInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Webmozart\Assert\Assert;
 

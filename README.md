@@ -38,37 +38,63 @@ Write permission access means also updating and deleting.
     ];
     ```
 
-4. Import routing:
+4. Override AdminUser entity:
+
+a) Use ShopBillingDataTrait and implement ShopBillingDataAwareInterface in the AdminUser class of your Sylius-Standard based project:
+
+```php
+/**
+ * @MappedSuperclass
+ * @Table(name="sylius_admin_user")
+ */
+class AdminUser extends BaseAdminUser implements AdminUserInterface, AdministrationRoleAwareInterface
+{
+    use AdministrationRoleTrait;
+}
+```
+
+b) And override the model's class in the chosen configuration file (e.g. `config/_sylius.yaml`):
+
+```yaml
+sylius_user:
+    resources:
+        admin:
+            user:
+                classes:
+                    model: App\Entity\AdminUser
+```
+
+5. Import routing:
 
     ```yaml
     sylius_rbac:
         resource: "@SyliusRbacPlugin/Resources/config/routing.yml"
     ```
 
-5. Import configuration:
+6. Import configuration:
 
     ```yaml
     - { resource: "@SyliusRbacPlugin/Resources/config/config.yml" }
     ```
 
-6. Copy plugin migrations to your migrations directory (e.g. `src/Migrations`) and apply them to your database:
+7. Copy plugin migrations to your migrations directory (e.g. `src/Migrations`) and apply them to your database:
 
     ```bash
     cp -R vendor/sylius/rbac-plugin/migrations/* "<path/to/your/migrations>"
     bin/console doctrine:migrations:migrate
     ```
 
-7. Copy templates from `vendor/sylius/rbac-plugin/src/Resources/views/SyliusAdminBundle/`
+8. Copy templates from `vendor/sylius/rbac-plugin/src/Resources/views/SyliusAdminBundle/`
 to `app/Resources/SyliusAdminBundle/views/`
 
-8. Run installation command
+9. Run installation command
 
     ```bash
     bin/console sylius-rbac:install-plugin
     ```
-    
+
     Where sylius-rbac:install-plugin consists of:
-    
+
     ```bash
     bin/console sylius-rbac:grant-access <roleName> <adminSections>
     ```
@@ -152,7 +178,7 @@ sylius_rbac:
 
 #### Remember!
 
-When configuring a custom section in Admin main menu, name it the same way you named it under `custom_sections` key in the plugin configuration. It will be automatically hidden and shown, exactly as 
+When configuring a custom section in Admin main menu, name it the same way you named it under `custom_sections` key in the plugin configuration. It will be automatically hidden and shown, exactly as
 basic Sylius sections!
 
 ```php
@@ -163,7 +189,7 @@ $suppliersSubmenu
     ->setLabel('Manage Suppliers')
     ->setLabelAttribute('icon', 'address card outline')
 ;
-``` 
+```
 
 ![Suppliers section](docs/suppliers_section.png)
 
