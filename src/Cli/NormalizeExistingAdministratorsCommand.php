@@ -6,8 +6,8 @@ namespace Sylius\RbacPlugin\Cli;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Sylius\RbacPlugin\Entity\AdministrationRoleAwareInterface;
 use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
-use Sylius\RbacPlugin\Entity\AdminUserInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -60,7 +60,7 @@ final class NormalizeExistingAdministratorsCommand extends Command
 
         $administrators = $this->administratorRepository->findAll();
 
-        /** @var AdminUserInterface $administrator */
+        /** @var AdministrationRoleAwareInterface $administrator */
         foreach ($administrators as $administrator) {
             $administrator->setAdministrationRole($noSectionsAccessRole);
         }
