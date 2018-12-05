@@ -12,4 +12,5 @@ parameters:
 
     ignoreErrors:
         - '/Parameter #1 $configuration of method Symfony\Component\DependencyInjection\Extension\Extension::processConfiguration() expects Symfony\Component\Config\Definition\ConfigurationInterface, Symfony\Component\Config\Definition\ConfigurationInterface|null given./'
+        - '/Cannot call method arrayNode() on Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface|null./'
         - '/Call to an undefined method Sylius\\Component\\Core\\Model\\AdminUserInterface/'

@@ -11,7 +11,7 @@ trait AdministrationRoleTrait
 {
     /**
      * @ManyToOne(targetEntity="Sylius\RbacPlugin\Entity\AdministrationRole")
-     * @JoinColumn(name="administration_role_id", referencedColumnName="id")
+     * @JoinColumn(name="administrationRole_id", referencedColumnName="id")
      *
      * @var AdministrationRoleInterface|null
      */

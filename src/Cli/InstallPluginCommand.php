@@ -15,12 +15,27 @@ final class InstallPluginCommand extends Command
     /** @var array */
     private $commands = [
         [
-            'command' => 'grant-access',
+            'command' => 'sylius:fixtures:load',
+            'message' => 'Loads default no sections access role',
+            'parameters' => [
+                'suite' => 'default_administration_role',
+            ],
+            'interactive' => false,
+        ],
+        [
+            'command' => 'sylius-rbac:normalize-administrators',
+            'message' => 'Assigns new, default role to all administrators in the system',
+            'parameters' => [],
+            'interactive' => false,
+        ],
+        [
+            'command' => 'sylius-rbac:grant-access',
             'message' => 'Grants access to given sections to specified administrator',
             'parameters' => [
                 'roleName' => 'Configurator',
                 'sections' => ['configuration', 'rbac'],
             ],
+            'interactive' => true,
         ],
     ];
 
@@ -42,13 +57,16 @@ final class InstallPluginCommand extends Command
                 $outputStyle->newLine();
                 $outputStyle->section($this->getCommandMessage($step, $command['message']));
 
+                $input = new ArrayInput($command['parameters']);
+                $input->setInteractive($command['interactive']);
+
                 $this->getApplication()
-                    ->find('sylius-rbac:' . $command['command'])
-                    ->run(new ArrayInput($command['parameters']), $output)
+                    ->find($command['command'])
+                    ->run($input, $output)
                 ;
             } catch (\Exception $exception) {
                 $outputStyle->newLine(2);
-                $outputStyle->warning('RBAC has been installed, but some error occurred.');
+                $outputStyle->warning($exception->getMessage());
 
                 return;
             }
