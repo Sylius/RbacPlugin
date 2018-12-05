@@ -34,7 +34,6 @@ final class AdministratorAccessGranterSpec extends ObjectBehavior
         $this
             ->shouldThrow(\InvalidArgumentException::class)
             ->during('__invoke', ['sylius@example.com', 'configurator', ['configuration']]);
-        ;
     }
 
     function it_creates_administration_role_if_does_not_exist(
@@ -46,11 +45,11 @@ final class AdministratorAccessGranterSpec extends ObjectBehavior
         $administratorRepository->findOneBy(['email' => 'sylius@example.com'])->willReturn($adminUser);
 
         $administrationRoleRepository->findOneBy(['name' => 'Configurator'])->willReturn(null);
-        $administrationRoleRepository->add(Argument::that(function(AdministrationRoleInterface $administrationRole): bool {
+        $administrationRoleRepository->add(Argument::that(function (AdministrationRoleInterface $administrationRole): bool {
             return $administrationRole->getName() === 'Configurator';
         }))->shouldBeCalled();
 
-        $adminUser->setAdministrationRole(Argument::that(function(AdministrationRoleInterface $administrationRole): bool {
+        $adminUser->setAdministrationRole(Argument::that(function (AdministrationRoleInterface $administrationRole): bool {
             return $administrationRole->getName() === 'Configurator';
         }))->shouldBeCalled();
 

@@ -4,14 +4,7 @@ declare(strict_types=1);
 
 namespace Sylius\RbacPlugin\Cli;
 
-use Doctrine\Common\Persistence\ObjectManager;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
-use Sylius\RbacPlugin\Access\Model\OperationType;
 use Sylius\RbacPlugin\Cli\Granter\AdministratorAccessGranterInterface;
-use Sylius\RbacPlugin\Entity\AdministrationRole;
-use Sylius\RbacPlugin\Entity\AdministrationRoleAwareInterface;
-use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
-use Sylius\RbacPlugin\Model\Permission;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
