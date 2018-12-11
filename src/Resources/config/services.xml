@@ -62,11 +62,20 @@
 
         <service id="Sylius\RbacPlugin\Normalizer\AdministrationRolePermissionNormalizer" />
 
-        <service id="Sylius\RbacPlugin\Cli\GrantAccessCommand">
+        <service id="Sylius\RbacPlugin\Cli\Granter\AdministratorAccessGranter">
             <argument type="service" id="sylius.repository.admin_user" />
             <argument type="service" id="sylius_rbac.repository.administration_role" />
             <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+
+        <service id="Sylius\RbacPlugin\Cli\GrantAccessCommand">
+            <argument type="service" id="Sylius\RbacPlugin\Cli\Granter\AdministratorAccessGranter" />
             <tag name="console.command" command="sylius-rbac:grant-access" />
+        </service>
+
+        <service id="Sylius\RbacPlugin\Cli\GrantAccessToGivenAdministratorCommand">
+            <argument type="service" id="Sylius\RbacPlugin\Cli\Granter\AdministratorAccessGranter" />
+            <tag name="console.command" command="sylius-rbac:grant-access-to-given-administrator" />
         </service>
 
         <service id="Sylius\RbacPlugin\Cli\InstallPluginCommand">

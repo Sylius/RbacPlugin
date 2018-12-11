@@ -112,6 +112,10 @@ to `app/Resources/SyliusAdminBundle/views/`
 
     `In order to permit access to admin panel sections, please provide administrator's email address: sylius@example.com`
 
+#### Beware!
+
+You can also use `bin/console sylius-rbac:grant-access-to-given-administrator <email> <roleName> <adminSections>`
+command in order to provide an email address as an input parameter.
 
 ## Sections configuration
 
