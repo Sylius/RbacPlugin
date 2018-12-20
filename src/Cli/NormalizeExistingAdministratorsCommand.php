@@ -60,6 +60,14 @@ final class NormalizeExistingAdministratorsCommand extends Command
 
         $administrators = $this->administratorRepository->findAll();
 
+        if (count($administrators) === 0) {
+            $output->writeln('No administrators found. No migration needed.');
+
+            return;
+        }
+
+        $output->writeln(sprintf('Found %d administrator(s). Migrating them.', count($administrators)));
+
         /** @var AdministrationRoleAwareInterface $administrator */
         foreach ($administrators as $administrator) {
             $administrator->setAdministrationRole($noSectionsAccessRole);
