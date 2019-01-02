@@ -93,24 +93,32 @@ to `app/Resources/SyliusAdminBundle/views/`
     bin/console sylius-rbac:install-plugin
     ```
 
-    Where sylius-rbac:install-plugin consists of:
+    Which consists of:
+    
+    * `sylius:fixtures:load`
+    
+        Loading fixture with a default "No sections access" role
+        
+    * `sylius-rbac:normalize-administrators`
+    
+        That assigns role created in a previous step to all already existent administrators 
 
-    ```bash
-    bin/console sylius-rbac:grant-access <roleName> <adminSections>
-    ```
+    * `sylius-rbac:grant-access <roleName> <adminSections>`
 
-    Where `adminSections` can be a space-separated list of any of these:
-    * catalogManagement
-    * configuration
-    * customerManagement
-    * marketingManagement
-    * salesManagement
+        Where `adminSections` can be a space-separated list of any of these:
+        * catalogManagement
+        * configuration
+        * customerManagement
+        * marketingManagement
+        * salesManagement
 
-    Administrator's email is provided by plugin user via CLI.
-
-    e.g. `bin/console sylius-rbac:grant-access administrator configuration catalogManagement`
-
-    `In order to permit access to admin panel sections, please provide administrator's email address: sylius@example.com`
+        Administrator's email is provided by plugin user via CLI.
+    
+        e.g. `bin/console sylius-rbac:grant-access administrator configuration catalogManagement`
+    
+        `In order to permit access to admin panel sections, please provide administrator's email address: sylius@example.com`
+        
+        By default, installation command creates *Configurator* role with *configuration* and *rbac* permissions.  
 
 #### Beware!
 
