@@ -33,11 +33,21 @@ final class InstallPluginCommand extends Command
             'message' => 'Grants access to given sections to specified administrator',
             'parameters' => [
                 'roleName' => 'Configurator',
-                'sections' => ['configuration', 'rbac'],
+                // based on config.yml file and added during command's execution
+                'sections' => [],
             ],
             'interactive' => true,
         ],
     ];
+
+    /** @var array */
+    private $rbacConfiguration;
+
+    public function __construct(array $rbacConfiguration)
+    {
+        parent::__construct();
+        $this->rbacConfiguration = $rbacConfiguration;
+    }
 
     protected function configure(): void
     {
@@ -53,6 +63,11 @@ final class InstallPluginCommand extends Command
         $outputStyle->writeln('<info>Installing RBAC plugin...</info>');
 
         foreach ($this->commands as $step => $command) {
+
+            if ($command['command'] === 'sylius-rbac:grant-access') {
+                $command['parameters']['sections'] = $this->provideAllSyliusSections();
+            }
+
             try {
                 $outputStyle->newLine();
                 $outputStyle->section($this->getCommandMessage($step, $command['message']));
@@ -82,6 +97,17 @@ final class InstallPluginCommand extends Command
             $step + 1,
             count($this->commands),
             $commandMessage
+        );
+    }
+
+    private function provideAllSyliusSections(): array
+    {
+        return array_diff(
+            array_merge(
+                array_keys($this->rbacConfiguration),
+                array_keys($this->rbacConfiguration['custom'])
+            ),
+            ['custom']
         );
     }
 }
