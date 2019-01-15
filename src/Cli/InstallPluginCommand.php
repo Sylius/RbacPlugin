@@ -63,7 +63,6 @@ final class InstallPluginCommand extends Command
         $outputStyle->writeln('<info>Installing RBAC plugin...</info>');
 
         foreach ($this->commands as $step => $command) {
-
             if ($command['command'] === 'sylius-rbac:grant-access') {
                 $command['parameters']['sections'] = $this->provideAllSyliusSections();
             }
