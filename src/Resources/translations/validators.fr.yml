@@ -1,0 +1,5 @@
+sylius_rbac:
+    administration_role:
+        name:
+            not_blank: 'Le nom du rôle ne peut être vide'
+            unique: 'Ce nom est déjà pris'

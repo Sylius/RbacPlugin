@@ -1,0 +1,6 @@
+sylius_rbac:
+    administration_role_does_not_exist: 'Ce rôle n''existe pas'
+    administration_role_successfully_created: 'Le rôle a bien été créé'
+    administration_role_successfully_updated: 'Le rôle a bien été modifié'
+    you_are_not_allowed_to_do_that: 'Vous n''avez pas les droits suffisants pour effectuer cette action'
+    you_have_no_access_to_this_section: 'Vous n''avez pas les droits suffisants pour accéder à cette section'

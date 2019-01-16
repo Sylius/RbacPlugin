@@ -1,0 +1,20 @@
+sylius_rbac:
+    ui:
+        access: 'Accès'
+        administration_role: 'Rôle'
+        administration_roles: 'Rôles'
+        edit_administration_role: 'Modifier le rôle'
+        new_administration_role: 'Créer un rôle'
+        permission:
+            catalog_management: 'Gestion du catalogue'
+            configuration: 'Configuration'
+            customers_management: 'Gestion des clients'
+            marketing_management: 'Gestion du marketing'
+            operation_type:
+                read: 'Visualiser'
+                write: 'Ecrire'
+            rbac: 'RBAC'
+            sales_management: 'Gestion des ventes'
+        permissions: 'Permissions'
+        rbac: 'RBAC'
+        rbac_role: 'rôle RBAC'
