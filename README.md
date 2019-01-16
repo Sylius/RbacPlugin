@@ -40,7 +40,7 @@ Write permission access means also updating and deleting.
 
 4. Override AdminUser entity:
 
-a) Use ShopBillingDataTrait and implement ShopBillingDataAwareInterface in the AdminUser class of your Sylius-Standard based project:
+a) Use AdministrationRoleTrait and implement AdministrationRoleAwareInterface in the AdminUser class of your Sylius-Standard based project:
 
 ```php
 /**
