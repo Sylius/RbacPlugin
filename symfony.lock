@@ -20,6 +20,15 @@
     "openlss/lib-array2xml": {
         "version": "0.0.10"
     },
+    "phpstan/phpstan-doctrine": {
+        "version": "0.11"
+    },
+    "phpstan/phpstan-symfony": {
+        "version": "0.11"
+    },
+    "phpstan/phpstan-webmozart-assert": {
+        "version": "0.11"
+    },
     "stripe/stripe-php": {
         "version": "v4.13.0"
     },
