@@ -89,3 +89,6 @@ sylius_rbac:
     custom_sections:
         rbac:
             - sylius_rbac
+
+parameters:
+    root_administrator_email: ''
