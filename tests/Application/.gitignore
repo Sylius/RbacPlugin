@@ -9,9 +9,3 @@
 
 /vendor
 /node_modules
-
-/.env
-/.env.prod
-/.env.staging
-/.env.test
-/.env.test_cached

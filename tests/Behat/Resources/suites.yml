@@ -1,7 +1,7 @@
 default:
     suites:
         ui_access_restrictions:
-            contexts_services:
+            contexts:
                 - sylius.behat.context.hook.doctrine_orm
 
                 - sylius.behat.context.transform.shared_storage
@@ -21,7 +21,7 @@ default:
             filters:
                 tags: "@access_restrictions && @ui"
         ui_managing_administration_roles:
-            contexts_services:
+            contexts:
                 - sylius.behat.context.hook.doctrine_orm
 
                 - sylius.behat.context.transform.shared_storage
@@ -37,7 +37,7 @@ default:
             filters:
                 tags: "@managing_administration_roles && @ui"
         ui_managing_administrators:
-            contexts_services:
+            contexts:
                 - sylius.behat.context.hook.doctrine_orm
 
                 - sylius.behat.context.transform.shared_storage
@@ -61,7 +61,7 @@ default:
             filters:
                 tags: "@managing_administrators && @ui"
         ui_managing_permissions:
-            contexts_services:
+            contexts:
                 - sylius.behat.context.hook.doctrine_orm
 
                 - sylius.behat.context.transform.shared_storage

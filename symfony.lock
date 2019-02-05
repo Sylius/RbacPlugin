@@ -1,0 +1,47 @@
+{
+    "coduo/php-matcher": {
+        "version": "3.1.1"
+    },
+    "coduo/php-to-string": {
+        "version": "2.0.1"
+    },
+    "lakion/api-test-case": {
+        "version": "v3.1.4"
+    },
+    "nelmio/alice": {
+        "version": "3.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.2",
+            "ref": "0b9900ece737bec7752e4155c0164639dd9b0cb0"
+        }
+    },
+    "openlss/lib-array2xml": {
+        "version": "0.0.10"
+    },
+    "stripe/stripe-php": {
+        "version": "v4.13.0"
+    },
+    "symfony/dotenv": {
+        "version": "v4.2.3"
+    },
+    "symfony/flex": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "dc3fc2e0334a4137c47cfd5a3ececc601fa61a0b"
+        }
+    },
+    "theofidry/alice-data-fixtures": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "fe5a50faf580eb58f08ada2abe8afbd2d4941e05"
+        }
+    }
+}
