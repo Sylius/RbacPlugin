@@ -1,7 +1,7 @@
 default:
     suites:
         installing_plugin:
-            contexts_services:
+            contexts:
                 - sylius.behat.context.hook.doctrine_orm
 
                 - sylius.behat.context.setup.admin_user

@@ -82,6 +82,10 @@ final class InstallPluginCommand extends Command
         $outputStyle->writeln('<info>Installing RBAC plugin...</info>');
 
         foreach ($this->commands as $step => $command) {
+            if (!$this->shouldCommandBeExecuted($command)) {
+                continue;
+            }
+
             if ($this->shouldCommandBeNormalized($command)) {
                 $command = $this->normalizeCommand($command);
             }
@@ -116,7 +120,7 @@ final class InstallPluginCommand extends Command
         );
     }
 
-    private function shouldCommandBeNormalized(array $command): bool
+    private function shouldCommandBeExecuted(array $command): bool
     {
         /** @var bool $isAdministratorEmailProvided */
         $isAdministratorEmailProvided = $this->isAdministratorEmailProvided();
@@ -128,8 +132,14 @@ final class InstallPluginCommand extends Command
         /** @var bool $isGrantAccessCurrentCommand */
         $isGrantAccessCurrentCommand = $this->isGrantAccessCurrentCommand($command['command']);
 
-        return ($isGrantAccessToGivenAdministratorCurrentCommand && !$isAdministratorEmailProvided) ||
-            ($isGrantAccessCurrentCommand && $isAdministratorEmailProvided);
+        return !(($isGrantAccessToGivenAdministratorCurrentCommand && !$isAdministratorEmailProvided) ||
+            ($isGrantAccessCurrentCommand && $isAdministratorEmailProvided));
+    }
+
+    private function shouldCommandBeNormalized(array $command): bool
+    {
+        return $this->isGrantAccessCurrentCommand($command['command']) ||
+            $this->isGrantAccessToGivenAdministratorCurrentCommand($command['command']);
     }
 
     private function normalizeCommand(array $command): array
