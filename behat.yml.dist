@@ -41,7 +41,3 @@ default:
                 class: Tests\Sylius\RbacPlugin\Application\Kernel
 
         FriendsOfBehat\VariadicExtension: ~
-
-        FriendsOfBehat\SuiteSettingsExtension:
-            paths:
-                - "features"
