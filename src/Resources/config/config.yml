@@ -1,3 +1,6 @@
+parameters:
+    root_administrator_email: ''
+
 prooph_service_bus:
     command_buses:
         sylius_rbac_command_bus: ~
@@ -89,6 +92,3 @@ sylius_rbac:
     custom_sections:
         rbac:
             - sylius_rbac
-
-parameters:
-    root_administrator_email: ''

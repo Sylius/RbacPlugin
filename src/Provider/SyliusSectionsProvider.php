@@ -6,6 +6,8 @@ namespace Sylius\RbacPlugin\Provider;
 
 final class SyliusSectionsProvider implements SyliusSectionsProviderInterface
 {
+    private const CUSTOM_SECTION_CONFIGURATION_KEY = 'custom';
+
     /** @var array */
     private $rbacConfiguration;
 
@@ -19,14 +21,16 @@ final class SyliusSectionsProvider implements SyliusSectionsProviderInterface
         $mergedArray = array_diff(
             array_merge(
                 array_keys($this->rbacConfiguration),
-                array_keys($this->rbacConfiguration['custom'])
+                array_keys($this->rbacConfiguration[self::CUSTOM_SECTION_CONFIGURATION_KEY])
             ),
-            ['custom']
+            [self::CUSTOM_SECTION_CONFIGURATION_KEY]
         );
 
-        // there's a gap between indexes after merging two arrays and then removing one of the elements
-        $rearrangedArray = array_values($mergedArray);
+        return $this->rearrangeArray($mergedArray);
+    }
 
-        return $rearrangedArray;
+    private function rearrangeArray(array $arrayToRearrange): array
+    {
+        return array_values($arrayToRearrange);
     }
 }

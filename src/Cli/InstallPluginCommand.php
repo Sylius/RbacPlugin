@@ -60,15 +60,6 @@ final class InstallPluginCommand extends Command
     /** @var string */
     private $administratorEmail;
 
-    /** @var RepositoryInterface */
-    private $administrationRoleRepository;
-
-    /** @var RepositoryInterface */
-    private $administratorRepository;
-
-    /** @var ObjectManager */
-    private $objectManager;
-
     public function __construct(
         SyliusSectionsProviderInterface $syliusSectionsProvider,
         string $administratorEmail
@@ -91,21 +82,8 @@ final class InstallPluginCommand extends Command
         $outputStyle->writeln('<info>Installing RBAC plugin...</info>');
 
         foreach ($this->commands as $step => $command) {
-            if ($this->isGrantAccessToGivenAdministratorCurrentCommand($command['command'])) {
-                if (!$this->isAdministratorEmailProvided()) {
-                    continue;
-                }
-
-                $command['parameters']['sections'] = $this->syliusSectionsProvider->__invoke();
-                $command['parameters']['administratorEmail'] = $this->administratorEmail;
-            }
-
-            if ($this->isGrantAccessCurrentCommand($command['command'])) {
-                if ($this->isAdministratorEmailProvided()) {
-                    continue;
-                }
-
-                $command['parameters']['sections'] = $this->syliusSectionsProvider->__invoke();
+            if ($this->shouldCommandBeNormalized($command)) {
+                $command = $this->normalizeCommand($command);
             }
 
             try {
@@ -117,7 +95,8 @@ final class InstallPluginCommand extends Command
 
                 $this->getApplication()
                     ->find($command['command'])
-                    ->run($input, $output);
+                    ->run($input, $output)
+                ;
             } catch (\Exception $exception) {
                 $outputStyle->newLine(2);
                 $outputStyle->warning($exception->getMessage());
@@ -135,6 +114,33 @@ final class InstallPluginCommand extends Command
             count($this->commands),
             $commandMessage
         );
+    }
+
+    private function shouldCommandBeNormalized(array $command): bool
+    {
+        /** @var bool $isAdministratorEmailProvided */
+        $isAdministratorEmailProvided = $this->isAdministratorEmailProvided();
+
+        /** @var bool $isGrantAccessToGivenAdministratorCurrentCommand */
+        $isGrantAccessToGivenAdministratorCurrentCommand =
+            $this->isGrantAccessToGivenAdministratorCurrentCommand($command['command']);
+
+        /** @var bool $isGrantAccessCurrentCommand */
+        $isGrantAccessCurrentCommand = $this->isGrantAccessCurrentCommand($command['command']);
+
+        return ($isGrantAccessToGivenAdministratorCurrentCommand && !$isAdministratorEmailProvided) ||
+            ($isGrantAccessCurrentCommand && $isAdministratorEmailProvided);
+    }
+
+    private function normalizeCommand(array $command): array
+    {
+        $command['parameters']['sections'] = $this->syliusSectionsProvider->__invoke();
+
+        if ($this->isGrantAccessToGivenAdministratorCurrentCommand($command['command'])) {
+            $command['parameters']['administratorEmail'] = $this->administratorEmail;
+        }
+
+        return $command;
     }
 
     private function isGrantAccessToGivenAdministratorCurrentCommand(string $commandName): bool
