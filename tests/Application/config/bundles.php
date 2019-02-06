@@ -57,4 +57,5 @@ return [
     Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['dev' => true, 'test' => true, 'test_cached' => true],
     Prooph\Bundle\ServiceBus\ProophServiceBusBundle::class => ['all' => true],
     Sylius\RbacPlugin\SyliusRbacPlugin::class => ['all' => true],
+    FriendsOfBehat\SymfonyExtension\Bundle\FriendsOfBehatSymfonyExtensionBundle::class => ['test' => true, 'test_cached' => true]
 ];
