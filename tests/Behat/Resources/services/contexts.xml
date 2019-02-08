@@ -51,5 +51,13 @@
             <argument type="service" id="sylius_rbac.behat.modifying_availability_checker.customers" />
             <argument type="service" id="sylius_rbac.behat.modifying_availability_checker.marketing" />
         </service>
+
+        <service id="Tests\Sylius\RbacPlugin\Behat\Context\Cli\InstallingPluginContext" public="true">
+            <argument type="service" id="kernel" />
+            <argument type="service" id="sylius.repository.admin_user" />
+            <argument type="service" id="sylius_rbac.repository.administration_role" />
+            <argument type="service" id="Sylius\RbacPlugin\Provider\SyliusSectionsProvider" />
+            <tag name="fob.context_service" />
+        </service>
     </services>
 </container>

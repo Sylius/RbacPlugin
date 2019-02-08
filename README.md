@@ -97,11 +97,17 @@ to `app/Resources/SyliusAdminBundle/views/`
     
     * `sylius:fixtures:load`
     
-        Loading fixture with a default "No sections access" role
+        Loading fixture with a default "No sections access" role. 
+        
+        The command runs in non-interactive mode so it will NOT purge your database. 
+        However, once you run it again it will throw an exception because of duplicate entry constraint violation.
+        
+        If you want to install RBAC plugin again on the same environment you will have to remove all roles manually 
+        via administration panel or run all commands except `sylius:fixtures:load` separately.
         
     * `sylius-rbac:normalize-administrators`
     
-        That assigns role created in a previous step to all already existent administrators 
+        Assigns role created in a previous step to all already existent administrators.
 
     * `sylius-rbac:grant-access <roleName> <adminSections>`
 
@@ -111,14 +117,26 @@ to `app/Resources/SyliusAdminBundle/views/`
         * customerManagement
         * marketingManagement
         * salesManagement
-
-        Administrator's email is provided by plugin user via CLI.
+        
+        #### Beware!
+        
+        There are two ways of defining root administrator's email address:
+        
+        * Provide it as a parameter in your configuration file (you will not be asked to enter it again via CLI during
+        plugin's installation)
+        
+        ```yaml
+        parameters:
+            root_administrator_email: example@example.com
+        ``` 
+        
+        * Provide it via CLI
     
         e.g. `bin/console sylius-rbac:grant-access administrator configuration catalogManagement`
     
         `In order to permit access to admin panel sections, please provide administrator's email address: sylius@example.com`
         
-        By default, installation command creates *Configurator* role with *configuration* and *rbac* permissions.  
+        By default, installation command creates *Configurator* role with access granted to all sections.  
 
 #### Beware!
 
