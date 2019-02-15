@@ -6,6 +6,8 @@
 
 <h1 align="center">Rbac Plugin</h1>
 
+<p align="center"><a href="https://sylius.com/plugins/" target="_blank"><img src="https://sylius.com/assets/badge-official-sylius-plugin.png" width="200"></a></p>
+
 <p align="center">This plugin provides basic roles and permissions management functionality for Sylius application.</p>
 
 #### Beware!
