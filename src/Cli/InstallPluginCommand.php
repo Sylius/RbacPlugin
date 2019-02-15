@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Sylius\RbacPlugin\Cli;
 
-use Doctrine\Common\Persistence\ObjectManager;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\RbacPlugin\Provider\SyliusSectionsProviderInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
