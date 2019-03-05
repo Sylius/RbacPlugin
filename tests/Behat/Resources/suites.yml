@@ -8,7 +8,7 @@ default:
 
                 - Tests\Sylius\RbacPlugin\Behat\Context\Cli\InstallingPluginContext
             filters:
-                tags: "@installing_rbac_plugin && @rbac_cli"
+                tags: "@installing_rbac_plugin && @cli"
         ui_access_restrictions:
             contexts:
                 - sylius.behat.context.hook.doctrine_orm

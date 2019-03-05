@@ -54,6 +54,7 @@
 
         <service id="Tests\Sylius\RbacPlugin\Behat\Context\Cli\InstallingPluginContext" public="true">
             <argument type="service" id="kernel" />
+            <argument type="service" id="Sylius\RbacPlugin\Cli\InstallPluginCommand" />
             <argument type="service" id="sylius.repository.admin_user" />
             <argument type="service" id="sylius_rbac.repository.administration_role" />
             <argument type="service" id="Sylius\RbacPlugin\Provider\SyliusSectionsProvider" />
