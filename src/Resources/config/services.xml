@@ -80,9 +80,6 @@
 
         <service id="Sylius\RbacPlugin\Cli\InstallPluginCommand">
             <argument type="service" id="Sylius\RbacPlugin\Provider\SyliusSectionsProvider"/>
-            <argument type="service" id="sylius_rbac.repository.administration_role" />
-            <argument type="service" id="sylius.repository.admin_user" />
-            <argument type="service" id="doctrine.orm.entity_manager" />
             <argument>%root_administrator_email%</argument>
             <tag name="console.command" command="sylius-rbac:install-plugin" />
         </service>

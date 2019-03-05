@@ -6,11 +6,11 @@ Feature: Adding a new Administration role
 
     Background:
         Given there is an administrator "scary.terry@nightmare.com"
-        Given there is an administrator "rick.sanchez@gmail.com"
+        And there is an administrator "rick.sanchez@gmail.com"
 
-    @rbac_cli
+    @cli
     Scenario: Installing RBAC plugin
-        When I install RBAC plugin by specifying root administrator's email as "scary.terry@nightmare.com"
+        When I install RBAC plugin
         Then there should be "No sections access" administration role
         And the "No sections access" role shouldn't have access to any section
         And there should be "Configurator" administration role

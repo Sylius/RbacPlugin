@@ -11,7 +11,6 @@ use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
 use Sylius\RbacPlugin\Model\PermissionInterface;
 use Sylius\RbacPlugin\Provider\SyliusSectionsProviderInterface;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Tests\Application\RbacPlugin\Entity\AdminUser;
@@ -42,26 +41,28 @@ final class InstallingPluginContext implements Context
 
     public function __construct(
         KernelInterface $kernel,
+        InstallPluginCommand $command,
         RepositoryInterface $administratorRepository,
         RepositoryInterface $administrationRoleRepository,
         SyliusSectionsProviderInterface $syliusSectionsProvider
     ) {
         $this->kernel = $kernel;
+        $this->command = $command;
         $this->administratorRepository = $administratorRepository;
         $this->administrationRoleRepository = $administrationRoleRepository;
         $this->syliusSectionsProvider = $syliusSectionsProvider;
     }
 
     /**
-     * @When I install RBAC plugin by specifying root administrator's email as :administratorEmail
+     * @When I install RBAC plugin
      */
-    public function installRbacPlugin(string $administratorEmail): void
+    public function installRbacPlugin(): void
     {
         $this->application = new Application($this->kernel);
-        $this->application->add(new InstallPluginCommand($this->syliusSectionsProvider, $administratorEmail));
+        $this->application->add($this->command);
 
-        $this->command = $this->application->find('sylius-rbac:install-plugin');
-        $this->tester = new CommandTester($this->command);
+        $command = $this->application->find('sylius-rbac:install-plugin');
+        $this->tester = new CommandTester($command);
 
         $this->tester->execute(['command' => 'sylius-rbac:install-plugin']);
     }
