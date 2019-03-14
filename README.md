@@ -24,32 +24,29 @@ Write permission access means also updating and deleting.
     composer require sylius/rbac-plugin
     ```
 
-2. Add plugin class and other required bundles to your `AppKernel`.
+2. Add plugin class and `ProophServiceBusBundle` to your `bundles.php`.
 
     ```php
-    $bundles = [
-       new \Sylius\RbacPlugin\SyliusRbacPlugin(),
+    return [
+       // ...
+       Prooph\Bundle\ServiceBus\ProophServiceBusBundle::class => ['all' => true],
+       Sylius\RbacPlugin\SyliusRbacPlugin::class => ['all' => true],
     ];
     ```
 
-3. Make sure to have ProophServiceBusBundle in your `AppKernel` as well:
-
-    ```php
-    $bundles = [
-        new \Prooph\Bundle\ServiceBus\ProophServiceBusBundle(),
-    ];
-    ```
-
-4. Override AdminUser entity:
+3. Override AdminUser entity:
 
 a) Use AdministrationRoleTrait and implement AdministrationRoleAwareInterface in the AdminUser class of your Sylius-Standard based project:
 
 ```php
+use Sylius\RbacPlugin\Entity\AdministrationRoleAwareInterface;
+use Sylius\RbacPlugin\Entity\AdministrationRoleTrait;
+
 /**
  * @MappedSuperclass
  * @Table(name="sylius_admin_user")
  */
-class AdminUser extends BaseAdminUser implements AdminUserInterface, AdministrationRoleAwareInterface
+class AdminUser extends BaseAdminUser implements AdministrationRoleAwareInterface
 {
     use AdministrationRoleTrait;
 }
@@ -66,30 +63,35 @@ sylius_user:
                     model: App\Entity\AdminUser
 ```
 
-5. Import routing:
+4. Import routing in `routes/sylius_rbac.yaml`:
 
     ```yaml
     sylius_rbac:
         resource: "@SyliusRbacPlugin/Resources/config/routing.yml"
     ```
 
-6. Import configuration:
+5. Import configuration in `config/sylius_rbac.yaml`:
 
     ```yaml
-    - { resource: "@SyliusRbacPlugin/Resources/config/config.yml" }
+    imports:
+        - { resource: "@SyliusRbacPlugin/Resources/config/config.yml" }
     ```
 
-7. Copy plugin migrations to your migrations directory (e.g. `src/Migrations`) and apply them to your database:
+6. Copy plugin migrations to your migrations directory (e.g. `src/Migrations`) and apply them to your database:
 
     ```bash
-    cp -R vendor/sylius/rbac-plugin/migrations/* "<path/to/your/migrations>"
+    cp -R vendor/sylius/rbac-plugin/migrations/* src/Migrations/
     bin/console doctrine:migrations:migrate
     ```
 
-8. Copy templates from `vendor/sylius/rbac-plugin/src/Resources/views/SyliusAdminBundle/`
-to `app/Resources/SyliusAdminBundle/views/`
+7. Copy overwritten `SyliusAdminBundle` templates:
 
-9. Run installation command
+    ```bash
+    mkdir templates/bundles/SyliusAdminBundle
+    cp -R vendor/sylius/rbac-plugin/src/Resources/views/SyliusAdminBundle/* templates/bundles/SyliusAdminBundle/
+    ```
+
+8. Run installation command
 
     ```bash
     bin/console sylius-rbac:install-plugin
