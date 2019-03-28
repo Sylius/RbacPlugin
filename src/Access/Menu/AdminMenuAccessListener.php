@@ -41,7 +41,7 @@ final class AdminMenuAccessListener
 
         /** @var AdminUserInterface $adminUser */
         $adminUser = $token->getUser();
-        Assert::isInstanceOf($adminUser, AdminUserInterface::class, 'Logged in user should be and administrator');
+        Assert::isInstanceOf($adminUser, AdminUserInterface::class, 'Logged in user should be an administrator');
 
         $menu = $event->getMenu();
 
