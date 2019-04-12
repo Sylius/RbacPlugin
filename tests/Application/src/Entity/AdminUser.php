@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping\Table;
 use Sylius\Component\Core\Model\AdminUser as BaseAdminUser;
 use Sylius\Component\Core\Model\AdminUserInterface;
 use Sylius\RbacPlugin\Entity\AdministrationRoleAwareInterface;
-use Sylius\RbacPlugin\Entity\AdministrationRoleTrait;
+use Sylius\RbacPlugin\Entity\AdministrationRoleAwareTrait;
 
 /**
  * @MappedSuperclass()
@@ -18,5 +18,5 @@ use Sylius\RbacPlugin\Entity\AdministrationRoleTrait;
  */
 class AdminUser extends BaseAdminUser implements AdminUserInterface, AdministrationRoleAwareInterface
 {
-    use AdministrationRoleTrait;
+    use AdministrationRoleAwareTrait;
 }
