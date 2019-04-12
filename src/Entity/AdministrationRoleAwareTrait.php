@@ -7,10 +7,10 @@ namespace Sylius\RbacPlugin\Entity;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 
-trait AdministrationRoleTrait
+trait AdministrationRoleAwareTrait
 {
     /**
-     * @ManyToOne(targetEntity="Sylius\RbacPlugin\Entity\AdministrationRole")
+     * @ManyToOne(targetEntity="Sylius\RbacPlugin\Entity\AdministrationRoleInterface")
      * @JoinColumn(name="administrationRole_id", referencedColumnName="id")
      *
      * @var AdministrationRoleInterface|null
