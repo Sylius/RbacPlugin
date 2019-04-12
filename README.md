@@ -36,11 +36,11 @@ Write permission access means also updating and deleting.
 
 3. Override AdminUser entity:
 
-a) Use AdministrationRoleTrait and implement AdministrationRoleAwareInterface in the AdminUser class of your Sylius-Standard based project:
+a) Use AdministrationRoleAwareTrait and implement AdministrationRoleAwareInterface in the AdminUser class of your Sylius-Standard based project:
 
 ```php
 use Sylius\RbacPlugin\Entity\AdministrationRoleAwareInterface;
-use Sylius\RbacPlugin\Entity\AdministrationRoleTrait;
+use Sylius\RbacPlugin\Entity\AdministrationRoleAwareTrait;
 
 /**
  * @MappedSuperclass
@@ -48,7 +48,7 @@ use Sylius\RbacPlugin\Entity\AdministrationRoleTrait;
  */
 class AdminUser extends BaseAdminUser implements AdministrationRoleAwareInterface
 {
-    use AdministrationRoleTrait;
+    use AdministrationRoleAwareTrait;
 }
 ```
 
@@ -146,6 +146,18 @@ sylius_user:
 
 You can also use `bin/console sylius-rbac:grant-access-to-given-administrator <email> <roleName> <adminSections>`
 command in order to provide an email address as an input parameter.
+
+#### Beware!
+
+`AdminUser` entity references `AdministrationRoleInterface`, which is an abstraction layer above the default
+`AdministrationRole` implementation. You can easily customize it by adding a following snippet in your `*.yaml` configuration file:
+
+```yaml
+doctrine:
+    orm:
+        resolve_target_entities:
+            Sylius\RbacPlugin\Entity\AdministrationRoleInterface: FullyQualifiedClassName
+```
 
 ## Sections configuration
 
