@@ -22,7 +22,7 @@
             <tag name="form.type" />
         </service>
 
-        <service id="Sylius\RbacPlugin\Form\Type\AdminUserTypeExtension">
+        <service id="Sylius\RbacPlugin\Form\Extension\AdminUserTypeExtension">
             <tag name="form.type_extension" extended-type="Sylius\Bundle\CoreBundle\Form\Type\User\AdminUserType" />
         </service>
 
