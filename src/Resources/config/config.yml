@@ -1,11 +1,6 @@
 parameters:
     root_administrator_email: ''
 
-doctrine:
-    orm:
-        resolve_target_entities:
-            Sylius\RbacPlugin\Entity\AdministrationRoleInterface: Sylius\RbacPlugin\Entity\AdministrationRole
-
 prooph_service_bus:
     command_buses:
         sylius_rbac_command_bus: ~
@@ -24,7 +19,8 @@ sylius_resource:
     resources:
         sylius_rbac.administration_role:
             classes:
-                model: Sylius\RbacPlugin\Entity\AdministrationRoleInterface
+                model: Sylius\RbacPlugin\Entity\AdministrationRole
+                interface: Sylius\RbacPlugin\Entity\AdministrationRoleInterface
 
 sylius_grid:
     grids:
