@@ -19,7 +19,7 @@ class AdministrationRole implements AdministrationRoleInterface
     /** @var array|string[] */
     private $permissions = [];
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

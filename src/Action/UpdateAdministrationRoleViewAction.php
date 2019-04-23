@@ -19,7 +19,7 @@ final class UpdateAdministrationRoleViewAction
     private $adminPermissionsProvider;
 
     /** @var RepositoryInterface */
-    private $administrationRolesRepository;
+    private $administrationRoleRepository;
 
     /** @var PermissionDataExtractorInterface */
     private $permissionDataExtractor;
@@ -32,13 +32,13 @@ final class UpdateAdministrationRoleViewAction
 
     public function __construct(
         AdminPermissionsProviderInterface $adminPermissionsProvider,
-        RepositoryInterface $administrationRolesRepository,
+        RepositoryInterface $administrationRoleRepository,
         PermissionDataExtractorInterface $permissionDataExtractor,
         Environment $twig,
         UrlGeneratorInterface $router
     ) {
         $this->adminPermissionsProvider = $adminPermissionsProvider;
-        $this->administrationRolesRepository = $administrationRolesRepository;
+        $this->administrationRoleRepository = $administrationRoleRepository;
         $this->permissionDataExtractor = $permissionDataExtractor;
         $this->twig = $twig;
         $this->router = $router;
@@ -47,7 +47,7 @@ final class UpdateAdministrationRoleViewAction
     public function __invoke(Request $request): Response
     {
         /** @var AdministrationRoleInterface $administrationRole */
-        $administrationRole = $this->administrationRolesRepository->find($request->attributes->get('id'));
+        $administrationRole = $this->administrationRoleRepository->find($request->attributes->get('id'));
 
         return new Response(
             $this->twig->render('@SyliusRbacPlugin/AdministrationRole/update.html.twig', [
