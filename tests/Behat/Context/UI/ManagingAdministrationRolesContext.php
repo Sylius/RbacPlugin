@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Tests\Sylius\RbacPlugin\Behat\Context\UI;
 
 use Behat\Behat\Context\Context;
+use FriendsOfBehat\PageObjectExtension\Page\UnexpectedPageException;
 use Sylius\Behat\NotificationType;
 use Sylius\Behat\Page\Admin\Crud\IndexPageInterface;
 use Sylius\Behat\Service\NotificationCheckerInterface;
 use Sylius\RbacPlugin\Access\Model\OperationType;
 use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdministrationRoleCreatePageInterface;
 use Tests\Sylius\RbacPlugin\Behat\Page\Ui\AdministrationRoleUpdatePageInterface;
 use Webmozart\Assert\Assert;
@@ -54,6 +56,30 @@ final class ManagingAdministrationRolesContext implements Context
     public function wantToAddSomePermissionsToAdministrationRole(AdministrationRoleInterface $administrationRole): void
     {
         $this->updatePage->open(['id' => $administrationRole->getId()]);
+    }
+
+    /**
+     * @When I want to edit a non existent administration role
+     */
+    public function wantToEditNonExistentAdministrationRole(): void
+    {
+        try {
+            $this->updatePage->open(['id' => 999]);
+        } catch (UnexpectedPageException $exception) {
+            if (strpos($exception->getMessage(), '404') !== false) {
+                return;
+            }
+        }
+
+        throw new \Exception('I should have been notified that this administration role does not exist');
+    }
+
+    /**
+     * @Then I should be notified that this administration role does not exist
+     */
+    public function shouldBeNotifiedThatThisAdministrationRoleDoesNotExist(): void
+    {
+        // If I'm not notified, the previous step will fail
     }
 
     /**

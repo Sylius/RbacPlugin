@@ -10,6 +10,7 @@ use Sylius\RbacPlugin\Extractor\PermissionDataExtractorInterface;
 use Sylius\RbacPlugin\Provider\AdminPermissionsProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Environment;
 
@@ -46,8 +47,15 @@ final class UpdateAdministrationRoleViewAction
 
     public function __invoke(Request $request): Response
     {
-        /** @var AdministrationRoleInterface $administrationRole */
+        /** @var AdministrationRoleInterface|null $administrationRole */
         $administrationRole = $this->administrationRoleRepository->find($request->attributes->get('id'));
+
+        if (null === $administrationRole) {
+            throw new NotFoundHttpException(sprintf(
+                'Administration role with id %s was not found', $request->attributes->get('id')
+                )
+            );
+        }
 
         return new Response(
             $this->twig->render('@SyliusRbacPlugin/AdministrationRole/update.html.twig', [
