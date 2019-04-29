@@ -222,6 +222,35 @@ sylius_rbac:
             suppliers: Suppliers
 ```
 
+#### Beware!
+
+You should take into account that by default the RBAC Plugin recognizes the admin-related routes using logic
+placed in the `HardcodedRouteNameChecker` class, which is the following:
+
+```php
+    public function isAdminRoute(string $routeName): bool
+    {
+        return
+            strpos($routeName, 'sylius_admin') !== false ||
+            strpos($routeName, 'sylius_rbac_admin') !== false
+        ;
+    }
+``` 
+
+Let's assume that you added a new route to your application and you want it to be handled by the RBAC plugin. 
+Once you did so, you should override the checker placed above and customize it in the following manner:
+
+```php
+    public function isAdminRoute(string $routeName): bool
+    {
+        return
+            strpos($routeName, 'sylius_admin') !== false ||
+            strpos($routeName, 'sylius_rbac_admin') !== false ||
+            strpos($routeName, 'your_custom_phrase' !== false
+        ;
+    }
+```
+
 #### Remember!
 
 When configuring a custom section in Admin main menu, name it the same way you named it under `custom_sections` key in the plugin configuration. It will be automatically hidden and shown, exactly as
