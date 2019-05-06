@@ -9,6 +9,7 @@ use FriendsOfBehat\PageObjectExtension\Page\UnexpectedPageException;
 use Sylius\Behat\NotificationType;
 use Sylius\Behat\Page\Admin\Crud\IndexPageInterface;
 use Sylius\Behat\Service\NotificationCheckerInterface;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\RbacPlugin\Access\Model\OperationType;
 use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -63,15 +64,7 @@ final class ManagingAdministrationRolesContext implements Context
      */
     public function wantToEditNonExistentAdministrationRole(): void
     {
-        try {
-            $this->updatePage->open(['id' => 999]);
-        } catch (UnexpectedPageException $exception) {
-            if (strpos($exception->getMessage(), '404') !== false) {
-                return;
-            }
-        }
-
-        throw new \Exception('I should have been notified that this administration role does not exist');
+        $this->updatePage->open(['id' => 999]);
     }
 
     /**
@@ -79,7 +72,10 @@ final class ManagingAdministrationRolesContext implements Context
      */
     public function shouldBeNotifiedThatThisAdministrationRoleDoesNotExist(): void
     {
-        // If I'm not notified, the previous step will fail
+        $this->notificationChecker->checkNotification(
+            'Administration role with id 999 was not found',
+            NotificationType::failure()
+        );
     }
 
     /**

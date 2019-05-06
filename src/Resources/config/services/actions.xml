@@ -22,6 +22,7 @@
             <argument type="service" id="Sylius\RbacPlugin\Extractor\PermissionDataExtractor"/>
             <argument type="service" id="twig" />
             <argument type="service" id="router" />
+            <argument type="service" id="session" />
         </service>
 
         <service id="Sylius\RbacPlugin\Action\UpdateAdministrationRoleAction">

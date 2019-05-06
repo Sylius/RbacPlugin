@@ -13,6 +13,6 @@ Feature: Being unable to edit a non existent administration role
         And I am logged in as "scary.terry@nightmare.com" administrator
 
     @ui
-    Scenario: Try to edit a non existent administration role
+    Scenario: Trying to edit a non existent administration role
         When I want to edit a non existent administration role
         Then I should be notified that this administration role does not exist
