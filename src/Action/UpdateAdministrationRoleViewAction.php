@@ -58,7 +58,7 @@ final class UpdateAdministrationRoleViewAction
 
         if (null === $administrationRole) {
             $this->session->getFlashBag()->add('error', [
-                'message' => 'sylius_rbac.ui.administration_role_not_found',
+                'message' => 'sylius_rbac.administration_role_not_found',
                 'parameters' => ['%administration_role_id%' => $request->attributes->get('id')],
             ]);
 

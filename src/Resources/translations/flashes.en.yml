@@ -1,5 +1,6 @@
 sylius_rbac:
     administration_role_does_not_exist: 'Administration role does not exist'
+    administration_role_not_found: 'Administration role with id %administration_role_id% was not found'
     administration_role_successfully_created: 'Administration role has been successfully created'
     administration_role_successfully_updated: 'Administration role has been successfully updated'
     you_are_not_allowed_to_do_that: 'You are not allowed to do that'

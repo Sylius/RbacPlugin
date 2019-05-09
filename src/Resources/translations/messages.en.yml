@@ -3,7 +3,6 @@ sylius_rbac:
         access: 'Access'
         administration_role: 'Administration role'
         administration_roles: 'Administration roles'
-        administration_role_not_found: 'Administration role with id %administration_role_id% was not found'
         edit_administration_role: 'Edit Administration role'
         new_administration_role: 'New Administration role'
         permission:
@@ -19,4 +18,3 @@ sylius_rbac:
         permissions: 'Permissions'
         rbac: 'RBAC'
         rbac_role: 'RBAC role'
-

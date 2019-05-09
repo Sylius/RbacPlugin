@@ -64,7 +64,7 @@ final class ManagingAdministrationRolesContext implements Context
      */
     public function wantToEditNonExistentAdministrationRole(): void
     {
-        $this->updatePage->open(['id' => 999]);
+        $this->updatePage->tryToOpen(['id' => 999]);
     }
 
     /**
