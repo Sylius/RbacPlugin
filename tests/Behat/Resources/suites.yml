@@ -43,6 +43,7 @@ default:
                 - Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdminUserContext
 
                 - Tests\Sylius\RbacPlugin\Behat\Context\UI\ManagingAdministrationRolesContext
+                - Tests\Sylius\RbacPlugin\Behat\Context\UI\ManagingAdministratorsContext
             filters:
                 tags: "@managing_administration_roles && @ui"
         ui_managing_administrators:

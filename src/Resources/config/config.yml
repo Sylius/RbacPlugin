@@ -7,7 +7,7 @@ prooph_service_bus:
 
 sylius_fixtures:
     suites:
-        default_administration_role:
+        default_rbac_fixtures:
             fixtures:
                 administration_role:
                     options:

@@ -19,7 +19,7 @@ final class InstallPluginCommand extends Command
             'command' => 'sylius:fixtures:load',
             'message' => 'Loads default no sections access role',
             'parameters' => [
-                'suite' => 'default_administration_role',
+                'suite' => 'default_rbac_fixtures',
             ],
             'interactive' => false,
         ],
