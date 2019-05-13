@@ -11,6 +11,9 @@
 
         <service id="Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdminUserContext" public="true">
             <argument type="service" id="sylius.manager.admin_user" />
+            <argument type="service" id="sylius.fixture.example_factory.admin_user" />
+            <argument type="service" id="sylius.repository.admin_user" />
+            <argument type="service" id="sylius.behat.shared_storage" />
         </service>
 
         <service id="Tests\Sylius\RbacPlugin\Behat\Context\Transform\AdministrationRoleContext" public="true">
