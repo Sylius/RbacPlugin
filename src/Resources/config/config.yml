@@ -12,6 +12,19 @@ sylius_fixtures:
                 administration_role:
                     options:
                         name: 'No sections access'
+                admin_user:
+                    name: 'admin_user'
+                    options:
+                        custom:
+                            -   email: 'good@father.com'
+                                username: 'good'
+                                password: 'good'
+                                enabled: true
+                                locale_code: '%locale%'
+                                first_name: 'Good'
+                                last_name: 'Father'
+                                administration_role: 'No sections access'
+
             listeners:
                 logger: ~
 
