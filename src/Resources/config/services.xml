@@ -101,6 +101,18 @@
             <tag name="sylius_fixtures.fixture"/>
         </service>
 
+        <service id="sylius.fixture.admin_user" class="Sylius\RbacPlugin\Fixture\AdminUserFixture">
+            <argument type="service" id="sylius.manager.admin_user" />
+            <argument type="service" id="sylius.fixture.example_factory.admin_user" />
+            <tag name="sylius_fixtures.fixture" />
+        </service>
+
+        <service id="sylius.fixture.example_factory.admin_user" class="Sylius\RbacPlugin\Factory\AdminUserExampleFactory">
+            <argument type="service" id="sylius.factory.admin_user" />
+            <argument type="service" id="sylius_rbac.repository.administration_role" />
+            <argument>%locale%</argument>
+        </service>
+
         <service id="Sylius\RbacPlugin\Provider\SyliusSectionsProvider" public="true">
             <argument>%sylius_rbac.configuration%</argument>
         </service>
