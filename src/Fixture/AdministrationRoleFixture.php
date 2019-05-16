@@ -41,7 +41,7 @@ final class AdministrationRoleFixture extends AbstractFixture implements Fixture
 
         foreach ($options['permissions'] as $permissionName) {
             $administrationRole
-                ->addPermission(Permission::ofType($permissionName, [OperationType::READ, OperationType::WRITE]))
+                ->addPermission(Permission::ofType($permissionName, [OperationType::read(), OperationType::write()]))
             ;
         }
 
@@ -57,7 +57,7 @@ final class AdministrationRoleFixture extends AbstractFixture implements Fixture
                     ->cannotBeEmpty()
                 ->end()
                 ->arrayNode('permissions')
-                    ->addDefaultsIfNotSet()
+                    ->scalarPrototype()->defaultValue([])
                 ->end()
             ->end()
         ->end();
