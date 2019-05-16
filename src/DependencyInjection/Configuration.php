@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sylius\RbacPlugin\DependencyInjection;
 
+use Sylius\RbacPlugin\Model\Permission;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -22,11 +23,11 @@ final class Configuration implements ConfigurationInterface
             ->children()
                 ->arrayNode('sylius_sections')
                     ->children()
-                        ->arrayNode('catalog')->variablePrototype()->end()->end()
-                        ->arrayNode('configuration')->variablePrototype()->end()->end()
-                        ->arrayNode('customers')->variablePrototype()->end()->end()
-                        ->arrayNode('marketing')->variablePrototype()->end()->end()
-                        ->arrayNode('sales')->variablePrototype()->end()->end()
+                        ->arrayNode(Permission::CATALOG_MANAGEMENT_PERMISSION)->variablePrototype()->end()->end()
+                        ->arrayNode(Permission::CONFIGURATION_PERMISSION)->variablePrototype()->end()->end()
+                        ->arrayNode(Permission::CUSTOMERS_MANAGEMENT_PERMISSION)->variablePrototype()->end()->end()
+                        ->arrayNode(Permission::MARKETING_MANAGEMENT_PERMISSION)->variablePrototype()->end()->end()
+                        ->arrayNode(Permission::SALES_MANAGEMENT_PERMISSION)->variablePrototype()->end()->end()
                     ->end()
                 ->end()
             ->end()
