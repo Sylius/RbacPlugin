@@ -39,7 +39,8 @@ final class AdministratorAccessGranter implements AdministratorAccessGranterInte
         $this->sectionsToPermissionsMapper = $sectionsToPermissionsMapper;
     }
 
-    public function __invoke(string $email, string $roleName, array $sections): void {
+    public function __invoke(string $email, string $roleName, array $sections): void
+    {
         /** @var AdministrationRoleAwareInterface|null $admin */
         $admin = $this->administratorRepository->findOneBy(['email' => $email]);
 

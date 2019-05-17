@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Sylius\RbacPlugin\DependencyInjection;
 
 use Sylius\RbacPlugin\Access\Model\Section;
-use Sylius\RbacPlugin\Model\Permission;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 

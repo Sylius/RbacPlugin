@@ -19,7 +19,7 @@ final class SyliusSectionsToPermissionsMapper implements SectionsToPermissionsMa
             Section::SALES => Permission::SALES_MANAGEMENT_PERMISSION,
             Section::MARKETING => Permission::MARKETING_MANAGEMENT_PERMISSION,
             Section::CUSTOMERS => Permission::CUSTOMERS_MANAGEMENT_PERMISSION,
-            Section::CONFIGURATION => Permission::CONFIGURATION_PERMISSION
+            Section::CONFIGURATION => Permission::CONFIGURATION_PERMISSION,
         ];
     }
 

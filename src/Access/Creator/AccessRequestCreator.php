@@ -8,7 +8,6 @@ use Sylius\RbacPlugin\Access\Exception\UnresolvedRouteNameException;
 use Sylius\RbacPlugin\Access\Model\AccessRequest;
 use Sylius\RbacPlugin\Access\Model\OperationType;
 use Sylius\RbacPlugin\Access\Model\Section;
-use Sylius\RbacPlugin\Model\Permission;
 
 final class AccessRequestCreator implements AccessRequestCreatorInterface
 {
