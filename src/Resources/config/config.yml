@@ -59,7 +59,7 @@ sylius_grid:
 
 sylius_rbac:
     sylius_sections:
-        catalog_management:
+        catalog:
             - sylius_admin_inventory
             - sylius_admin_product
             - sylius_admin_product_association_type
@@ -80,14 +80,14 @@ sylius_rbac:
             - sylius_admin_tax_category
             - sylius_admin_tax_rate
             - sylius_admin_zone
-        customers_management:
+        customers:
             - sylius_admin_customer
             - sylius_admin_customer_group
             - sylius_admin_shop_user
-        marketing_management:
+        marketing:
             - sylius_admin_product_review
             - sylius_admin_promotion
-        sales_management:
+        sales:
             - sylius_admin_order
     custom_sections:
         rbac:

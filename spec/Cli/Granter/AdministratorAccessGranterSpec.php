@@ -10,6 +10,7 @@ use Prophecy\Argument;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\RbacPlugin\Cli\Granter\AdministratorAccessGranterInterface;
 use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
+use Sylius\RbacPlugin\Mapper\SectionsToPermissionsMapperInterface;
 use Tests\Application\RbacPlugin\Entity\AdminUser;
 
 final class AdministratorAccessGranterSpec extends ObjectBehavior
@@ -17,9 +18,15 @@ final class AdministratorAccessGranterSpec extends ObjectBehavior
     function let(
         RepositoryInterface $administratorRepository,
         RepositoryInterface $administrationRoleRepository,
-        ObjectManager $objectManager
+        ObjectManager $objectManager,
+        SectionsToPermissionsMapperInterface $sectionsToPermissionsMapper
     ): void {
-        $this->beConstructedWith($administratorRepository, $administrationRoleRepository, $objectManager);
+        $this->beConstructedWith(
+            $administratorRepository,
+            $administrationRoleRepository,
+            $objectManager,
+            $sectionsToPermissionsMapper
+        );
     }
 
     function it_implements_administrator_access_granter_interface(): void
@@ -63,7 +70,8 @@ final class AdministratorAccessGranterSpec extends ObjectBehavior
         RepositoryInterface $administrationRoleRepository,
         ObjectManager $objectManager,
         AdminUser $adminUser,
-        AdministrationRoleInterface $administrationRole
+        AdministrationRoleInterface $administrationRole,
+        SectionsToPermissionsMapperInterface $sectionsToPermissionsMapper
     ): void {
         $administratorRepository->findOneBy(['email' => 'sylius@example.com'])->willReturn($adminUser);
         $administrationRoleRepository->findOneBy(['name' => 'Configurator'])->willReturn($administrationRole);
@@ -72,6 +80,10 @@ final class AdministratorAccessGranterSpec extends ObjectBehavior
 
         $administrationRoleRepository->add($administrationRole)->shouldBeCalled();
         $objectManager->flush()->shouldBeCalled();
+
+        $sectionsToPermissionsMapper->map('catalog')->willReturn('catalog_management');
+        $sectionsToPermissionsMapper->map('configuration')->willReturn('configuration');
+        $sectionsToPermissionsMapper->map('customers')->willReturn('customers_management');
 
         $this->__invoke('sylius@example.com', 'Configurator', ['catalog', 'configuration', 'customers']);
     }

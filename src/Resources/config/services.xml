@@ -66,6 +66,7 @@
             <argument type="service" id="sylius.repository.admin_user" />
             <argument type="service" id="sylius_rbac.repository.administration_role" />
             <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="Sylius\RbacPlugin\Mapper\SyliusSectionsToPermissionsMapper" />
         </service>
 
         <service id="Sylius\RbacPlugin\Cli\GrantAccessCommand">
@@ -104,5 +105,7 @@
         <service id="Sylius\RbacPlugin\Provider\SyliusSectionsProvider" public="true">
             <argument>%sylius_rbac.configuration%</argument>
         </service>
+
+        <service id="Sylius\RbacPlugin\Mapper\SyliusSectionsToPermissionsMapper" public="true" />
     </services>
 </container>
