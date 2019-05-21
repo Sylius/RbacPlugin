@@ -8,7 +8,6 @@ use Behat\Behat\Context\Context;
 use Doctrine\Common\Persistence\ObjectManager;
 use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
 use Sylius\RbacPlugin\Entity\AdministrationRoleAwareInterface;
-use Webmozart\Assert\Assert;
 
 final class AdminUserContext implements Context
 {
@@ -21,7 +20,7 @@ final class AdminUserContext implements Context
     }
 
     /**
-     * @When /^(this administrator) has (administration role "[^"]+")$/
+     * @Given /^(this administrator) has (administration role "[^"]+")$/
      */
     public function thisAdministratorHasRole(
         AdministrationRoleAwareInterface $administrator,
@@ -30,15 +29,5 @@ final class AdminUserContext implements Context
         $administrator->setAdministrationRole($administrationRole);
 
         $this->administratorManager->flush();
-    }
-
-    /**
-     * @Then /^(this administrator) should have (administration role "([^"]*)")$/
-     */
-    public function thisAdministratorShouldHaveAdministrationRole(
-        AdministrationRoleAwareInterface $administrator,
-        AdministrationRoleInterface $administrationRole
-    ): void {
-        Assert::true($administrator->getAdministrationRole() === $administrationRole);
     }
 }

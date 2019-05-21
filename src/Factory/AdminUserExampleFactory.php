@@ -47,10 +47,7 @@ final class AdminUserExampleFactory extends BaseAdminUserExampleFactory implemen
             return $user;
         }
 
-        /** @var AdministrationRoleInterface $administrationRole */
-        $administrationRole = $this->administrationRoleRepository->find($options['administration_role']);
-
-        $user->setAdministrationRole($administrationRole);
+        $user->setAdministrationRole($options['administration_role']);
 
         return $user;
     }
