@@ -18,6 +18,9 @@ final class AdminUserExampleFactory extends BaseAdminUserExampleFactory implemen
     /** @var AdministrationRoleInterface $administrationRole */
     private $administrationRoleRepository;
 
+    /** @var OptionsResolver */
+    private $optionsResolver;
+
     public function __construct(
         FactoryInterface $userFactory,
         RepositoryInterface $administrationRoleRepository,
@@ -26,6 +29,10 @@ final class AdminUserExampleFactory extends BaseAdminUserExampleFactory implemen
         $this->administrationRoleRepository = $administrationRoleRepository;
 
         parent::__construct($userFactory, $localeCode);
+
+        $this->optionsResolver = new OptionsResolver();
+
+        $this->configureOptions($this->optionsResolver);
     }
 
     protected function configureOptions(OptionsResolver $resolver): void
@@ -42,6 +49,8 @@ final class AdminUserExampleFactory extends BaseAdminUserExampleFactory implemen
     public function create(array $options = []): AdminUserInterface
     {
         $user = parent::create($options);
+
+        $options = $this->optionsResolver->resolve($options);
 
         if (!isset($options['administration_role'])) {
             return $user;
