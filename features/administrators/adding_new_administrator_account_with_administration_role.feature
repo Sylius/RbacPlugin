@@ -9,7 +9,7 @@ Feature: Adding a new Administrator account with administration role
         And there is already an Administration role "No sections access" in the system
 
     @domain
-    Scenario: Adding a new administrator account with administration role in the system
+    Scenario: Adding a new administrator account with administration role
         When I add a new administrator "good.father@abc.com" named "Good" with "Father" last name and "No sections access" administration role
         Then the administrator account "good.father@abc.com" should have "Good" first name and "Father" last name
         And this administrator should have administration role "No sections access"
