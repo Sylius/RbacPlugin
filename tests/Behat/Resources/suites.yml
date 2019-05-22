@@ -1,5 +1,20 @@
 default:
     suites:
+        domain_managing_administration_roles:
+            contexts:
+                - sylius.behat.context.hook.doctrine_orm
+
+                - sylius.behat.context.setup.channel
+
+                - sylius.behat.context.transform.shared_storage
+
+                - Tests\Sylius\RbacPlugin\Behat\Context\Domain\ManagingAdministratorsContext
+
+                - Tests\Sylius\RbacPlugin\Behat\Context\Setup\AdministrationRolesContext
+
+                - Tests\Sylius\RbacPlugin\Behat\Context\Transform\AdministrationRoleContext
+            filters:
+                tags: "@managing_administration_roles && @domain"
         installing_plugin:
             contexts:
                 - sylius.behat.context.hook.doctrine_orm
