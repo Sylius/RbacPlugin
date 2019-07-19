@@ -63,14 +63,14 @@ sylius_user:
                     model: App\Entity\AdminUser
 ```
 
-4. Import routing in `routes/sylius_rbac.yaml`:
+4. Import routing in `config/routes/sylius_rbac.yaml`:
 
     ```yaml
     sylius_rbac:
         resource: "@SyliusRbacPlugin/Resources/config/routing.yml"
     ```
 
-5. Import configuration in `config/sylius_rbac.yaml`:
+5. Import configuration in `config/packages/sylius_rbac.yaml`:
 
     ```yaml
     imports:
