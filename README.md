@@ -39,6 +39,9 @@ Write permission access means also updating and deleting.
 a) Use AdministrationRoleAwareTrait and implement AdministrationRoleAwareInterface in the AdminUser class of your Sylius-Standard based project:
 
 ```php
+use Doctrine\ORM\Mapping\MappedSuperclass;
+use Doctrine\ORM\Mapping\Table;
+use Sylius\Component\Core\Model\AdminUser as BaseAdminUser;
 use Sylius\RbacPlugin\Entity\AdministrationRoleAwareInterface;
 use Sylius\RbacPlugin\Entity\AdministrationRoleAwareTrait;
 
