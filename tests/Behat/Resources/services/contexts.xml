@@ -65,6 +65,7 @@
             <argument type="service" id="sylius.repository.admin_user" />
             <argument type="service" id="sylius_rbac.repository.administration_role" />
             <argument type="service" id="Sylius\RbacPlugin\Provider\SyliusSectionsProvider" />
+            <argument type="service" id="Sylius\RbacPlugin\Mapper\SyliusSectionsToPermissionsMapper" />
             <tag name="fob.context_service" />
         </service>
     </services>

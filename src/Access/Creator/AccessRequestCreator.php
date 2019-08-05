@@ -23,31 +23,31 @@ final class AccessRequestCreator implements AccessRequestCreatorInterface
     {
         $operationType = $this->resolveOperationType($requestMethod);
 
-        foreach ($this->configuration['configuration'] as $configurationRoutePrefix) {
+        foreach ($this->configuration[Section::CONFIGURATION] as $configurationRoutePrefix) {
             if (strpos($routeName, $configurationRoutePrefix) === 0) {
                 return new AccessRequest(Section::configuration(), $operationType);
             }
         }
 
-        foreach ($this->configuration['customers'] as $customersRoutePrefix) {
+        foreach ($this->configuration[Section::CUSTOMERS] as $customersRoutePrefix) {
             if (strpos($routeName, $customersRoutePrefix) === 0) {
                 return new AccessRequest(Section::customers(), $operationType);
             }
         }
 
-        foreach ($this->configuration['marketing'] as $marketingRoutePrefix) {
+        foreach ($this->configuration[Section::MARKETING] as $marketingRoutePrefix) {
             if (strpos($routeName, $marketingRoutePrefix) === 0) {
                 return new AccessRequest(Section::marketing(), $operationType);
             }
         }
 
-        foreach ($this->configuration['sales'] as $salesRoutePrefix) {
+        foreach ($this->configuration[Section::SALES] as $salesRoutePrefix) {
             if (strpos($routeName, $salesRoutePrefix) === 0) {
                 return new AccessRequest(Section::sales(), $operationType);
             }
         }
 
-        foreach ($this->configuration['catalog'] as $catalogRoutePrefix) {
+        foreach ($this->configuration[Section::CATALOG] as $catalogRoutePrefix) {
             if (strpos($routeName, $catalogRoutePrefix) === 0) {
                 return new AccessRequest(Section::catalog(), $operationType);
             }

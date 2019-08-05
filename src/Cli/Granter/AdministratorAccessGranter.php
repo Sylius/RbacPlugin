@@ -10,6 +10,7 @@ use Sylius\RbacPlugin\Access\Model\OperationType;
 use Sylius\RbacPlugin\Entity\AdministrationRole;
 use Sylius\RbacPlugin\Entity\AdministrationRoleAwareInterface;
 use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
+use Sylius\RbacPlugin\Mapper\SectionsToPermissionsMapperInterface;
 use Sylius\RbacPlugin\Model\Permission;
 
 final class AdministratorAccessGranter implements AdministratorAccessGranterInterface
@@ -23,14 +24,19 @@ final class AdministratorAccessGranter implements AdministratorAccessGranterInte
     /** @var ObjectManager */
     private $objectManager;
 
+    /** @var SectionsToPermissionsMapperInterface */
+    private $sectionsToPermissionsMapper;
+
     public function __construct(
         RepositoryInterface $administratorRepository,
         RepositoryInterface $administratorRoleRepository,
-        ObjectManager $objectManager
+        ObjectManager $objectManager,
+        SectionsToPermissionsMapperInterface $sectionsToPermissionsMapper
     ) {
         $this->administratorRepository = $administratorRepository;
         $this->administratorRoleRepository = $administratorRoleRepository;
         $this->objectManager = $objectManager;
+        $this->sectionsToPermissionsMapper = $sectionsToPermissionsMapper;
     }
 
     public function __invoke(string $email, string $roleName, array $sections): void
@@ -49,7 +55,7 @@ final class AdministratorAccessGranter implements AdministratorAccessGranterInte
         foreach ($sections as $section) {
             $administrationRole->addPermission(
                 Permission::ofType(
-                    $section,
+                    $this->sectionsToPermissionsMapper->map($section),
                     [OperationType::read(), OperationType::write()])
             );
         }

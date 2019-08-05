@@ -8,6 +8,7 @@ use Behat\Behat\Context\Context;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\RbacPlugin\Cli\InstallPluginCommand;
 use Sylius\RbacPlugin\Entity\AdministrationRoleInterface;
+use Sylius\RbacPlugin\Mapper\SectionsToPermissionsMapperInterface;
 use Sylius\RbacPlugin\Model\PermissionInterface;
 use Sylius\RbacPlugin\Provider\SyliusSectionsProviderInterface;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
@@ -39,18 +40,23 @@ final class InstallingPluginContext implements Context
     /** @var SyliusSectionsProviderInterface */
     private $syliusSectionsProvider;
 
+    /** @var SectionsToPermissionsMapperInterface */
+    private $sectionsToPermissionsMapper;
+
     public function __construct(
         KernelInterface $kernel,
         InstallPluginCommand $command,
         RepositoryInterface $administratorRepository,
         RepositoryInterface $administrationRoleRepository,
-        SyliusSectionsProviderInterface $syliusSectionsProvider
+        SyliusSectionsProviderInterface $syliusSectionsProvider,
+        SectionsToPermissionsMapperInterface $sectionsToPermissionsMapper
     ) {
         $this->kernel = $kernel;
         $this->command = $command;
         $this->administratorRepository = $administratorRepository;
         $this->administrationRoleRepository = $administrationRoleRepository;
         $this->syliusSectionsProvider = $syliusSectionsProvider;
+        $this->sectionsToPermissionsMapper = $sectionsToPermissionsMapper;
     }
 
     /**
@@ -105,10 +111,12 @@ final class InstallingPluginContext implements Context
             return $permission->type();
         }, $administrationRole->getPermissions());
 
-        $availableSyliusSections = $this->syliusSectionsProvider->__invoke();
+        $availablePermissions = array_map(function (string $section): string {
+            return $this->sectionsToPermissionsMapper->map($section);
+        }, $this->syliusSectionsProvider->__invoke());
 
         foreach ($permissionTypes as $permission) {
-            if (!in_array($permission, $availableSyliusSections)) {
+            if (!in_array($permission, $availablePermissions)) {
                 throw new \Exception(sprintf(
                     'Administration role does not have a permission for %s section', $permission
                 ));
